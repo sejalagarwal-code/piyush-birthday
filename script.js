@@ -1,15 +1,32 @@
 /* =========================================
-PAGE CONTROL
+PAGE REFERENCES
 ========================================= */
 
-const page1 = document.getElementById("page1");
-const page2 = document.getElementById("page2");
-const page3 = document.getElementById("page3");
+const page1 =
+document.getElementById("page1");
+
+const page2 =
+document.getElementById("page2");
+
+const page3 =
+document.getElementById("page3");
+
+const page4 =
+document.getElementById("page4");
+
+
+/* =========================================
+SHOW PAGE
+========================================= */
 
 function showPage(page) {
 
-document.querySelectorAll(".page").forEach(function (p) {
+document
+.querySelectorAll(".page")
+.forEach(function (p) {
+
 p.classList.remove("active");
+
 });
 
 page.classList.add("active");
@@ -20,50 +37,57 @@ page.classList.add("active");
 MUSIC
 ========================================= */
 
-const birthdayMusic = document.getElementById("birthdayMusic");
+const birthdayMusic =
+document.getElementById("birthdayMusic");
 
 
 /* =========================================
-PAGE 1 — YES BUTTON
+PAGE 1 — YES
 ========================================= */
 
-const yesButton = document.getElementById("yesButton");
+const yesButton =
+document.getElementById("yesButton");
 
-yesButton.addEventListener("click", function () {
-
-/*
-Music starts from the user's click.
-This works with iPhone autoplay restrictions
-because play() is triggered by a real tap.
-*/
+yesButton.addEventListener(
+"click",
+function () {
 
 birthdayMusic.volume = 0.4;
 
-birthdayMusic.play().catch(function (error) {
-console.log("Music could not start:", error);
+birthdayMusic
+.play()
+.catch(function (error) {
+
+console.log(
+"Music could not start:",
+error
+);
+
 });
 
 showPage(page2);
-});
+
+}
+);
 
 
 /* =========================================
-PAGE 1 — NO BUTTON
+PAGE 1 — NO
 ========================================= */
 
-const noButton = document.getElementById("noButton");
+const noButton =
+document.getElementById("noButton");
+
 
 function moveNoButton() {
 
-/*
-Make the button fixed so it can move
-anywhere within the screen.
-*/
-
 noButton.style.position = "fixed";
 
-const buttonWidth = noButton.offsetWidth;
-const buttonHeight = noButton.offsetHeight;
+const buttonWidth =
+noButton.offsetWidth;
+
+const buttonHeight =
+noButton.offsetHeight;
 
 const padding = 25;
 
@@ -92,24 +116,19 @@ Math.random() *
 (maxY - minY + 1)
 ) + minY;
 
-noButton.style.left = randomX + "px";
-noButton.style.top = randomY + "px";
+noButton.style.left =
+randomX + "px";
+
+noButton.style.top =
+randomY + "px";
 }
 
-
-/*
-Desktop
-*/
 
 noButton.addEventListener(
 "mouseenter",
 moveNoButton
 );
 
-
-/*
-Mobile
-*/
 
 noButton.addEventListener(
 "touchstart",
@@ -152,23 +171,29 @@ const rect =
 balloon.getBoundingClientRect();
 
 const centerX =
-rect.left + rect.width / 2;
+rect.left +
+rect.width / 2;
 
 const centerY =
-rect.top + rect.height / 2;
+rect.top +
+rect.height / 2;
 
 const effects =
 document.getElementById("effects");
+
 
 for (let i = 0; i < 7; i++) {
 
 const heart =
 document.createElement("div");
 
-heart.className = "pop-heart";
+heart.className =
+"pop-heart";
 
 heart.innerHTML =
-Math.random() > 0.5 ? "♥" : "♡";
+Math.random() > 0.5
+? "♥"
+: "♡";
 
 heart.style.left =
 centerX + "px";
@@ -178,69 +203,95 @@ centerY + "px";
 
 heart.style.setProperty(
 "--x",
-(Math.random() * 100 - 50) + "px"
+(Math.random() * 100 - 50) +
+"px"
 );
 
 heart.style.setProperty(
 "--y",
-(Math.random() * -100 - 30) + "px"
+(Math.random() * -100 - 30) +
+"px"
 );
 
 effects.appendChild(heart);
 
+
 setTimeout(function () {
+
 heart.remove();
+
 }, 900);
 }
 }
 
 
 /* =========================================
-POP EACH BALLOON
+POP BALLOONS
 ========================================= */
 
-balloons.forEach(function (balloon) {
+balloons.forEach(
+function (balloon) {
 
-balloon.addEventListener("click", function () {
+balloon.addEventListener(
+"click",
+function () {
 
-if (balloon.classList.contains("popped")) {
+if (
+balloon.classList.contains(
+"popped"
+)
+) {
 return;
 }
 
+
 popped++;
 
-createPopEffect(balloon);
 
-balloon.classList.add("popped");
+createPopEffect(
+balloon
+);
 
-balloonCount.textContent = popped;
+
+balloon.classList.add(
+"popped"
+);
 
 
-/*
-Once all 4 are popped,
-reveal the message.
-*/
+balloonCount.textContent =
+popped;
+
 
 if (popped === 4) {
 
-setTimeout(function () {
+setTimeout(
+function () {
 
-specialMessage.classList.add("show");
+specialMessage
+.classList
+.add("show");
 
-}, 450);
+},
+450
+);
+
 }
 
-});
+}
+);
 
-});
+}
+);
 
 
 /* =========================================
-PAGE 2 — CONTINUE
+PAGE 2 → PAGE 3
 ========================================= */
 
 const continueButton =
-document.getElementById("continueButton");
+document.getElementById(
+"continueButton"
+);
 
 continueButton.addEventListener(
 "click",
@@ -253,30 +304,41 @@ showPage(page3);
 
 
 /* =========================================
-PAGE 3 — SWIPE CANDLE
+PAGE 3 — SWIPE
 ========================================= */
 
 const swipeTrack =
-document.getElementById("swipeTrack");
+document.getElementById(
+"swipeTrack"
+);
 
 const swipeButton =
-document.getElementById("swipeButton");
+document.getElementById(
+"swipeButton"
+);
 
 const flame =
-document.getElementById("flame");
+document.getElementById(
+"flame"
+);
 
 const wishMessage =
-document.getElementById("wishMessage");
+document.getElementById(
+"wishMessage"
+);
 
 
 let isDragging = false;
+
 let startX = 0;
+
 let currentX = 0;
+
 let candleBlown = false;
 
 
 /* =========================================
-GET MAXIMUM SWIPE DISTANCE
+MAX SWIPE
 ========================================= */
 
 function getMaxSwipe() {
@@ -290,7 +352,7 @@ swipeButton.offsetWidth -
 
 
 /* =========================================
-POINTER DOWN
+START SWIPE
 ========================================= */
 
 swipeButton.addEventListener(
@@ -303,7 +365,9 @@ return;
 
 isDragging = true;
 
-startX = event.clientX - currentX;
+startX =
+event.clientX -
+currentX;
 
 swipeButton.setPointerCapture(
 event.pointerId
@@ -314,28 +378,27 @@ event.pointerId
 
 
 /* =========================================
-POINTER MOVE
+MOVE SWIPE
 ========================================= */
 
 swipeButton.addEventListener(
 "pointermove",
 function (event) {
 
-if (!isDragging || candleBlown) {
+if (
+!isDragging ||
+candleBlown
+) {
 return;
 }
 
 let newX =
-event.clientX - startX;
+event.clientX -
+startX;
 
 const maxSwipe =
 getMaxSwipe();
 
-
-/*
-Keep button completely inside
-the swipe track.
-*/
 
 newX =
 Math.max(
@@ -346,19 +409,20 @@ maxSwipe
 )
 );
 
+
 currentX = newX;
 
+
 swipeButton.style.transform =
-"translateX(" + currentX + "px)";
+"translateX(" +
+currentX +
+"px)";
 
-
-/*
-If dragged far enough,
-blow the candle.
-*/
 
 const progress =
-currentX / maxSwipe;
+currentX /
+maxSwipe;
+
 
 if (progress >= 0.78) {
 
@@ -371,7 +435,7 @@ finishCandle();
 
 
 /* =========================================
-POINTER UP
+END SWIPE
 ========================================= */
 
 swipeButton.addEventListener(
@@ -384,10 +448,6 @@ return;
 
 isDragging = false;
 
-/*
-If candle wasn't blown,
-smoothly return the button.
-*/
 
 swipeButton.style.transition =
 "transform 0.3s ease";
@@ -397,12 +457,16 @@ currentX = 0;
 swipeButton.style.transform =
 "translateX(0)";
 
-setTimeout(function () {
+
+setTimeout(
+function () {
 
 swipeButton.style.transition =
 "";
 
-}, 300);
+},
+300
+);
 
 }
 );
@@ -433,49 +497,55 @@ candleBlown = true;
 isDragging = false;
 
 
-/*
-Push button to the end.
-*/
+/* Move swipe button to end */
 
-currentX = getMaxSwipe();
+currentX =
+getMaxSwipe();
 
 swipeButton.style.transition =
 "transform 0.25s ease";
 
 swipeButton.style.transform =
-"translateX(" + currentX + "px)";
+"translateX(" +
+currentX +
+"px)";
 
 
-/*
-Blow out flame.
-*/
+/* Blow out flame */
 
-setTimeout(function () {
+setTimeout(
+function () {
 
 flame.classList.add("off");
 
-}, 120);
+},
+120
+);
 
 
-/*
-Update text.
-*/
+/* Show wish */
 
-setTimeout(function () {
+setTimeout(
+function () {
 
-wishMessage.classList.add("show");
+wishMessage
+.classList
+.add("show");
 
-}, 550);
+},
+550
+);
 
 
-/*
-Change the instruction.
-*/
+/* Change text */
 
-setTimeout(function () {
+setTimeout(
+function () {
 
 const blowText =
-document.querySelector(".blow-text");
+document.querySelector(
+".blow-text"
+);
 
 if (blowText) {
 
@@ -484,12 +554,30 @@ blowText.textContent =
 
 }
 
-}, 400);
+},
+400
+);
+
+
+/*
+Give the candle moment to go out,
+then move to the letter.
+*/
+
+setTimeout(
+function () {
+
+showPage(page4);
+
+},
+1800
+);
+
 }
 
 
 /* =========================================
-PREVENT CONTEXT MENU ON SWIPE BUTTON
+PREVENT LONG-PRESS MENU
 ========================================= */
 
 swipeButton.addEventListener(
