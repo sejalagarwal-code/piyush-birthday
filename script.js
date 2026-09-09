@@ -1,5 +1,5 @@
 /* =========================================
-PAGE REFERENCES
+PAGE CONTROL
 ========================================= */
 
 const page1 =
@@ -15,10 +15,6 @@ const page4 =
 document.getElementById("page4");
 
 
-/* =========================================
-SHOW PAGE
-========================================= */
-
 function showPage(page) {
 
 document
@@ -29,8 +25,10 @@ p.classList.remove("active");
 
 });
 
+
 page.classList.add("active");
 }
+
 
 
 /* =========================================
@@ -41,6 +39,7 @@ const birthdayMusic =
 document.getElementById("birthdayMusic");
 
 
+
 /* =========================================
 PAGE 1 — YES
 ========================================= */
@@ -48,11 +47,13 @@ PAGE 1 — YES
 const yesButton =
 document.getElementById("yesButton");
 
+
 yesButton.addEventListener(
 "click",
 function () {
 
 birthdayMusic.volume = 0.4;
+
 
 birthdayMusic
 .play()
@@ -65,10 +66,12 @@ error
 
 });
 
+
 showPage(page2);
 
 }
 );
+
 
 
 /* =========================================
@@ -81,43 +84,50 @@ document.getElementById("noButton");
 
 function moveNoButton() {
 
-noButton.style.position = "fixed";
+noButton.style.position =
+"fixed";
+
 
 const buttonWidth =
 noButton.offsetWidth;
 
+
 const buttonHeight =
 noButton.offsetHeight;
 
+
 const padding = 25;
+
 
 const maxX =
 window.innerWidth -
 buttonWidth -
 padding;
 
+
 const maxY =
 window.innerHeight -
 buttonHeight -
 padding;
 
-const minX = padding;
-const minY = padding;
 
 const randomX =
 Math.floor(
 Math.random() *
-(maxX - minX + 1)
-) + minX;
+(maxX - padding + 1)
+) + padding;
+
 
 const randomY =
 Math.floor(
 Math.random() *
-(maxY - minY + 1)
-) + minY;
+(maxY - padding + 1)
+) + padding;
+
 
 noButton.style.left =
 randomX + "px";
+
 
 noButton.style.top =
 randomY + "px";
@@ -145,20 +155,31 @@ passive: false
 );
 
 
+
 /* =========================================
 PAGE 2 — BALLOONS
 ========================================= */
 
 const balloons =
-document.querySelectorAll(".balloon");
+document.querySelectorAll(
+".balloon"
+);
+
 
 const balloonCount =
-document.getElementById("balloonCount");
+document.getElementById(
+"balloonCount"
+);
+
 
 const specialMessage =
-document.getElementById("specialMessage");
+document.getElementById(
+"specialMessage"
+);
+
 
 let popped = 0;
+
 
 
 /* =========================================
@@ -170,59 +191,89 @@ function createPopEffect(balloon) {
 const rect =
 balloon.getBoundingClientRect();
 
+
 const centerX =
 rect.left +
 rect.width / 2;
+
 
 const centerY =
 rect.top +
 rect.height / 2;
 
+
 const effects =
-document.getElementById("effects");
+document.getElementById(
+"effects"
+);
 
 
-for (let i = 0; i < 7; i++) {
+for (
+let i = 0;
+i < 7;
+i++
+) {
 
 const heart =
-document.createElement("div");
+document.createElement(
+"div"
+);
+
 
 heart.className =
 "pop-heart";
+
 
 heart.innerHTML =
 Math.random() > 0.5
 ? "♥"
 : "♡";
 
+
 heart.style.left =
 centerX + "px";
+
 
 heart.style.top =
 centerY + "px";
 
+
 heart.style.setProperty(
 "--x",
-(Math.random() * 100 - 50) +
-"px"
+(
+Math.random() * 100 -
+50
+) + "px"
 );
+
 
 heart.style.setProperty(
 "--y",
-(Math.random() * -100 - 30) +
-"px"
+(
+Math.random() * -100 -
+30
+) + "px"
 );
 
-effects.appendChild(heart);
+
+effects.appendChild(
+heart
+);
 
 
-setTimeout(function () {
+setTimeout(
+function () {
 
 heart.remove();
 
-}, 900);
+},
+900
+);
+
 }
+
 }
+
 
 
 /* =========================================
@@ -236,12 +287,15 @@ balloon.addEventListener(
 "click",
 function () {
 
+
 if (
 balloon.classList.contains(
 "popped"
 )
 ) {
+
 return;
+
 }
 
 
@@ -260,6 +314,7 @@ balloon.classList.add(
 
 balloonCount.textContent =
 popped;
+
 
 
 if (popped === 4) {
@@ -284,14 +339,16 @@ specialMessage
 );
 
 
+
 /* =========================================
-PAGE 2 → PAGE 3
+PAGE 2 — CONTINUE
 ========================================= */
 
 const continueButton =
 document.getElementById(
 "continueButton"
 );
+
 
 continueButton.addEventListener(
 "click",
@@ -303,6 +360,7 @@ showPage(page3);
 );
 
 
+
 /* =========================================
 PAGE 3 — SWIPE
 ========================================= */
@@ -312,15 +370,18 @@ document.getElementById(
 "swipeTrack"
 );
 
+
 const swipeButton =
 document.getElementById(
 "swipeButton"
 );
 
+
 const flame =
 document.getElementById(
 "flame"
 );
+
 
 const wishMessage =
 document.getElementById(
@@ -337,9 +398,6 @@ let currentX = 0;
 let candleBlown = false;
 
 
-/* =========================================
-MAX SWIPE
-========================================= */
 
 function getMaxSwipe() {
 
@@ -348,7 +406,9 @@ swipeTrack.offsetWidth -
 swipeButton.offsetWidth -
 12
 );
+
 }
+
 
 
 /* =========================================
@@ -359,15 +419,19 @@ swipeButton.addEventListener(
 "pointerdown",
 function (event) {
 
+
 if (candleBlown) {
 return;
 }
 
+
 isDragging = true;
+
 
 startX =
 event.clientX -
 currentX;
+
 
 swipeButton.setPointerCapture(
 event.pointerId
@@ -375,6 +439,7 @@ event.pointerId
 
 }
 );
+
 
 
 /* =========================================
@@ -385,16 +450,21 @@ swipeButton.addEventListener(
 "pointermove",
 function (event) {
 
+
 if (
 !isDragging ||
 candleBlown
 ) {
+
 return;
+
 }
+
 
 let newX =
 event.clientX -
 startX;
+
 
 const maxSwipe =
 getMaxSwipe();
@@ -410,7 +480,8 @@ maxSwipe
 );
 
 
-currentX = newX;
+currentX =
+newX;
 
 
 swipeButton.style.transform =
@@ -419,12 +490,15 @@ currentX +
 "px)";
 
 
+
 const progress =
 currentX /
 maxSwipe;
 
 
-if (progress >= 0.78) {
+if (
+progress >= 0.78
+) {
 
 finishCandle();
 
@@ -432,6 +506,7 @@ finishCandle();
 
 }
 );
+
 
 
 /* =========================================
@@ -442,9 +517,11 @@ swipeButton.addEventListener(
 "pointerup",
 function () {
 
+
 if (candleBlown) {
 return;
 }
+
 
 isDragging = false;
 
@@ -452,7 +529,9 @@ isDragging = false;
 swipeButton.style.transition =
 "transform 0.3s ease";
 
+
 currentX = 0;
+
 
 swipeButton.style.transform =
 "translateX(0)";
@@ -482,28 +561,32 @@ isDragging = false;
 );
 
 
+
 /* =========================================
 BLOW CANDLE
 ========================================= */
 
 function finishCandle() {
 
+
 if (candleBlown) {
 return;
 }
 
+
 candleBlown = true;
+
 
 isDragging = false;
 
 
-/* Move swipe button to end */
-
 currentX =
 getMaxSwipe();
 
+
 swipeButton.style.transition =
 "transform 0.25s ease";
+
 
 swipeButton.style.transform =
 "translateX(" +
@@ -511,33 +594,44 @@ currentX +
 "px)";
 
 
-/* Blow out flame */
+
+/*
+Flame goes out
+*/
 
 setTimeout(
 function () {
 
-flame.classList.add("off");
+flame.classList.add(
+"off"
+);
 
 },
 120
 );
 
 
-/* Show wish */
+
+/*
+Wish message
+*/
 
 setTimeout(
 function () {
 
-wishMessage
-.classList
-.add("show");
+wishMessage.classList.add(
+"show"
+);
 
 },
-550
+500
 );
 
 
-/* Change text */
+
+/*
+Change text
+*/
 
 setTimeout(
 function () {
@@ -546,6 +640,7 @@ const blowText =
 document.querySelector(
 ".blow-text"
 );
+
 
 if (blowText) {
 
@@ -559,25 +654,262 @@ blowText.textContent =
 );
 
 
+
 /*
-Give the candle moment to go out,
-then move to the letter.
+Begin transition
 */
 
 setTimeout(
 function () {
 
+page3.classList.add(
+"leaving"
+);
+
+},
+900
+);
+
+
+
+/*
+Move to envelope
+*/
+
+setTimeout(
+function () {
+
+page3.classList.remove(
+"leaving"
+);
+
+
 showPage(page4);
 
 },
-1800
+1500
 );
 
 }
 
 
+
 /* =========================================
-PREVENT LONG-PRESS MENU
+PAGE 4 — ENVELOPE
+========================================= */
+
+const envelope =
+document.getElementById(
+"envelope"
+);
+
+
+const openEnvelope =
+document.getElementById(
+"openEnvelope"
+);
+
+
+const letterHint =
+document.getElementById(
+"letterHint"
+);
+
+
+const typedMessage =
+document.getElementById(
+"typedMessage"
+);
+
+
+let envelopeOpened = false;
+
+
+
+/* =========================================
+LETTER MESSAGE
+========================================= */
+
+const message =
+`Happy Birthday Chotu ❤️
+
+Who knew one random, unplanned coffee date would bring you into my life? 🥹
+
+Since then, you’ve filled my life with so many laughs, memories, adventures, and little moments that mean more than you know.
+
+I hope this year brings you everything you wish for and I hope I get to be beside you through all of it. ❤️
+
+More memories, more adventures, more us.
+
+Love you always`;
+
+
+
+/* =========================================
+OPEN ENVELOPE
+========================================= */
+
+function openTheEnvelope() {
+
+
+if (envelopeOpened) {
+return;
+}
+
+
+envelopeOpened = true;
+
+
+envelope.classList.add(
+"opened"
+);
+
+
+openEnvelope.classList.add(
+"hidden"
+);
+
+
+letterHint.classList.add(
+"hidden"
+);
+
+
+
+/*
+Let the envelope open and
+letter rise first.
+*/
+
+setTimeout(
+function () {
+
+startTyping();
+
+},
+1100
+);
+
+}
+
+
+
+/* Envelope itself */
+
+envelope.addEventListener(
+"click",
+openTheEnvelope
+);
+
+
+
+/* Button */
+
+openEnvelope.addEventListener(
+"click",
+openTheEnvelope
+);
+
+
+
+/* =========================================
+TYPING EFFECT
+========================================= */
+
+function startTyping() {
+
+
+typedMessage.textContent =
+"";
+
+
+let index = 0;
+
+
+
+function typeNextCharacter() {
+
+
+if (
+index >=
+message.length
+) {
+
+return;
+
+}
+
+
+const character =
+message.charAt(index);
+
+
+typedMessage.textContent +=
+character;
+
+
+index++;
+
+
+
+/*
+Normal typing speed
+*/
+
+let delay = 32;
+
+
+
+/*
+Natural pauses
+*/
+
+if (
+character === "." ||
+character === "," ||
+character === "!"
+) {
+
+delay = 130;
+
+}
+
+
+if (
+character === "?"
+) {
+
+delay = 180;
+
+}
+
+
+if (
+character === "\n"
+) {
+
+delay = 300;
+
+}
+
+
+setTimeout(
+typeNextCharacter,
+delay
+);
+
+}
+
+
+
+typeNextCharacter();
+
+}
+
+
+
+/* =========================================
+PREVENT CONTEXT MENU
 ========================================= */
 
 swipeButton.addEventListener(
