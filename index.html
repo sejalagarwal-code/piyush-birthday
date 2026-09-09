@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
 <title>Happy Birthday Piyush ❤️</title>
 
@@ -11,211 +15,213 @@
 
 <body>
 
-<!-- ================= MUSIC ================= -->
+<!-- =====================================
+PAGE 1
+====================================== -->
 
-<audio id="birthdayMusic" loop preload="auto">
-<source src="birthday-music.mp3" type="audio/mpeg">
-</audio>
+<section id="page1" class="page page-one active">
+
+<!-- Background decorations -->
+<div class="floating-heart heart-one">♡</div>
+<div class="floating-heart heart-two">♥</div>
+<div class="floating-heart heart-three">♡</div>
+<div class="floating-heart heart-four">♥</div>
+<div class="floating-heart heart-five">♡</div>
+<div class="floating-heart heart-six">♥</div>
 
 
-<!-- ================= PAGE 1 ================= -->
+<!-- Main card -->
 
-<section class="page active" id="page1">
+<div class="birthday-card">
 
-<div class="heart-bg">♡</div>
+<div class="eyebrow">
+A LITTLE SURPRISE FOR YOU
+</div>
 
-<div class="card">
 
-<div class="small-heart">♥</div>
+<div class="heart-badge">
+♥
+</div>
+
 
 <h1>
-Happy Birthday,<br>
-Piyush ❤️
+Happy Birthday,
+<br>
+<span>Piyush</span> ❤️
 </h1>
 
-<p>
-Something special is waiting for you...
+
+<div class="ornament">
+<i></i>
+<span>✦</span>
+<i></i>
+</div>
+
+
+<p class="question">
+Are you excited for
+<br>
+<em>what's next?</em>
 </p>
 
-<h2>
-Are you excited for what's next?
-</h2>
 
 <div class="buttons">
 
-<button id="yesButton" class="yes-btn">
+<button
+id="yesButton"
+class="yes-button"
+type="button"
+>
 YES ❤️
 </button>
 
-<button id="noButton" class="no-btn">
-NO 🙈
+
+<button
+id="noButton"
+class="no-button"
+type="button"
+>
+NO 😏
 </button>
 
 </div>
+
+
+<p class="choose-text">
+Choose wisely...
+</p>
 
 </div>
 
 </section>
 
 
-<!-- ================= PAGE 2 ================= -->
 
-<section class="page" id="page2">
+<!-- =====================================
+PAGE 2
+====================================== -->
 
-<div class="card balloon-card">
+<section id="page2" class="page page-two">
 
-<p class="step">
-A little challenge for you 🎈
+<!-- Decorative background -->
+
+<div class="background-glow glow-one"></div>
+<div class="background-glow glow-two"></div>
+
+<div class="floating-heart page-two-heart heart-a">♡</div>
+<div class="floating-heart page-two-heart heart-b">♥</div>
+<div class="floating-heart page-two-heart heart-c">♡</div>
+
+
+<div class="page-two-content">
+
+<p class="eyebrow">
+JUST FOR YOU
 </p>
 
-<h1>
-Pop all 4 balloons
-</h1>
-
-<p class="subtext">
-Tap each balloon to see what's waiting for you...
-</p>
-
-
-<div class="balloon-area">
-
-<button
-class="balloon balloon1"
-aria-label="Pop balloon 1">
-<span>♥</span>
-</button>
-
-<button
-class="balloon balloon2"
-aria-label="Pop balloon 2">
-<span>★</span>
-</button>
-
-<button
-class="balloon balloon3"
-aria-label="Pop balloon 3">
-<span>♥</span>
-</button>
-
-<button
-class="balloon balloon4"
-aria-label="Pop balloon 4">
-<span>★</span>
-</button>
-
-</div>
-
-
-<div id="balloonCount" class="balloon-count">
-0 / 4 popped
-</div>
-
-
-<!-- THIS IS HIDDEN UNTIL ALL 4 ARE POPPED -->
-
-<div id="specialMessage" class="special-message">
-
-<div class="sparkle">
-✨
-</div>
 
 <h2>
-You are so special ❤️
+Pop all 4
+<br>
+<span>balloons</span> 🎈
 </h2>
 
-<p>
-And there's so much more I want to show you...
-</p>
 
-</div>
-
-</div>
-
-
-<div id="confetti"></div>
-
-</section>
-
-
-<!-- ================= PAGE 3 ================= -->
-
-<section class="page" id="page3">
-
-<div class="card candle-card">
-
-<p class="step">
-One more little thing... 🥹
-</p>
-
-<h1>
-Make a wish ✨
-</h1>
-
-<p class="subtext">
-Blow out the candle and make your birthday wish.
+<p class="instruction">
+Tap each balloon
 </p>
 
 
-<div class="cake-scene">
-
-<div class="cake">
-
-<div class="candle">
+<!-- Message stays hidden until all balloons are popped -->
 
 <div
-class="flame"
-id="flame">
-🔥
-</div>
+id="specialMessage"
+class="special-message"
+>
 
-<div class="wick"></div>
+<div>You are</div>
 
-<div class="candle-body"></div>
+<strong>so special</strong>
 
-</div>
-
-
-<div class="cake-top"></div>
-
-
-<div class="cake-body">
-
-<div class="cream-line"></div>
-
-<div class="cream-line second"></div>
-
+<div class="message-heart">
+❤️
 </div>
 
 </div>
 
-</div>
 
+<!-- Balloons -->
+
+<div
+id="balloonArea"
+class="balloon-area"
+>
 
 <button
-id="blowButton"
-class="main-button">
-
-Tap to blow 💨
-
+class="balloon balloon-one"
+type="button"
+aria-label="Pop balloon 1"
+>
+<span class="shine"></span>
+<span class="knot"></span>
 </button>
 
 
+<button
+class="balloon balloon-two"
+type="button"
+aria-label="Pop balloon 2"
+>
+<span class="shine"></span>
+<span class="knot"></span>
+</button>
+
+
+<button
+class="balloon balloon-three"
+type="button"
+aria-label="Pop balloon 3"
+>
+<span class="shine"></span>
+<span class="knot"></span>
+</button>
+
+
+<button
+class="balloon balloon-four"
+type="button"
+aria-label="Pop balloon 4"
+>
+<span class="shine"></span>
+<span class="knot"></span>
+</button>
+
+</div>
+
+
+<div class="balloon-counter">
+<span id="balloonCount">0</span>
+<span class="counter-slash">/</span>
+<span>4</span>
+</div>
+
+</div>
+
+
+<!-- Pop effects -->
+
 <div
-id="wishText"
-class="wish-text">
-
-Make your wish... ❤️
-
-</div>
-
-</div>
+id="effects"
+class="effects"
+></div>
 
 </section>
 
 
-<!-- ================= JAVASCRIPT ================= -->
 
-<script src="script.js?v=40"></script>
+<!-- JavaScript -->
+
+<script src="script.js"></script>
 
 </body>
 </html>
