@@ -8,11 +8,14 @@ const page2 = document.getElementById("page2");
 const yesButton = document.getElementById("yesButton");
 const noButton = document.getElementById("noButton");
 
-const birthdayMusic = document.getElementById("birthdayMusic");
+const birthdayMusic =
+document.getElementById("birthdayMusic");
 
-const balloons = document.querySelectorAll(".balloon");
+const balloons =
+document.querySelectorAll(".balloon");
 
-const balloonCount = document.getElementById("balloonCount");
+const balloonCount =
+document.getElementById("balloonCount");
 
 const specialMessage =
 document.getElementById("specialMessage");
@@ -40,18 +43,25 @@ page.classList.add("active");
 
 /* =========================
 YES BUTTON
-START MUSIC + PAGE 2
+START REAL MUSIC
 ========================= */
 
-yesButton.addEventListener("click", async () => {
+yesButton.addEventListener("click", function () {
+
+birthdayMusic.currentTime = 0;
 
 birthdayMusic.volume = 0.4;
 
-try {
-await birthdayMusic.play();
-} catch (error) {
-console.log("Music could not start:", error);
-}
+birthdayMusic.play()
+.then(() => {
+console.log("Birthday music started");
+})
+.catch((error) => {
+console.log(
+"Music error:",
+error
+);
+});
 
 showPage(page2);
 });
@@ -59,52 +69,58 @@ showPage(page2);
 
 /* =========================
 NO BUTTON
-KEEP INSIDE SCREEN
+NEVER LEAVE SCREEN
 ========================= */
 
 function moveNoButton() {
 
-const button = noButton;
+const buttonWidth =
+noButton.offsetWidth;
 
-const padding = 20;
+const buttonHeight =
+noButton.offsetHeight;
 
-const buttonWidth = button.offsetWidth;
-const buttonHeight = button.offsetHeight;
+const padding = 25;
+
 
 const maxX =
+Math.max(
+padding,
 window.innerWidth -
 buttonWidth -
-padding;
+padding
+);
+
 
 const maxY =
+Math.max(
+padding,
 window.innerHeight -
 buttonHeight -
-padding;
-
-const minX = padding;
-const minY = padding;
+padding
+);
 
 
 const randomX =
 Math.floor(
 Math.random() *
-(maxX - minX + 1)
-) + minX;
+(maxX - padding + 1)
+) + padding;
 
 
 const randomY =
 Math.floor(
 Math.random() *
-(maxY - minY + 1)
-) + minY;
+(maxY - padding + 1)
+) + padding;
 
 
-button.style.position = "fixed";
+noButton.style.position = "fixed";
 
-button.style.left =
+noButton.style.left =
 randomX + "px";
 
-button.style.top =
+noButton.style.top =
 randomY + "px";
 }
 
@@ -121,7 +137,7 @@ moveNoButton
 
 noButton.addEventListener(
 "touchstart",
-(event) => {
+function (event) {
 
 event.preventDefault();
 
@@ -130,23 +146,6 @@ moveNoButton();
 },
 {
 passive: false
-}
-);
-
-
-/* Also handle pointer */
-
-noButton.addEventListener(
-"pointerdown",
-(event) => {
-
-if (event.pointerType === "touch") {
-
-event.preventDefault();
-
-moveNoButton();
-}
-
 }
 );
 
@@ -160,44 +159,50 @@ let popped = 0;
 
 balloons.forEach((balloon) => {
 
-balloon.addEventListener("click", () => {
+balloon.addEventListener(
+"click",
+function () {
 
-/* Don't pop twice */
-
-if (balloon.classList.contains("popped")) {
+if (
+balloon.classList.contains(
+"popped"
+)
+) {
 return;
 }
 
 
-/* Pop balloon */
+balloon.classList.add(
+"popped"
+);
 
-balloon.classList.add("popped");
 
 popped++;
 
-balloonCount.textContent = popped;
 
+balloonCount.textContent =
+popped;
 
-/* Create pop effect */
 
 createPopEffect(balloon);
 
 
-/* =========================
-ONLY AFTER ALL 4
-========================= */
+/* Show message ONLY after all 4 */
 
 if (popped === 4) {
 
 setTimeout(() => {
 
-specialMessage.classList.add("show");
+specialMessage.classList.add(
+"show"
+);
 
 }, 400);
 
 }
 
-});
+}
+);
 
 });
 
@@ -211,11 +216,15 @@ function createPopEffect(balloon) {
 const rect =
 balloon.getBoundingClientRect();
 
+
 const centerX =
-rect.left + rect.width / 2;
+rect.left +
+rect.width / 2;
+
 
 const centerY =
-rect.top + rect.height / 2;
+rect.top +
+rect.height / 2;
 
 
 const emojis = [
@@ -229,9 +238,14 @@ const emojis = [
 for (let i = 0; i < 8; i++) {
 
 const heart =
-document.createElement("span");
+document.createElement(
+"span"
+);
 
-heart.className = "pop-heart";
+
+heart.className =
+"pop-heart";
+
 
 heart.textContent =
 emojis[
@@ -245,27 +259,38 @@ emojis.length
 heart.style.left =
 centerX + "px";
 
+
 heart.style.top =
 centerY + "px";
 
 
 heart.style.setProperty(
 "--x",
-(Math.random() * 160 - 80) + "px"
+(
+Math.random() * 160 -
+80
+) + "px"
 );
 
 
 heart.style.setProperty(
 "--y",
-(Math.random() * 160 - 80) + "px"
+(
+Math.random() * 160 -
+80
+) + "px"
 );
 
 
-effects.appendChild(heart);
+effects.appendChild(
+heart
+);
 
 
 setTimeout(() => {
+
 heart.remove();
+
 }, 900);
 
 }
@@ -274,15 +299,20 @@ heart.remove();
 
 
 /* =========================
-CONTINUE BUTTON
+CONTINUE
 ========================= */
 
 /*
-Page 3 will be added here later.
+Page 3 will be connected here later.
 */
 
-continueButton.addEventListener("click", () => {
+continueButton.addEventListener(
+"click",
+function () {
 
-alert("Page 3 coming next ❤️");
+alert(
+"Page 3 coming next ❤️"
+);
 
-});
+}
+);
