@@ -1,230 +1,50 @@
 /* =====================================================
-PAGE REFERENCES
+PIYUSH BIRTHDAY WEBSITE
+PAGE 1 → PAGE 2 → PAGE 3
 ===================================================== */
-
-const page1 =
-document.getElementById("page1");
-
-const page2 =
-document.getElementById("page2");
-
-const page3 =
-document.getElementById("page3");
-
-const page4 =
-document.getElementById("page4");
 
 
 /* =====================================================
-PAGE NAVIGATION
+PAGE SWITCHING
 ===================================================== */
 
-let currentPage = page1;
+function showPage(number) {
+
+const pages =
+document.querySelectorAll(".page");
+
+pages.forEach(function(page) {
+
+page.classList.remove("active");
+
+});
 
 
-function showPage(nextPage) {
+const target =
+document.getElementById("page" + number);
 
-currentPage.classList.remove("active");
+if (target) {
 
-nextPage.classList.add("active");
+target.classList.add("active");
 
-currentPage = nextPage;
+}
 
 }
 
 
 /* =====================================================
-HAPPY BIRTHDAY MUSIC
+MUSIC
 ===================================================== */
 
-/*
-We use the browser's Web Audio system instead of
-requiring an MP3 file.
-
-Music starts when YES is clicked because that is a
-user interaction, which allows the browser to play it.
-*/
-
-let audioContext = null;
-
-let musicStarted = false;
-
-let musicTimer = null;
-
-let musicStep = 0;
-
-
-/* Happy Birthday melody */
-
-const melody = [
-
-[261.63, 0.35],
-[261.63, 0.35],
-[293.66, 0.7],
-[261.63, 0.7],
-[349.23, 0.7],
-[329.63, 1.2],
-
-[261.63, 0.35],
-[261.63, 0.35],
-[293.66, 0.7],
-[261.63, 0.7],
-[392.00, 0.7],
-[349.23, 1.2],
-
-[261.63, 0.35],
-[261.63, 0.35],
-[523.25, 0.7],
-[440.00, 0.7],
-[349.23, 0.7],
-[329.63, 0.7],
-[293.66, 1.2],
-
-[466.16, 0.35],
-[466.16, 0.35],
-[440.00, 0.7],
-[349.23, 0.7],
-[392.00, 0.7],
-[349.23, 1.2]
-
-];
-
-
-function playNote(frequency, duration) {
-
-if (!audioContext) return;
-
-
-const oscillator =
-audioContext.createOscillator();
-
-const gain =
-audioContext.createGain();
-
-
-oscillator.type = "sine";
-
-oscillator.frequency.value =
-frequency;
-
-
-oscillator.connect(gain);
-
-gain.connect(
-audioContext.destination
-);
-
-
-const now =
-audioContext.currentTime;
-
-
-gain.gain.setValueAtTime(
-0,
-now
-);
-
-gain.gain.linearRampToValueAtTime(
-0.12,
-now + 0.03
-);
-
-gain.gain.setValueAtTime(
-0.12,
-now + duration - 0.08
-);
-
-gain.gain.linearRampToValueAtTime(
-0,
-now + duration
-);
-
-
-oscillator.start(now);
-
-oscillator.stop(
-now + duration + 0.03
-);
-
-}
-
-
-function playNextNote() {
-
-if (!musicStarted) return;
-
-
-const note =
-melody[musicStep];
-
-
-playNote(
-note[0],
-note[1]
-);
-
-
-musicStep++;
-
-
-if (musicStep >= melody.length) {
-
-musicStep = 0;
-
-}
+const music =
+document.getElementById("birthdayMusic");
 
 
 /*
-Schedule the next note.
-
-The short gap keeps the melody sounding
-continuous instead of creating silence.
+Keep volume comfortable.
 */
 
-musicTimer =
-setTimeout(
-playNextNote,
-note[1] * 1000 + 70
-);
-
-}
-
-
-function startMusic() {
-
-if (musicStarted) return;
-
-
-try {
-
-audioContext =
-new (
-window.AudioContext ||
-window.webkitAudioContext
-)();
-
-
-audioContext.resume();
-
-
-musicStarted = true;
-
-musicStep = 0;
-
-playNextNote();
-
-}
-
-catch (error) {
-
-console.log(
-"Music could not start:",
-error
-);
-
-}
-
-}
+music.volume = 0.65;
 
 
 /* =====================================================
@@ -235,30 +55,48 @@ const yesButton =
 document.getElementById("yesButton");
 
 
-yesButton.addEventListener(
-"click",
-function() {
+yesButton.addEventListener("click", function() {
 
 /*
 IMPORTANT:
-Music starts from the YES tap.
+
+The music starts INSIDE the user's
+YES click.
+
+This is required by browser autoplay rules.
 */
 
-startMusic();
+music.currentTime = 0;
+
+music.play()
+.then(function() {
+
+console.log(
+"Birthday music started successfully 🎵"
+);
+
+})
+.catch(function(error) {
+
+console.log(
+"Music playback error:",
+error
+);
+
+});
 
 
 /*
-Go directly to Page 2.
+Move immediately to Page 2.
 */
 
-showPage(page2);
+showPage(2);
 
-}
-);
+});
 
 
 /* =====================================================
-PAGE 1 — NO
+PAGE 1 — NO BUTTON
 ===================================================== */
 
 const noButton =
@@ -267,57 +105,64 @@ document.getElementById("noButton");
 
 function moveNoButton() {
 
-const width =
+const buttonWidth =
 noButton.offsetWidth;
 
-const height =
+const buttonHeight =
 noButton.offsetHeight;
 
 
-const margin = 20;
-
+/*
+Keep the button completely
+inside the screen.
+*/
 
 const maxX =
+Math.max(
+10,
 window.innerWidth -
-width -
-margin;
-
+buttonWidth -
+10
+);
 
 const maxY =
+Math.max(
+10,
 window.innerHeight -
-height -
-margin;
-
-
-const x =
-margin +
-Math.random() *
-Math.max(
-1,
-maxX - margin
+buttonHeight -
+10
 );
 
 
-const y =
-margin +
+const randomX =
+10 +
 Math.random() *
-Math.max(
-1,
-maxY - margin
-);
+(maxX - 10);
+
+const randomY =
+10 +
+Math.random() *
+(maxY - 10);
 
 
 noButton.style.position =
 "fixed";
 
 noButton.style.left =
-x + "px";
+randomX + "px";
 
 noButton.style.top =
-y + "px";
+randomY + "px";
+
+noButton.style.zIndex =
+"9999";
 
 }
 
+
+/*
+Desktop
+*/
 
 noButton.addEventListener(
 "mouseenter",
@@ -325,23 +170,12 @@ moveNoButton
 );
 
 
+/*
+Mobile
+*/
+
 noButton.addEventListener(
 "touchstart",
-function(event) {
-
-event.preventDefault();
-
-moveNoButton();
-
-},
-{
-passive: false
-}
-);
-
-
-noButton.addEventListener(
-"pointerdown",
 function(event) {
 
 event.preventDefault();
@@ -357,45 +191,40 @@ PAGE 2 — BALLOONS
 ===================================================== */
 
 const balloons =
-document.querySelectorAll(
-".balloon"
-);
-
-
-const balloonArea =
-document.getElementById(
-"balloonArea"
-);
+document.querySelectorAll(".balloon");
 
 
 const balloonCount =
-document.getElementById(
-"balloonCount"
-);
+document.getElementById("balloonCount");
 
 
-const confetti =
-document.getElementById(
-"confetti"
-);
+const specialMessage =
+document.getElementById("specialMessage");
 
 
-let popped = 0;
+let poppedBalloons = 0;
+
+let finishedBalloons = false;
 
 
-balloons.forEach(
-function(balloon) {
+/*
+Add click event to all 4 balloons.
+*/
 
+balloons.forEach(function(balloon) {
 
 balloon.addEventListener(
 "click",
 function() {
 
 
+/*
+Don't allow a popped balloon
+to be counted again.
+*/
+
 if (
-balloon.classList.contains(
-"popped"
-)
+balloon.classList.contains("popped")
 ) {
 
 return;
@@ -403,80 +232,103 @@ return;
 }
 
 
-balloon.classList.add(
-"popped"
-);
+/*
+Pop it.
+*/
+
+balloon.classList.add("popped");
 
 
-popped++;
+/*
+Increase count.
+*/
+
+poppedBalloons++;
 
 
 balloonCount.textContent =
-popped;
-
-
-createPopConfetti(
-balloon
-);
+poppedBalloons + " / 4 popped";
 
 
 /*
-
-IMPORTANT:
-
-The special message does NOT
-appear after 1, 2 or 3 balloons.
-
-It appears ONLY after balloon 4.
-
+Pop confetti.
 */
 
-if (popped === 4) {
-
-balloonArea.classList.add(
-"all-popped"
-);
+createPopConfetti(balloon);
 
 
 /*
-Give the final balloon time
-to finish popping before
-showing the message.
+=====================================
+CRITICAL:
+
+NOTHING happens to the special
+message until ALL FOUR balloons
+have been popped.
+=====================================
+*/
+
+if (
+poppedBalloons === 4 &&
+!finishedBalloons
+) {
+
+finishedBalloons = true;
+
+
+/*
+Wait for the final balloon
+pop animation.
 */
 
 setTimeout(
 function() {
 
+
 /*
-Message is now visible
-through CSS.
+NOW show the message.
 */
+
+specialMessage.classList.add(
+"show"
+);
+
+
+/*
+Celebrate.
+*/
+
+createBigConfetti();
+
+
+/*
+Keep the message visible
+before going to Page 3.
+*/
+
+setTimeout(
+function() {
+
+showPage(3);
 
 },
-500
+3000
 );
 
 
-/*
-Stay on Page 2.
-
-We will connect Page 3
-after the message has been
-shown as part of the next
-build step.
-*/
+},
+450
+);
 
 }
 
 }
 );
 
-}
-);
+});
 
 
 /* =====================================================
-BALLOON POP EFFECT
+BALLOON POP CONFETTI
 ===================================================== */
 
 function createPopConfetti(balloon) {
@@ -485,23 +337,8 @@ const rect =
 balloon.getBoundingClientRect();
 
 
-const centerX =
-rect.left +
-rect.width / 2;
-
-
-const centerY =
-rect.top +
-rect.height / 2;
-
-
-const pieces = [
-"💗",
-"💕",
-"✨",
-"♥",
-"💖"
-];
+const container =
+document.getElementById("confetti");
 
 
 for (
@@ -510,55 +347,48 @@ i < 14;
 i++
 ) {
 
-
 const piece =
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 
 piece.className =
 "confetti-piece";
 
 
-piece.textContent =
-pieces[
+piece.style.left =
+(
+rect.left +
+rect.width / 2
+) + "px";
+
+
+piece.style.top =
+(
+rect.top +
+rect.height / 2
+) + "px";
+
+
+piece.style.background =
+[
+"#e889a7",
+"#b978a4",
+"#f4b6c8",
+"#d98ca7"
+][
 Math.floor(
-Math.random() *
-pieces.length
+Math.random() * 4
 )
 ];
 
 
-piece.style.left =
-centerX + "px";
+piece.style.transform =
+"rotate(" +
+Math.random() * 360 +
+"deg)";
 
 
-piece.style.top =
-centerY + "px";
-
-
-piece.style.setProperty(
-"--x",
-(
-Math.random() * 180 -
-90
-) + "px"
-);
-
-
-piece.style.setProperty(
-"--y",
-(
-Math.random() * 180 -
-90
-) + "px"
-);
-
-
-confetti.appendChild(
-piece
-);
+container.appendChild(piece);
 
 
 setTimeout(
@@ -567,7 +397,79 @@ function() {
 piece.remove();
 
 },
-1100
+2000
+);
+
+}
+
+}
+
+
+/* =====================================================
+BIG CONFETTI
+===================================================== */
+
+function createBigConfetti() {
+
+const container =
+document.getElementById("confetti");
+
+
+for (
+let i = 0;
+i < 55;
+i++
+) {
+
+const piece =
+document.createElement("div");
+
+
+piece.className =
+"confetti-piece";
+
+
+piece.style.left =
+Math.random() * 100 +
+"vw";
+
+
+piece.style.top =
+Math.random() * 30 +
+"vh";
+
+
+piece.style.background =
+[
+"#e889a7",
+"#b978a4",
+"#f4b6c8",
+"#d98ca7",
+"#efc5d2"
+][
+Math.floor(
+Math.random() * 5
+)
+];
+
+
+piece.style.animationDuration =
+(
+1.5 +
+Math.random() * 1.5
+) + "s";
+
+
+container.appendChild(piece);
+
+
+setTimeout(
+function() {
+
+piece.remove();
+
+},
+3500
 );
 
 }
@@ -580,24 +482,19 @@ PAGE 3 — BLOW CANDLE
 ===================================================== */
 
 const blowButton =
-document.getElementById(
-"blowButton"
-);
+document.getElementById("blowButton");
 
 
-const candleScene =
-document.querySelector(
-".candle-scene"
-);
+const flame =
+document.getElementById("flame");
 
 
 const wishText =
-document.getElementById(
-"wishText"
-);
+document.getElementById("wishText");
 
 
-let candleBlown = false;
+const page3Card =
+document.querySelector(".page3-card");
 
 
 blowButton.addEventListener(
@@ -605,58 +502,53 @@ blowButton.addEventListener(
 function() {
 
 
-if (candleBlown) {
-return;
-}
-
-
-candleBlown = true;
-
-
 /*
-Put out flame.
+Put out the flame.
 */
 
-candleScene.classList.add(
-"blown"
-);
+flame.style.opacity = "0";
+
+flame.style.transform =
+"scale(0)";
 
 
 /*
-Change the message.
+Hide button.
+*/
+
+blowButton.style.display =
+"none";
+
+
+/*
+Show message.
 */
 
 wishText.textContent =
-"Wish made! ✨❤️";
+"Wish made? ✨ ❤️";
 
 
 wishText.classList.add(
-"blow"
+"show"
 );
 
 
 /*
-Prevent another tap.
+Small celebration.
 */
 
-blowButton.classList.add(
-"hidden"
-);
+createBigConfetti();
 
 
 /*
-Page 4 will be connected
-after the candle animation.
+PAGE 3 IS NOW COMPLETE.
+
+We are intentionally NOT moving
+to Page 4 yet.
+
+We'll build Page 4 after you
+confirm Pages 1–3 work.
 */
-
-setTimeout(
-function() {
-
-showPage(page4);
-
-},
-1500
-);
 
 }
 );
