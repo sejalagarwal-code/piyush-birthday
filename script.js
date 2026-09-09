@@ -1,78 +1,76 @@
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
+
 const yesButton = document.getElementById("yesButton");
 const noButton = document.getElementById("noButton");
+
+
+// ========================================
+// CHANGE PAGE
+// ========================================
+
+function showPage(page) {
+
+document.querySelectorAll(".page").forEach(function(item) {
+item.classList.remove("active");
+});
+
+page.classList.add("active");
+}
 
 
 // ========================================
 // YES BUTTON
 // ========================================
 
-yesButton.addEventListener("click", function () {
+yesButton.addEventListener("click", function() {
 
-// For now, this confirms the button works.
-// We will replace this with the balloon page.
-alert("YES! ❤️");
+showPage(page2);
 
 });
 
 
 // ========================================
-// NO BUTTON — MOVE AWAY
+// NO BUTTON
 // ========================================
 
 function escapeNoButton() {
 
-// Make the button independent of the card
-noButton.style.position = "fixed";
+const width = noButton.offsetWidth;
+const height = noButton.offsetHeight;
 
-// Get its size
-const buttonWidth = noButton.offsetWidth;
-const buttonHeight = noButton.offsetHeight;
-
-// Keep it safely inside the screen
 const margin = 20;
 
-const availableWidth =
-window.innerWidth -
-buttonWidth -
-margin * 2;
+const maxX =
+window.innerWidth - width - margin;
 
-const availableHeight =
-window.innerHeight -
-buttonHeight -
-margin * 2;
+const maxY =
+window.innerHeight - height - margin;
 
-// Random position
-const randomX =
+const x =
 margin +
-Math.random() * availableWidth;
+Math.random() * Math.max(1, maxX - margin);
 
-const randomY =
+const y =
 margin +
-Math.random() * availableHeight;
+Math.random() * Math.max(1, maxY - margin);
 
-noButton.style.left = randomX + "px";
-noButton.style.top = randomY + "px";
+noButton.style.position = "fixed";
+
+noButton.style.left = x + "px";
+
+noButton.style.top = y + "px";
 
 }
-
-
-// ========================================
-// COMPUTER
-// ========================================
 
 noButton.addEventListener(
 "mouseenter",
 escapeNoButton
 );
 
-
-// ========================================
-// PHONE
-// ========================================
-
 noButton.addEventListener(
 "touchstart",
-function (event) {
+function(event) {
 
 event.preventDefault();
 
@@ -82,14 +80,9 @@ escapeNoButton();
 { passive: false }
 );
 
-
-// ========================================
-// PHONE / TABLET POINTER
-// ========================================
-
 noButton.addEventListener(
 "pointerdown",
-function (event) {
+function(event) {
 
 event.preventDefault();
 
@@ -97,3 +90,137 @@ escapeNoButton();
 
 }
 );
+
+
+// ========================================
+// PAGE 2 — BALLOONS
+// ========================================
+
+const balloons =
+document.querySelectorAll(".balloon");
+
+const balloonCount =
+document.getElementById("balloonCount");
+
+const balloonArea =
+document.querySelector(".balloon-area");
+
+const confetti =
+document.getElementById("confetti");
+
+let popped = 0;
+
+
+// ========================================
+// BALLOON POP
+// ========================================
+
+balloons.forEach(function(balloon) {
+
+balloon.addEventListener("click", function() {
+
+if (balloon.classList.contains("popped")) {
+return;
+}
+
+balloon.classList.add("popped");
+
+popped++;
+
+balloonCount.textContent = popped;
+
+balloonArea.classList.add("has-pops");
+
+createPopConfetti(balloon);
+
+
+// All four popped
+if (popped === 4) {
+
+setTimeout(function() {
+
+// Page 3 will be connected here
+// after we build the candle scene.
+
+alert("All balloons popped! ❤️");
+
+}, 900);
+
+}
+
+});
+
+});
+
+
+// ========================================
+// POP CONFETTI
+// ========================================
+
+function createPopConfetti(balloon) {
+
+const rect =
+balloon.getBoundingClientRect();
+
+const centerX =
+rect.left + rect.width / 2;
+
+const centerY =
+rect.top + rect.height / 2;
+
+
+const pieces = [
+"💗",
+"💕",
+"✨",
+"♥",
+"💖"
+];
+
+
+for (let i = 0; i < 12; i++) {
+
+const piece =
+document.createElement("div");
+
+piece.className =
+"confetti-piece";
+
+piece.textContent =
+pieces[
+Math.floor(
+Math.random() * pieces.length
+)
+];
+
+
+piece.style.left =
+centerX + "px";
+
+piece.style.top =
+centerY + "px";
+
+
+piece.style.setProperty(
+"--x",
+(Math.random() * 180 - 90) + "px"
+);
+
+piece.style.setProperty(
+"--y",
+(Math.random() * 180 - 90) + "px"
+);
+
+
+confetti.appendChild(piece);
+
+
+setTimeout(function() {
+
+piece.remove();
+
+}, 1100);
+
+}
+
+}
