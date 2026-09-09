@@ -1,15 +1,39 @@
-/* =========================
-GET ELEMENTS
-========================= */
+/* =========================================
+PAGES
+========================================= */
 
-const page1 = document.getElementById("page1");
-const page2 = document.getElementById("page2");
+const page1 =
+document.getElementById("page1");
 
-const yesButton = document.getElementById("yesButton");
-const noButton = document.getElementById("noButton");
+const page2 =
+document.getElementById("page2");
+
+const page3 =
+document.getElementById("page3");
+
+
+/* =========================================
+PAGE 1 BUTTONS
+========================================= */
+
+const yesButton =
+document.getElementById("yesButton");
+
+const noButton =
+document.getElementById("noButton");
+
+
+/* =========================================
+MUSIC
+========================================= */
 
 const birthdayMusic =
 document.getElementById("birthdayMusic");
+
+
+/* =========================================
+PAGE 2
+========================================= */
 
 const balloons =
 document.querySelectorAll(".balloon");
@@ -27,52 +51,81 @@ const effects =
 document.getElementById("effects");
 
 
-/* =========================
-PAGE SWITCHING
-========================= */
+/* =========================================
+CHANGE PAGE
+========================================= */
 
 function showPage(page) {
 
-document.querySelectorAll(".page").forEach((p) => {
-p.classList.remove("active");
+document
+.querySelectorAll(".page")
+.forEach(function (item) {
+
+item.classList.remove("active");
+
 });
 
 page.classList.add("active");
 }
 
 
-/* =========================
+/* =========================================
 YES BUTTON
-START REAL MUSIC
-========================= */
+MUSIC + PAGE 2
+========================================= */
 
-yesButton.addEventListener("click", function () {
+yesButton.addEventListener(
+"click",
+function () {
 
-birthdayMusic.currentTime = 0;
+/*
+* Start the actual MP3 file.
+*/
 
 birthdayMusic.volume = 0.4;
 
 birthdayMusic.play()
-.then(() => {
-console.log("Birthday music started");
-})
-.catch((error) => {
+.then(function () {
+
 console.log(
-"Music error:",
+"Birthday music started"
+);
+
+})
+.catch(function (error) {
+
+console.log(
+"Music could not start:",
 error
 );
+
 });
+
+
+/*
+* Move to Page 2
+*/
 
 showPage(page2);
-});
+
+}
+);
 
 
-/* =========================
+/* =========================================
 NO BUTTON
-NEVER LEAVE SCREEN
-========================= */
+STAYS INSIDE SCREEN
+========================================= */
 
 function moveNoButton() {
+
+/*
+* Change it to fixed positioning
+* so it can move anywhere on screen.
+*/
+
+noButton.style.position = "fixed";
+
 
 const buttonWidth =
 noButton.offsetWidth;
@@ -80,26 +133,34 @@ noButton.offsetWidth;
 const buttonHeight =
 noButton.offsetHeight;
 
+
+/*
+* Safe distance from every edge.
+*/
+
 const padding = 25;
 
 
+/*
+* Calculate the maximum possible
+* position while keeping the
+* ENTIRE button visible.
+*/
+
 const maxX =
-Math.max(
-padding,
 window.innerWidth -
 buttonWidth -
-padding
-);
-
+padding;
 
 const maxY =
-Math.max(
-padding,
 window.innerHeight -
 buttonHeight -
-padding
-);
+padding;
 
+
+/*
+* Generate random position.
+*/
 
 const randomX =
 Math.floor(
@@ -107,15 +168,12 @@ Math.random() *
 (maxX - padding + 1)
 ) + padding;
 
-
 const randomY =
 Math.floor(
 Math.random() *
 (maxY - padding + 1)
 ) + padding;
 
-
-noButton.style.position = "fixed";
 
 noButton.style.left =
 randomX + "px";
@@ -150,18 +208,24 @@ passive: false
 );
 
 
-/* =========================
+/* =========================================
 BALLOONS
-========================= */
+========================================= */
 
 let popped = 0;
 
 
-balloons.forEach((balloon) => {
+balloons.forEach(
+function (balloon) {
 
 balloon.addEventListener(
 "click",
 function () {
+
+/*
+* Prevent double clicking
+* the same balloon.
+*/
 
 if (
 balloon.classList.contains(
@@ -172,6 +236,10 @@ return;
 }
 
 
+/*
+* Pop it.
+*/
+
 balloon.classList.add(
 "popped"
 );
@@ -180,36 +248,53 @@ balloon.classList.add(
 popped++;
 
 
+/*
+* Update counter.
+*/
+
 balloonCount.textContent =
 popped;
 
 
-createPopEffect(balloon);
+/*
+* Little heart burst.
+*/
+
+createPopEffect(
+balloon
+);
 
 
-/* Show message ONLY after all 4 */
+/*
+* ONLY show the message
+* after ALL FOUR balloons.
+*/
 
 if (popped === 4) {
 
-setTimeout(() => {
+setTimeout(
+function () {
 
-specialMessage.classList.add(
-"show"
+specialMessage
+.classList
+.add("show");
+
+},
+450
 );
-
-}, 400);
 
 }
 
 }
 );
 
-});
+}
+);
 
 
-/* =========================
+/* =========================================
 POP EFFECT
-========================= */
+========================================= */
 
 function createPopEffect(balloon) {
 
@@ -235,7 +320,11 @@ const emojis = [
 ];
 
 
-for (let i = 0; i < 8; i++) {
+for (
+let i = 0;
+i < 8;
+i++
+) {
 
 const heart =
 document.createElement(
@@ -258,7 +347,6 @@ emojis.length
 
 heart.style.left =
 centerX + "px";
-
 
 heart.style.top =
 centerY + "px";
@@ -287,32 +375,28 @@ heart
 );
 
 
-setTimeout(() => {
+setTimeout(
+function () {
 
 heart.remove();
 
-}, 900);
+},
+900
+);
 
 }
-
 }
 
 
-/* =========================
-CONTINUE
-========================= */
-
-/*
-Page 3 will be connected here later.
-*/
+/* =========================================
+CONTINUE → PAGE 3
+========================================= */
 
 continueButton.addEventListener(
 "click",
 function () {
 
-alert(
-"Page 3 coming next ❤️"
-);
+showPage(page3);
 
 }
 );
