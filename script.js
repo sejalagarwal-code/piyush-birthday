@@ -1,23 +1,34 @@
-document.addEventListener("DOMContentLoaded", function () {
-
 /* =========================================
 PAGE CONTROL
 ========================================= */
 
-const page1 = document.getElementById("page1");
-const page2 = document.getElementById("page2");
-const page3 = document.getElementById("page3");
-const page4 = document.getElementById("page4");
+const page1 =
+document.getElementById("page1");
+
+const page2 =
+document.getElementById("page2");
+
+const page3 =
+document.getElementById("page3");
+
+const page4 =
+document.getElementById("page4");
+
 
 function showPage(page) {
-if (!page) return;
 
-document.querySelectorAll(".page").forEach(function (p) {
+document
+.querySelectorAll(".page")
+.forEach(function (p) {
+
 p.classList.remove("active");
+
 });
+
 
 page.classList.add("active");
 }
+
 
 
 /* =========================================
@@ -28,6 +39,7 @@ const birthdayMusic =
 document.getElementById("birthdayMusic");
 
 
+
 /* =========================================
 PAGE 1 — YES
 ========================================= */
@@ -35,25 +47,31 @@ PAGE 1 — YES
 const yesButton =
 document.getElementById("yesButton");
 
-if (yesButton) {
 
-yesButton.addEventListener("click", function () {
-
-if (birthdayMusic) {
+yesButton.addEventListener(
+"click",
+function () {
 
 birthdayMusic.volume = 0.4;
 
-birthdayMusic.play().catch(function (error) {
-console.log("Music could not start:", error);
+
+birthdayMusic
+.play()
+.catch(function (error) {
+
+console.log(
+"Music could not start:",
+error
+);
+
 });
 
-}
 
 showPage(page2);
 
-});
-
 }
+);
+
 
 
 /* =========================================
@@ -63,11 +81,11 @@ PAGE 1 — NO
 const noButton =
 document.getElementById("noButton");
 
+
 function moveNoButton() {
 
-if (!noButton) return;
-
 noButton.style.position = "fixed";
+
 
 const buttonWidth =
 noButton.offsetWidth;
@@ -75,47 +93,57 @@ noButton.offsetWidth;
 const buttonHeight =
 noButton.offsetHeight;
 
+
 const padding = 25;
 
-const maxX = Math.max(
-padding,
+
+const maxX =
 window.innerWidth -
 buttonWidth -
-padding
-);
+padding;
 
-const maxY = Math.max(
-padding,
+
+const maxY =
 window.innerHeight -
 buttonHeight -
-padding
-);
+padding;
+
+
+const minX = padding;
+
+const minY = padding;
+
 
 const randomX =
+
 Math.floor(
 Math.random() *
-(maxX - padding + 1)
-) + padding;
+(maxX - minX + 1)
+) + minX;
+
 
 const randomY =
+
 Math.floor(
 Math.random() *
-(maxY - padding + 1)
-) + padding;
+(maxY - minY + 1)
+) + minY;
+
 
 noButton.style.left =
 randomX + "px";
+
 
 noButton.style.top =
 randomY + "px";
 }
 
-if (noButton) {
 
 noButton.addEventListener(
 "mouseenter",
 moveNoButton
 );
+
 
 noButton.addEventListener(
 "touchstart",
@@ -131,7 +159,6 @@ passive: false
 }
 );
 
-}
 
 
 /* =========================================
@@ -141,83 +168,167 @@ PAGE 2 — BALLOONS
 const balloons =
 document.querySelectorAll(".balloon");
 
+
 const balloonCount =
 document.getElementById("balloonCount");
+
 
 const specialMessage =
 document.getElementById("specialMessage");
 
+
 let popped = 0;
 
+
+
+/* =========================================
+BALLOON POP EFFECT
+========================================= */
 
 function createPopEffect(balloon) {
 
 const rect =
 balloon.getBoundingClientRect();
 
+
 const centerX =
 rect.left +
 rect.width / 2;
+
 
 const centerY =
 rect.top +
 rect.height / 2;
 
+
 const effects =
 document.getElementById("effects");
 
-if (!effects) return;
 
 for (let i = 0; i < 7; i++) {
-balloons.forEach(function (balloon) {
+
+const heart =
+document.createElement("div");
+
+
+heart.className =
+"pop-heart";
+
+
+heart.innerHTML =
+Math.random() > 0.5
+? "♥"
+: "♡";
+
+
+heart.style.left =
+centerX + "px";
+
+
+heart.style.top =
+centerY + "px";
+
+
+heart.style.setProperty(
+"--x",
+(Math.random() * 100 - 50) + "px"
+);
+
+
+heart.style.setProperty(
+"--y",
+(Math.random() * -100 - 30) + "px"
+);
+
+
+effects.appendChild(heart);
+
+
+setTimeout(
+function () {
+heart.remove();
+},
+900
+);
+
+}
+
+}
+
+
+
+/* =========================================
+POP BALLOONS
+========================================= */
+
+balloons.forEach(
+function (balloon) {
 
 balloon.addEventListener(
 "click",
 function () {
 
+
 if (
-balloon.classList.contains("popped")
+balloon.classList
+.contains("popped")
 ) {
 return;
 }
 
+
 popped++;
 
-createPopEffect(balloon);
 
-balloon.classList.add("popped");
+createPopEffect(
+balloon
+);
 
-if (balloonCount) {
+
+balloon.classList.add(
+"popped"
+);
+
+
 balloonCount.textContent =
 popped;
-}
 
-if (popped === 4 && specialMessage) {
 
-setTimeout(function () {
+
+/* All 4 balloons */
+
+if (popped === 4) {
+
+setTimeout(
+function () {
 
 specialMessage
 .classList
 .add("show");
 
-}, 450);
+},
+450
+);
 
 }
 
 }
 );
 
-});
+}
+);
+
 
 
 /* =========================================
-PAGE 2 — CONTINUE
+PAGE 2 → PAGE 3
 ========================================= */
 
 const continueButton =
-document.getElementById("continueButton");
+document.getElementById(
+"continueButton"
+);
 
-if (continueButton) {
 
 continueButton.addEventListener(
 "click",
@@ -228,7 +339,6 @@ showPage(page3);
 }
 );
 
-}
 
 
 /* =========================================
@@ -236,52 +346,80 @@ PAGE 3 — SWIPE
 ========================================= */
 
 const swipeTrack =
-document.getElementById("swipeTrack");
+document.getElementById(
+"swipeTrack"
+);
+
 
 const swipeButton =
-document.getElementById("swipeButton");
+document.getElementById(
+"swipeButton"
+);
+
 
 const flame =
-document.getElementById("flame");
+document.getElementById(
+"flame"
+);
+
 
 const wishMessage =
-document.getElementById("wishMessage");
+document.getElementById(
+"wishMessage"
+);
+
 
 let isDragging = false;
+
 let startX = 0;
+
 let currentX = 0;
+
 let candleBlown = false;
 
 
+
+/* =========================================
+MAXIMUM SWIPE
+========================================= */
+
 function getMaxSwipe() {
 
-if (!swipeTrack || !swipeButton) {
-return 0;
-}
+return (
 
-return Math.max(
-0,
 swipeTrack.offsetWidth -
+
 swipeButton.offsetWidth -
+
 12
+
 );
 
 }
 
 
-if (swipeButton) {
+
+/* =========================================
+POINTER DOWN
+========================================= */
 
 swipeButton.addEventListener(
 "pointerdown",
 function (event) {
 
-if (candleBlown) return;
+
+if (candleBlown) {
+return;
+}
+
 
 isDragging = true;
+
 
 startX =
 event.clientX -
 currentX;
+
 
 swipeButton.setPointerCapture(
 event.pointerId
@@ -291,43 +429,109 @@ event.pointerId
 );
 
 
-maxSwipe > 0
-? currentX / maxSwipe
-: 0;
+
+/* =========================================
+POINTER MOVE
+========================================= */
+
+swipeButton.addEventListener(
+"pointermove",
+function (event) {
+
+
+if (
+!isDragging ||
+candleBlown
+) {
+return;
+}
+
+
+let newX =
+event.clientX -
+startX;
+
+
+const maxSwipe =
+getMaxSwipe();
+
+
+newX =
+Math.max(
+0,
+Math.min(
+newX,
+maxSwipe
+)
+);
+
+
+currentX = newX;
+
+
+swipeButton.style.transform =
+"translateX(" +
+currentX +
+"px)";
+
+
+const progress =
+currentX /
+maxSwipe;
+
 
 if (progress >= 0.78) {
+
 finishCandle();
+
 }
 
 }
 );
 
+
+
+/* =========================================
+POINTER UP
+========================================= */
 
 swipeButton.addEventListener(
 "pointerup",
 function () {
 
-if (candleBlown) return;
+
+if (candleBlown) {
+return;
+}
+
 
 isDragging = false;
+
 
 swipeButton.style.transition =
 "transform 0.3s ease";
 
+
 currentX = 0;
+
 
 swipeButton.style.transform =
 "translateX(0)";
 
-setTimeout(function () {
+
+setTimeout(
+function () {
 
 swipeButton.style.transition =
 "";
 
-}, 300);
+},
+300
+);
 
 }
 );
+
 
 
 swipeButton.addEventListener(
@@ -340,6 +544,119 @@ isDragging = false;
 );
 
 
+
+/* =========================================
+BLOW OUT CANDLE
+========================================= */
+
+function finishCandle() {
+
+
+if (candleBlown) {
+return;
+}
+
+
+candleBlown = true;
+
+
+isDragging = false;
+
+
+
+/* Finish swipe */
+
+currentX =
+getMaxSwipe();
+
+
+swipeButton.style.transition =
+"transform 0.25s ease";
+
+
+swipeButton.style.transform =
+"translateX(" +
+currentX +
+"px)";
+
+
+
+/* Flame disappears */
+
+setTimeout(
+function () {
+
+flame.classList.add(
+"off"
+);
+
+},
+100
+);
+
+
+
+/* Change text */
+
+setTimeout(
+function () {
+
+const blowText =
+document.querySelector(
+".blow-text"
+);
+
+
+if (blowText) {
+
+blowText.textContent =
+"Wish made ✨";
+
+}
+
+},
+350
+);
+
+
+
+/* Show wish */
+
+setTimeout(
+function () {
+
+wishMessage
+.classList
+.add("show");
+
+},
+550
+);
+
+
+
+/*
+Short smooth transition
+after flame disappears.
+*/
+
+setTimeout(
+function () {
+
+showPage(page4);
+
+},
+1150
+);
+
+}
+
+
+
+/* =========================================
+PREVENT CONTEXT MENU
+========================================= */
+
 swipeButton.addEventListener(
 "contextmenu",
 function (event) {
@@ -349,165 +666,210 @@ event.preventDefault();
 }
 );
 
-}
 
 
 /* =========================================
-BLOW CANDLE
+PAGE 4 — ENVELOPE
 ========================================= */
 
-function finishCandle() {
+const envelope =
+document.getElementById(
+"envelope"
+);
 
-if (candleBlown) return;
 
-candleBlown = true;
-isDragging = false;
+const tapToOpen =
+document.getElementById(
+"tapToOpen"
+);
 
-currentX = getMaxSwipe();
 
-if (swipeButton) {
+const typedMessage =
+document.getElementById(
+"typedMessage"
+);
 
-swipeButton.style.transition =
-"transform 0.25s ease";
 
-swipeButton.style.transform =
-"translateX(" +
-currentX +
-"px)";
+let envelopeOpened = false;
 
+
+
+/* =========================================
+LETTER TEXT
+========================================= */
+
+const letterText = `Happy Birthday Chotu ❤️
+
+Who knew one random, unplanned coffee date would bring you into my life? 🥹
+
+Since then, you’ve filled my life with so many laughs, memories, adventures, and little moments that mean more than you know.
+
+I hope this year brings you everything you wish for, and I hope I get to be beside you through all of it. ❤️
+
+More memories, more adventures, more us.
+
+Love you always`;
+
+
+
+/* =========================================
+OPEN ENVELOPE
+========================================= */
+
+function openEnvelope() {
+
+
+if (envelopeOpened) {
+return;
 }
 
-
-setTimeout(function () {
-
-if (flame) {
-flame.classList.add("off");
-}
-
-}, 120);
-
-
-setTimeout(function () {
-
-if (wishMessage) {
-wishMessage.classList.add("show");
-}
-
-}, 500);
-
-
-setTimeout(function () {
-
-const blowText =
-document.querySelector(".blow-text");
-
-if (blowText) {
-blowText.textContent =
-"Wish made ✨";
-}
-
-}, 400);
-
-
-setTimeout(function () {
-
-if (page3) {
-page3.classList.add("leaving");
-}
-
-}, 900);
-
-
-setTimeout(function () {
-
-if (page3) {
-if (!envelope || !typedMessage) return;
 
 envelopeOpened = true;
 
-envelope.classList.add("opened");
 
-if (openEnvelope) {
-openEnvelope.classList.add("hidden");
-}
-
-if (letterHint) {
-letterHint.classList.add("hidden");
-}
-
-setTimeout(function () {
-
-startTyping();
-
-}, 1100);
-
-}
+envelope.classList.add(
+"open"
+);
 
 
-if (envelope) {
+tapToOpen.style.opacity =
+"0";
 
-envelope.addEventListener(
-"click",
-openTheEnvelope
+
+
+/*
+Wait for envelope animation,
+then start handwriting.
+*/
+
+setTimeout(
+function () {
+
+typedMessage.style.opacity =
+"1";
+
+
+typeLetter();
+
+},
+950
 );
 
 }
 
-
-if (openEnvelope) {
-
-openEnvelope.addEventListener(
-"click",
-openTheEnvelope
-);
-
-}
 
 
 /* =========================================
-TYPING EFFECT
+TAP
 ========================================= */
 
-function startTyping() {
+envelope.addEventListener(
+"click",
+openEnvelope
+);
 
-if (!typedMessage) return;
 
-typedMessage.textContent = "";
+
+/* =========================================
+KEYBOARD
+========================================= */
+
+envelope.addEventListener(
+"keydown",
+function (event) {
+
+
+if (
+event.key === "Enter" ||
+event.key === " "
+) {
+
+event.preventDefault();
+
+openEnvelope();
+
+}
+
+}
+);
+
+
+
+/* =========================================
+TYPING ANIMATION
+========================================= */
+
+function typeLetter() {
+
+
+typedMessage.textContent =
+"";
+
 
 let index = 0;
 
 
+
 function typeNextCharacter() {
 
-if (index >= message.length) {
+
+if (
+index >=
+letterText.length
+) {
+
 return;
+
 }
 
-const character =
-message.charAt(index);
 
 typedMessage.textContent +=
-character;
+letterText.charAt(index);
+
 
 index++;
 
+
 let delay = 32;
+
+
+const character =
+letterText.charAt(
+index - 1
+);
+
+
+
+/* Natural pauses */
 
 if (
 character === "." ||
-character === "," ||
-character === "!"
+character === "!" ||
+character === "?"
 ) {
-delay = 130;
+
+delay = 260;
+
 }
 
-if (character === "?") {
-delay = 180;
+
+else if (
+character === ","
+) {
+
+delay = 150;
+
 }
 
-if (character === "\n") {
-delay = 300;
+
+else if (
+character === "\n"
+) {
+
+delay = 420;
+
 }
+
 
 setTimeout(
 typeNextCharacter,
@@ -516,8 +878,7 @@ delay
 
 }
 
+
 typeNextCharacter();
 
 }
-
-});
