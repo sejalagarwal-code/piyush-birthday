@@ -2,21 +2,28 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Piyush ❤️</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<title>Happy Birthday Piyush ❤️</title>
+
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- ================= PAGE 1 ================= -->
+<!-- =====================================================
+PAGE 1
+===================================================== -->
 
 <section id="page1" class="page active">
 
-<div class="floating-heart h1">♡</div>
-<div class="floating-heart h2">♥</div>
-<div class="floating-heart h3">♡</div>
-<div class="floating-heart h4">♥</div>
+<div class="floating-heart heart-one">♡</div>
+<div class="floating-heart heart-two">♥</div>
+<div class="floating-heart heart-three">♡</div>
+<div class="floating-heart heart-four">♥</div>
 
 <div class="card">
 
@@ -24,7 +31,9 @@
 A LITTLE SURPRISE FOR YOU
 </div>
 
-<div class="main-heart">♥</div>
+<div class="main-heart">
+♥
+</div>
 
 <h1>
 Happy Birthday,<br>
@@ -44,11 +53,13 @@ Are you excited for<br>
 
 <div class="button-area">
 
-<button id="yesButton" class="yes-button">
+<button id="yesButton"
+class="yes-button">
 YES ❤️
 </button>
 
-<button id="noButton" class="no-button">
+<button id="noButton"
+class="no-button">
 NO 😏
 </button>
 
@@ -63,11 +74,11 @@ Choose wisely...
 </section>
 
 
-<!-- ================= PAGE 2 ================= -->
+<!-- =====================================================
+PAGE 2 — BALLOONS
+===================================================== -->
 
 <section id="page2" class="page">
-
-<div class="scene-glow"></div>
 
 <div class="page-content">
 
@@ -84,31 +95,43 @@ Pop all 4<br>
 Tap each balloon
 </p>
 
+
+<!-- Message is BEHIND balloons and hidden initially -->
+
 <div class="special-message">
+
 <span>You are</span>
+
 <strong>so special</strong>
+
 <span>❤️</span>
-</div>
-
-<div class="balloon-area">
-
-<button class="balloon balloon-pink" data-balloon="1">
-<span></span>
-</button>
-
-<button class="balloon balloon-purple" data-balloon="2">
-<span></span>
-</button>
-
-<button class="balloon balloon-rose" data-balloon="3">
-<span></span>
-</button>
-
-<button class="balloon balloon-peach" data-balloon="4">
-<span></span>
-</button>
 
 </div>
+
+
+<!-- BALLOONS -->
+
+<div id="balloonArea"
+class="balloon-area">
+
+<button class="balloon balloon-one">
+<span></span>
+</button>
+
+<button class="balloon balloon-two">
+<span></span>
+</button>
+
+<button class="balloon balloon-three">
+<span></span>
+</button>
+
+<button class="balloon balloon-four">
+<span></span>
+</button>
+
+</div>
+
 
 <div class="balloon-count">
 <span id="balloonCount">0</span> / 4
@@ -121,7 +144,107 @@ Tap each balloon
 </section>
 
 
-<script src="script.js?v=2"></script>
+<!-- =====================================================
+PAGE 3 — CANDLE
+===================================================== -->
+
+<section id="page3" class="page">
+
+<div class="candle-page">
+
+<p class="scene-label">
+ONE MORE LITTLE THING
+</p>
+
+<h2>
+Blow the<br>
+<span>candle</span> 🕯️
+</h2>
+
+<p class="candle-subtitle">
+Make a wish for your new year ✨
+</p>
+
+
+<!-- Candle -->
+
+<div class="candle-scene">
+
+<div class="cake-plate"></div>
+
+<div class="cake">
+
+<div class="cake-top"></div>
+
+<div class="cake-body"></div>
+
+<div class="icing"></div>
+
+</div>
+
+
+<div class="candle">
+
+<div id="flame"
+class="flame">
+
+<div class="flame-inner"></div>
+
+</div>
+
+<div class="candle-stick"></div>
+
+</div>
+
+</div>
+
+
+<button id="blowButton"
+class="blow-button">
+
+Tap to blow 💨
+
+</button>
+
+<p id="wishText"
+class="wish-text">
+
+Make a wish... ❤️
+
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+PAGE 4 PLACEHOLDER
+===================================================== -->
+
+<section id="page4" class="page">
+
+<div class="page-content">
+
+<p class="scene-label">
+AND NOW...
+</p>
+
+<h2>
+Something<br>
+<span>special</span> 🌹
+</h2>
+
+<p class="tap-hint">
+Page 4 will be built next
+</p>
+
+</div>
+
+</section>
+
+
+<script src="script.js?v=4"></script>
 
 </body>
 </html>
