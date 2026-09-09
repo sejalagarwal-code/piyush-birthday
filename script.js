@@ -1,36 +1,45 @@
-/* =====================================================
+/* =========================================
 PAGE CONTROL
-===================================================== */
+========================================= */
 
 const page1 = document.getElementById("page1");
 const page2 = document.getElementById("page2");
 const page3 = document.getElementById("page3");
 
-const yesButton = document.getElementById("yesButton");
-const noButton = document.getElementById("noButton");
-
-const birthdayMusic = document.getElementById("birthdayMusic");
-
-
 function showPage(page) {
 
-document.querySelectorAll(".page").forEach(function(section) {
-section.classList.remove("active");
+document.querySelectorAll(".page").forEach(function (p) {
+p.classList.remove("active");
 });
 
 page.classList.add("active");
 }
 
 
-/* =====================================================
-PAGE 1 — YES BUTTON
-===================================================== */
+/* =========================================
+MUSIC
+========================================= */
 
-yesButton.addEventListener("click", function() {
+const birthdayMusic = document.getElementById("birthdayMusic");
+
+
+/* =========================================
+PAGE 1 — YES BUTTON
+========================================= */
+
+const yesButton = document.getElementById("yesButton");
+
+yesButton.addEventListener("click", function () {
+
+/*
+Music starts from the user's click.
+This works with iPhone autoplay restrictions
+because play() is triggered by a real tap.
+*/
 
 birthdayMusic.volume = 0.4;
 
-birthdayMusic.play().catch(function(error) {
+birthdayMusic.play().catch(function (error) {
 console.log("Music could not start:", error);
 });
 
@@ -38,11 +47,18 @@ showPage(page2);
 });
 
 
-/* =====================================================
+/* =========================================
 PAGE 1 — NO BUTTON
-===================================================== */
+========================================= */
+
+const noButton = document.getElementById("noButton");
 
 function moveNoButton() {
+
+/*
+Make the button fixed so it can move
+anywhere within the screen.
+*/
 
 noButton.style.position = "fixed";
 
@@ -61,38 +77,48 @@ window.innerHeight -
 buttonHeight -
 padding;
 
+const minX = padding;
+const minY = padding;
+
 const randomX =
 Math.floor(
 Math.random() *
-(maxX - padding + 1)
-) + padding;
+(maxX - minX + 1)
+) + minX;
 
 const randomY =
 Math.floor(
 Math.random() *
-(maxY - padding + 1)
-) + padding;
+(maxY - minY + 1)
+) + minY;
 
-noButton.style.left =
-randomX + "px";
-
-noButton.style.top =
-randomY + "px";
+noButton.style.left = randomX + "px";
+noButton.style.top = randomY + "px";
 }
 
+
+/*
+Desktop
+*/
 
 noButton.addEventListener(
 "mouseenter",
 moveNoButton
 );
 
+
+/*
+Mobile
+*/
+
 noButton.addEventListener(
 "touchstart",
-function(event) {
+function (event) {
 
 event.preventDefault();
 
 moveNoButton();
+
 },
 {
 passive: false
@@ -100,171 +126,135 @@ passive: false
 );
 
 
-/* =====================================================
+/* =========================================
 PAGE 2 — BALLOONS
-===================================================== */
+========================================= */
 
 const balloons =
 document.querySelectorAll(".balloon");
 
-const balloonCounter =
-document.getElementById("balloonCounter");
+const balloonCount =
+document.getElementById("balloonCount");
 
 const specialMessage =
 document.getElementById("specialMessage");
 
-const balloonContinue =
-document.getElementById("balloonContinue");
-
 let popped = 0;
 
 
-balloons.forEach(function(balloon) {
-
-balloon.addEventListener("click", function() {
-
-if (balloon.classList.contains("popped")) {
-return;
-}
-
-balloon.classList.add("popped");
-
-popped++;
-
-balloonCounter.textContent =
-popped + " / 4 popped";
-
-createPopEffect(balloon);
-
-
-if (popped === 4) {
-
-setTimeout(function() {
-
-specialMessage.classList.add("show");
-
-}, 400);
-
-}
-
-});
-
-});
-
-
-/* =====================================================
+/* =========================================
 BALLOON POP EFFECT
-===================================================== */
+========================================= */
 
 function createPopEffect(balloon) {
 
 const rect =
 balloon.getBoundingClientRect();
 
-for (let i = 0; i < 8; i++) {
+const centerX =
+rect.left + rect.width / 2;
+
+const centerY =
+rect.top + rect.height / 2;
+
+const effects =
+document.getElementById("effects");
+
+for (let i = 0; i < 7; i++) {
 
 const heart =
-document.createElement("span");
+document.createElement("div");
 
-heart.textContent = "♥";
+heart.className = "pop-heart";
 
-heart.style.position = "fixed";
+heart.innerHTML =
+Math.random() > 0.5 ? "♥" : "♡";
 
 heart.style.left =
-rect.left +
-rect.width / 2 +
-"px";
+centerX + "px";
 
 heart.style.top =
-rect.top +
-rect.height / 2 +
-"px";
+centerY + "px";
 
-heart.style.fontSize =
-Math.random() * 10 + 10 + "px";
-
-heart.style.color =
-"#e95d91";
-
-heart.style.pointerEvents =
-"none";
-
-heart.style.zIndex = "100";
-
-const angle =
-Math.random() *
-Math.PI *
-2;
-
-const distance =
-Math.random() * 70 + 30;
-
-const x =
-Math.cos(angle) *
-distance;
-
-const y =
-Math.sin(angle) *
-distance;
-
-heart.animate(
-[
-{
-transform:
-"translate(-50%, -50%) scale(1)",
-opacity: 1
-},
-{
-transform:
-`translate(
-calc(-50% + ${x}px),
-calc(-50% + ${y}px)
-)
-scale(0)`,
-opacity: 0
-}
-],
-{
-duration: 650,
-
-easing: "ease-out"
-}
+heart.style.setProperty(
+"--x",
+(Math.random() * 100 - 50) + "px"
 );
 
-document.body.appendChild(heart);
+heart.style.setProperty(
+"--y",
+(Math.random() * -100 - 30) + "px"
+);
 
-setTimeout(function() {
+effects.appendChild(heart);
+
+setTimeout(function () {
 heart.remove();
-}, 700);
+}, 900);
 }
 }
 
 
-/* =====================================================
-PAGE 2 → PAGE 3
-===================================================== */
+/* =========================================
+POP EACH BALLOON
+========================================= */
 
-balloonContinue.addEventListener(
+balloons.forEach(function (balloon) {
+
+balloon.addEventListener("click", function () {
+
+if (balloon.classList.contains("popped")) {
+return;
+}
+
+popped++;
+
+createPopEffect(balloon);
+
+balloon.classList.add("popped");
+
+balloonCount.textContent = popped;
+
+
+/*
+Once all 4 are popped,
+reveal the message.
+*/
+
+if (popped === 4) {
+
+setTimeout(function () {
+
+specialMessage.classList.add("show");
+
+}, 450);
+}
+
+});
+
+});
+
+
+/* =========================================
+PAGE 2 — CONTINUE
+========================================= */
+
+const continueButton =
+document.getElementById("continueButton");
+
+continueButton.addEventListener(
 "click",
-function() {
+function () {
 
 showPage(page3);
 
-resetCandle();
-
 }
 );
 
 
-/* =====================================================
-PAGE 3 — CANDLE
-===================================================== */
-
-const flame =
-document.getElementById("flame");
-
-const birthdayCandle =
-document.getElementById("birthdayCandle");
+/* =========================================
+PAGE 3 — SWIPE CANDLE
+========================================= */
 
 const swipeTrack =
 document.getElementById("swipeTrack");
@@ -272,356 +262,241 @@ document.getElementById("swipeTrack");
 const swipeButton =
 document.getElementById("swipeButton");
 
-const swipeProgress =
-document.getElementById("swipeProgress");
+const flame =
+document.getElementById("flame");
+
+const wishMessage =
+document.getElementById("wishMessage");
 
 
 let isDragging = false;
-
 let startX = 0;
-
 let currentX = 0;
+let candleBlown = false;
 
-let swipeCompleted = false;
+
+/* =========================================
+GET MAXIMUM SWIPE DISTANCE
+========================================= */
+
+function getMaxSwipe() {
+
+return (
+swipeTrack.offsetWidth -
+swipeButton.offsetWidth -
+12
+);
+}
 
 
-/* =====================================================
-SWIPE START
-===================================================== */
+/* =========================================
+POINTER DOWN
+========================================= */
 
-function startSwipe(event) {
+swipeButton.addEventListener(
+"pointerdown",
+function (event) {
 
-if (swipeCompleted) {
+if (candleBlown) {
 return;
 }
 
 isDragging = true;
 
-if (event.type === "touchstart") {
+startX = event.clientX - currentX;
 
-startX =
-event.touches[0].clientX;
-
-} else {
-
-startX =
-event.clientX;
-}
-
-swipeButton.style.transition =
-"none";
-}
-
-
-swipeButton.addEventListener(
-"mousedown",
-startSwipe
+swipeButton.setPointerCapture(
+event.pointerId
 );
 
-swipeButton.addEventListener(
-"touchstart",
-startSwipe,
-{
-passive: true
 }
 );
 
 
-/* =====================================================
-SWIPE MOVE
-===================================================== */
+/* =========================================
+POINTER MOVE
+========================================= */
 
-function moveSwipe(event) {
+swipeButton.addEventListener(
+"pointermove",
+function (event) {
 
-if (!isDragging || swipeCompleted) {
+if (!isDragging || candleBlown) {
 return;
 }
 
-if (event.type === "touchmove") {
+let newX =
+event.clientX - startX;
 
-currentX =
-event.touches[0].clientX;
+const maxSwipe =
+getMaxSwipe();
 
-} else {
 
-currentX =
-event.clientX;
-}
+/*
+Keep button completely inside
+the swipe track.
+*/
 
-let distance =
-currentX - startX;
+newX =
+Math.max(
+0,
+Math.min(
+newX,
+maxSwipe
+)
+);
 
-if (distance < 0) {
-distance = 0;
-}
-
-const trackWidth =
-swipeTrack.offsetWidth;
-
-const buttonWidth =
-swipeButton.offsetWidth;
-
-const maxDistance =
-trackWidth -
-buttonWidth -
-10;
-
-if (distance > maxDistance) {
-distance = maxDistance;
-}
+currentX = newX;
 
 swipeButton.style.transform =
-`translateX(${distance}px)`;
-
-const percentage =
-(distance / maxDistance) * 100;
-
-swipeProgress.style.width =
-percentage + "%";
+"translateX(" + currentX + "px)";
 
 
-/* Candle blows out when swipe reaches end */
+/*
+If dragged far enough,
+blow the candle.
+*/
 
-if (percentage >= 90) {
+const progress =
+currentX / maxSwipe;
 
-completeSwipe();
+if (progress >= 0.78) {
+
+finishCandle();
 
 }
-}
 
-
-document.addEventListener(
-"mousemove",
-moveSwipe
-);
-
-document.addEventListener(
-"touchmove",
-moveSwipe,
-{
-passive: true
 }
 );
 
 
-/* =====================================================
-SWIPE END
-===================================================== */
+/* =========================================
+POINTER UP
+========================================= */
 
-function endSwipe() {
+swipeButton.addEventListener(
+"pointerup",
+function () {
 
-if (!isDragging) {
+if (candleBlown) {
 return;
 }
 
 isDragging = false;
 
-if (swipeCompleted) {
-return;
-}
+/*
+If candle wasn't blown,
+smoothly return the button.
+*/
 
 swipeButton.style.transition =
 "transform 0.3s ease";
 
+currentX = 0;
+
 swipeButton.style.transform =
 "translateX(0)";
 
-swipeProgress.style.transition =
-"width 0.3s ease";
+setTimeout(function () {
 
-swipeProgress.style.width =
-"0%";
+swipeButton.style.transition =
+"";
+
+}, 300);
+
 }
-
-
-document.addEventListener(
-"mouseup",
-endSwipe
-);
-
-document.addEventListener(
-"touchend",
-endSwipe
 );
 
 
-/* =====================================================
-CANDLE BLOWN OUT
-===================================================== */
-
-function completeSwipe() {
-
-if (swipeCompleted) {
-return;
-}
-
-swipeCompleted = true;
+swipeButton.addEventListener(
+"pointercancel",
+function () {
 
 isDragging = false;
 
-flame.classList.add("blown-out");
+}
+);
 
-birthdayCandle.classList.add("candle-blown");
+
+/* =========================================
+BLOW CANDLE
+========================================= */
+
+function finishCandle() {
+
+if (candleBlown) {
+return;
+}
+
+candleBlown = true;
+
+isDragging = false;
+
+
+/*
+Push button to the end.
+*/
+
+currentX = getMaxSwipe();
 
 swipeButton.style.transition =
 "transform 0.25s ease";
 
-const trackWidth =
-swipeTrack.offsetWidth;
-
-const buttonWidth =
-swipeButton.offsetWidth;
-
-const finalPosition =
-trackWidth -
-buttonWidth -
-10;
-
 swipeButton.style.transform =
-`translateX(${finalPosition}px)`;
-
-swipeProgress.style.transition =
-"width 0.25s ease";
-
-swipeProgress.style.width =
-"100%";
-
-
-/* Tiny celebration */
-
-createCandleEffect();
+"translateX(" + currentX + "px)";
 
 
 /*
-Wait briefly so the user sees
-the flame go out before Page 4.
+Blow out flame.
 */
 
-setTimeout(function() {
+setTimeout(function () {
 
-showPage(
-document.getElementById("page4")
-);
+flame.classList.add("off");
 
-}, 850);
+}, 120);
+
+
+/*
+Update text.
+*/
+
+setTimeout(function () {
+
+wishMessage.classList.add("show");
+
+}, 550);
+
+
+/*
+Change the instruction.
+*/
+
+setTimeout(function () {
+
+const blowText =
+document.querySelector(".blow-text");
+
+if (blowText) {
+
+blowText.textContent =
+"Wish made ✨";
+
+}
+
+}, 400);
 }
 
 
-/* =====================================================
-RESET CANDLE
-===================================================== */
+/* =========================================
+PREVENT CONTEXT MENU ON SWIPE BUTTON
+========================================= */
 
-function resetCandle() {
+swipeButton.addEventListener(
+"contextmenu",
+function (event) {
 
-swipeCompleted = false;
+event.preventDefault();
 
-isDragging = false;
-
-flame.classList.remove(
-"blown-out"
-);
-
-birthdayCandle.classList.remove(
-"candle-blown"
-);
-
-swipeButton.style.transform =
-"translateX(0)";
-
-swipeProgress.style.width =
-"0%";
-}
-
-
-/* =====================================================
-CANDLE EFFECT
-===================================================== */
-
-function createCandleEffect() {
-
-const rect =
-flame.getBoundingClientRect();
-
-for (let i = 0; i < 12; i++) {
-
-const particle =
-document.createElement("span");
-
-particle.textContent =
-Math.random() > 0.5
-? "✨"
-: "♡";
-
-particle.style.position =
-"fixed";
-
-particle.style.left =
-rect.left +
-rect.width / 2 +
-"px";
-
-particle.style.top =
-rect.top +
-rect.height / 2 +
-"px";
-
-particle.style.fontSize =
-Math.random() * 8 + 10 +
-"px";
-
-particle.style.pointerEvents =
-"none";
-
-particle.style.zIndex =
-"200";
-
-const angle =
-Math.random() *
-Math.PI *
-2;
-
-const distance =
-Math.random() * 80 +
-40;
-
-const x =
-Math.cos(angle) *
-distance;
-
-const y =
-Math.sin(angle) *
-distance;
-
-particle.animate(
-[
-{
-transform:
-"translate(-50%, -50%) scale(1)",
-opacity: 1
-},
-{
-transform:
-`translate(
-calc(-50% + ${x}px),
-calc(-50% + ${y}px)
-)
-scale(0)`,
-opacity: 0
-}
-],
-{
-duration: 700,
-
-easing: "ease-out"
 }
 );
-
-document.body.appendChild(
-particle
-);
-
-setTimeout(function() {
-particle.remove();
-}, 750);
-}
-}
