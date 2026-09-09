@@ -1,244 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
-
-<title>Happy Birthday Piyush ❤️</title>
-
-<link rel="stylesheet" href="style.css?v=6">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Piyush ❤️</title>
+<link rel="stylesheet" href="style.css?v=7">
 </head>
-
 
 <body>
 
-
-<!-- =========================================
-PAGE 1
-========================================= -->
-
+<!-- ================= PAGE 1 ================= -->
 <section id="page1" class="page active">
+<div class="hearts-container"></div>
 
-<div class="floating-heart h1">♡</div>
-<div class="floating-heart h2">♥</div>
-<div class="floating-heart h3">♡</div>
-<div class="floating-heart h4">♥</div>
+<div class="glass-card">
+<div class="small-title">A LITTLE SURPRISE FOR YOU</div>
 
+<div class="big-heart">♥</div>
 
-<div class="card">
+<h1>Happy Birthday, Piyush ❤️</h1>
 
-<div class="small-text">
-A LITTLE SURPRISE FOR YOU
+<div class="divider"></div>
+
+<p>Are you excited for what's next?</p>
+
+<div class="button-row">
+<button id="yesBtn">YES</button>
+<button id="noBtn">NO</button>
 </div>
 
-
-<div class="main-heart">
-♥
+<div class="choose-text">Choose wisely...</div>
 </div>
-
-
-<h1>
-Happy Birthday,<br>
-<span>Piyush</span> ❤️
-</h1>
-
-
-<div class="divider">
-<span></span>
-✦
-<span></span>
-</div>
-
-
-<p class="question">
-Are you excited for<br>
-<i>what's next?</i>
-</p>
-
-
-<div class="button-area">
-
-<button
-id="yesButton"
-class="yes-button"
-type="button"
->
-YES ❤️
-</button>
-
-
-<button
-id="noButton"
-class="no-button"
-type="button"
->
-NO 😏
-</button>
-
-</div>
-
-
-<p class="bottom-text">
-Choose wisely...
-</p>
-
-</div>
-
 </section>
 
 
-
-<!-- =========================================
-PAGE 2
-========================================= -->
-
+<!-- ================= PAGE 2 ================= -->
 <section id="page2" class="page">
-
 <div class="balloon-page">
 
+<div class="page2-small">A LITTLE SURPRISE</div>
 
-<div class="page2-small">
-A LITTLE SURPRISE
+<h2>Pop all 4 balloons</h2>
+
+<p>There's something waiting for you...</p>
+
+<div class="balloon-grid">
+
+<div class="balloon balloon-pink" data-balloon="1">
+<div class="balloon-string"></div>
 </div>
 
+<div class="balloon balloon-blue" data-balloon="2">
+<div class="balloon-string"></div>
+</div>
 
-<h2>
-Pop all 4 balloons
-</h2>
+<div class="balloon balloon-yellow" data-balloon="3">
+<div class="balloon-string"></div>
+</div>
 
-
-<p class="page2-subtitle">
-There's something waiting for you...
-</p>
-
-
-<div class="balloon-area">
-
-
-<button
-class="balloon balloon-one"
-type="button"
-aria-label="Pop balloon"
->
-<span></span>
-</button>
-
-
-<button
-class="balloon balloon-two"
-type="button"
-aria-label="Pop balloon"
->
-<span></span>
-</button>
-
-
-<button
-class="balloon balloon-three"
-type="button"
-aria-label="Pop balloon"
->
-<span></span>
-</button>
-
-
-<button
-class="balloon balloon-four"
-type="button"
-aria-label="Pop balloon"
->
-<span></span>
-</button>
-
+<div class="balloon balloon-purple" data-balloon="4">
+<div class="balloon-string"></div>
+</div>
 
 </div>
 
+<div id="balloonCounter">0 / 4</div>
 
-<div class="balloon-counter">
-<span id="balloonCount">0</span> / 4
+<div id="balloonComplete" class="balloon-complete">
+<div>You are special</div>
+<span>This is just a little surprise for you ❤️</span>
 </div>
 
-
-<div
-id="specialMessage"
-class="special-message"
->
-
-<div class="special-heart">
-♥
-</div>
-
-
-<h3>
-You are special
-</h3>
-
-
-<p>
-This is just a little surprise for you ❤️
-</p>
-
-
-<button
-id="continueButton"
-class="continue-button"
-type="button"
->
+<button id="continueBtn" class="continue-btn">
 Continue ✨
 </button>
 
 </div>
-
-</div>
-
 </section>
 
 
-
-<!-- =========================================
-PAGE 3
-EXACTLY FROM YOUR LATEST CODE
-========================================= -->
-
+<!-- ================= PAGE 3 ================= -->
 <section id="page3" class="page">
 
 <div class="candle-page">
 
+<div class="page3-small">MAKE A WISH ✨</div>
 
-<div class="page3-small">
-MAKE A WISH ✨
-</div>
-
-
-<h2>
-Blow the candle
-</h2>
-
+<h2>Blow the candle</h2>
 
 <p class="page3-subtitle">
 Make a wish before the flame goes out...
 </p>
 
-
-<!-- CAKE -->
-
 <div class="cake-scene">
 
 <div class="cake-glow"></div>
 
-
 <div class="cheesecake">
 
-
 <div class="biscoff-crumbs">
-
 <span></span>
 <span></span>
 <span></span>
@@ -246,80 +106,46 @@ Make a wish before the flame goes out...
 <span></span>
 <span></span>
 <span></span>
-
 </div>
 
-
 <div class="cheesecake-top"></div>
-
 
 <div class="biscoff-drip drip-one"></div>
 <div class="biscoff-drip drip-two"></div>
 <div class="biscoff-drip drip-three"></div>
 
-
 <div class="cheesecake-middle"></div>
-
-
 <div class="cheesecake-base"></div>
 
 </div>
 
+<div id="candle" class="candle">
 
-
-<!-- CANDLE -->
-
-<div
-id="candle"
-class="candle"
->
-
-<div
-id="flame"
-class="flame"
->
-
+<div id="flame" class="flame">
 <div class="flame-inner"></div>
-
 </div>
-
 
 <div class="candle-body">
-
 <div class="candle-stripe"></div>
 <div class="candle-stripe"></div>
 <div class="candle-stripe"></div>
-
 </div>
 
 </div>
 
 </div>
-
-
 
 <div class="blow-text">
 Blow the candle 💨
 </div>
 
-
-
-<!-- SWIPE -->
-
 <div class="swipe-container">
 
-<div
-id="swipeTrack"
-class="swipe-track"
->
+<div id="swipeTrack" class="swipe-track">
 
-<div
-id="swipeButton"
-class="swipe-button"
->
+<div id="swipeButton" class="swipe-button">
 <span>→</span>
 </div>
-
 
 <div class="swipe-label">
 Swipe to blow candle
@@ -329,12 +155,7 @@ Swipe to blow candle
 
 </div>
 
-
-
-<div
-id="wishMessage"
-class="wish-message"
->
+<div id="wishMessage" class="wish-message">
 ✨ Wish made ✨
 </div>
 
@@ -343,27 +164,16 @@ class="wish-message"
 </section>
 
 
-
-<!-- =========================================
-PAGE 4 — MESSAGE
-========================================= -->
-
+<!-- ================= PAGE 4 ================= -->
 <section id="page4" class="page">
 
 <div class="heart-message-page">
 
-
-<div
-id="letterIntro"
-class="letter-intro"
->
+<div id="letterIntro" class="letter-intro">
 
 <div class="heart-message-title">
 A message from my heart
 </div>
-
-
-<!-- SMALL ENVELOPE -->
 
 <div
 id="envelope"
@@ -375,26 +185,17 @@ aria-label="Open message"
 
 <div class="envelope-back"></div>
 
-
-<div
-id="letterPaper"
-class="letter-paper"
->
+<div id="letterPaper" class="letter-paper">
 
 <div class="letter-content">
-
 <div id="typedMessage"></div>
-
 </div>
 
 </div>
-
 
 <div class="envelope-front"></div>
 
-
 <div class="envelope-flap"></div>
-
 
 <div class="envelope-seal">
 ♥
@@ -402,55 +203,23 @@ class="letter-paper"
 
 </div>
 
-
-<div
-id="tapToOpen"
-class="tap-to-open"
->
+<div id="tapToOpen" class="tap-to-open">
 Tap to open
 </div>
 
 </div>
 
 
-<!-- FINAL LETTER -->
-
-<div
-id="finalLetterStage"
-class="final-letter-stage"
-></div>
-
+<div id="finalLetterStage" class="final-letter-stage"></div>
 
 </div>
 
 </section>
 
 
+<audio id="birthdayMusic" src="birthday-music.mp3" loop></audio>
 
-<!-- =========================================
-EFFECTS
-========================================= -->
-
-<div id="effects"></div>
-
-
-
-<!-- =========================================
-MUSIC
-========================================= -->
-
-<audio
-id="birthdayMusic"
-src="birthday-music.mp3"
-preload="auto"
-loop>
-</audio>
-
-
-
-<script src="script.js?v=6"></script>
-
+<script src="script.js?v=7"></script>
 
 </body>
-
 </html>
