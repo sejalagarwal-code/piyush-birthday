@@ -1,247 +1,556 @@
-/* =========================================
-RESET
-========================================= */
+/* =========================
+BASIC RESET
+========================= */
 
 * {
+box-sizing: border-box;
 margin: 0;
 padding: 0;
-box-sizing: border-box;
 }
-
 
 html,
 body {
 width: 100%;
-height: 100%;
+min-height: 100%;
 }
-
 
 body {
+font-family: Georgia, "Times New Roman", serif;
+
+background:
+radial-gradient(circle at 20% 20%, #ffd6e5 0%, transparent 30%),
+radial-gradient(circle at 80% 80%, #f7c5d9 0%, transparent 35%),
+linear-gradient(135deg, #fff5f8, #ffe4ef);
+
 overflow: hidden;
 
-font-family:
-Georgia,
-"Times New Roman",
-serif;
-
--webkit-tap-highlight-color: transparent;
+color: #54213a;
 }
 
 
-/* =========================================
-ALL PAGES
-========================================= */
+/* =========================
+PAGE SYSTEM
+========================= */
 
 .page {
 position: fixed;
 
 inset: 0;
 
-width: 100%;
-height: 100dvh;
-
-overflow: hidden;
+width: 100vw;
+height: 100vh;
 
 display: flex;
 
-align-items: center;
 justify-content: center;
+align-items: center;
+
+padding: 20px;
 
 opacity: 0;
-
 visibility: hidden;
 
-transform: scale(1.04);
+transform: scale(1.03);
 
 transition:
 opacity 0.7s ease,
 transform 0.7s ease,
-visibility 0.7s ease;
-}
+visibility 0.7s;
 
+z-index: 2;
+}
 
 .page.active {
 opacity: 1;
-
 visibility: visible;
 
 transform: scale(1);
 }
 
 
-/* =========================================
-PAGE 1 BACKGROUND
-========================================= */
+/* =========================
+CARD
+========================= */
 
-.page-one {
+.card {
+width: min(92vw, 650px);
 
-background:
+min-height: 430px;
 
-radial-gradient(
-circle at 15% 10%,
-rgba(255,255,255,0.95),
-transparent 27%
-),
-
-radial-gradient(
-circle at 90% 90%,
-rgba(241,146,177,0.45),
-transparent 32%
-),
-
-linear-gradient(
-135deg,
-#fff8fa 0%,
-#fbdce7 52%,
-#f3b4ca 100%
-);
-}
-
-
-/* =========================================
-PAGE 1 CARD
-========================================= */
-
-.birthday-card {
-
-position: relative;
-
-z-index: 10;
-
-width: min(88vw, 410px);
-
-padding:
-42px
-28px
-32px;
-
-text-align: center;
-
-background:
-rgba(255,255,255,0.76);
-
-border:
-1px solid
-rgba(255,255,255,0.95);
-
-border-radius: 32px;
-
-box-shadow:
-
-0 30px 80px
-rgba(137,53,82,0.18),
-
-inset
-0 1px 0
-rgba(255,255,255,0.95);
-
-backdrop-filter:
-blur(18px);
-
--webkit-backdrop-filter:
-blur(18px);
-
-animation:
-cardEntrance
-1s
-cubic-bezier(.2,.8,.2,1)
-both;
-}
-
-
-@keyframes cardEntrance {
-
-from {
-opacity: 0;
-
-transform:
-translateY(30px)
-scale(0.94);
-}
-
-to {
-opacity: 1;
-
-transform:
-translateY(0)
-scale(1);
-}
-}
-
-
-/* =========================================
-EYEBROW
-========================================= */
-
-.eyebrow {
-
-font-family:
-Arial,
-sans-serif;
-
-font-size: 10px;
-
-letter-spacing: 3px;
-
-color: #b65b78;
-
-text-transform: uppercase;
-}
-
-
-.birthday-card .eyebrow {
-
-margin-bottom: 22px;
-}
-
-
-/* =========================================
-HEART BADGE
-========================================= */
-
-.heart-badge {
-
-width: 64px;
-height: 64px;
-
-margin:
-0 auto
-22px;
+padding: 55px 35px;
 
 display: flex;
 
+flex-direction: column;
+
+justify-content: center;
 align-items: center;
+
+text-align: center;
+
+border-radius: 32px;
+
+background: rgba(255, 255, 255, 0.72);
+
+border: 1px solid rgba(255, 255, 255, 0.9);
+
+box-shadow:
+0 30px 80px rgba(130, 47, 82, 0.18),
+inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+backdrop-filter: blur(18px);
+
+position: relative;
+
+overflow: hidden;
+}
+
+
+/* =========================
+PAGE 1
+========================= */
+
+.small-heart {
+font-size: 45px;
+
+margin-bottom: 20px;
+
+animation: heartbeat 1.6s infinite;
+}
+
+h1 {
+font-size: clamp(36px, 7vw, 62px);
+
+line-height: 1.1;
+
+color: #8d3158;
+
+margin-bottom: 22px;
+
+letter-spacing: -1px;
+}
+
+.subtitle {
+font-family: Arial, sans-serif;
+
+font-size: 18px;
+
+color: #86546a;
+
+margin-bottom: 35px;
+}
+
+
+/* =========================
+BUTTONS
+========================= */
+
+.buttons {
+display: flex;
+
+gap: 18px;
+
 justify-content: center;
 
-border-radius: 50%;
+align-items: center;
+
+position: relative;
+
+min-height: 60px;
+
+width: 100%;
+}
+
+button {
+border: none;
+
+cursor: pointer;
+
+font-family: Arial, sans-serif;
+
+font-weight: 700;
+
+transition:
+transform 0.25s ease,
+box-shadow 0.25s ease;
+}
+
+.yes-button,
+.no-button {
+padding: 15px 30px;
+
+border-radius: 50px;
+
+font-size: 16px;
+}
+
+.yes-button {
+background: linear-gradient(135deg, #d94b7b, #a82d5d);
 
 color: white;
 
-font-family:
-Arial,
-sans-serif;
-
-font-size: 28px;
-
-background:
-linear-gradient(
-145deg,
-#ef7196,
-#d43e6c
-);
-
 box-shadow:
-
-0 12px 30px
-rgba(208,59,105,0.28);
-
-animation:
-heartbeat
-1.7s
-ease-in-out
-infinite;
+0 10px 25px rgba(168, 45, 93, 0.3);
 }
 
+.yes-button:hover {
+transform: translateY(-3px) scale(1.04);
+}
+
+.no-button {
+background: white;
+
+color: #9b5471;
+
+border: 1px solid #edc3d2;
+
+position: relative;
+
+z-index: 20;
+}
+
+.no-button:hover {
+box-shadow: 0 8px 20px rgba(100, 40, 70, 0.12);
+}
+
+
+/* =========================
+FLOATING HEARTS
+========================= */
+
+.floating-hearts {
+position: fixed;
+
+inset: 0;
+
+pointer-events: none;
+
+overflow: hidden;
+
+z-index: 1;
+}
+
+.floating-hearts span {
+position: absolute;
+
+bottom: -60px;
+
+font-size: 22px;
+
+opacity: 0.35;
+
+animation: floatUp linear infinite;
+}
+
+.floating-hearts span:nth-child(1) {
+left: 8%;
+animation-duration: 9s;
+}
+
+.floating-hearts span:nth-child(2) {
+left: 25%;
+animation-duration: 12s;
+animation-delay: 2s;
+}
+
+.floating-hearts span:nth-child(3) {
+left: 43%;
+animation-duration: 10s;
+animation-delay: 4s;
+}
+
+.floating-hearts span:nth-child(4) {
+left: 62%;
+animation-duration: 13s;
+animation-delay: 1s;
+}
+
+.floating-hearts span:nth-child(5) {
+left: 80%;
+animation-duration: 11s;
+animation-delay: 3s;
+}
+
+.floating-hearts span:nth-child(6) {
+left: 92%;
+animation-duration: 14s;
+animation-delay: 5s;
+}
+
+
+/* =========================
+PAGE 2
+========================= */
+
+.balloon-card {
+min-height: 620px;
+}
+
+.balloon-card h2 {
+font-size: clamp(32px, 6vw, 48px);
+
+color: #8d3158;
+
+margin-bottom: 10px;
+}
+
+
+/* =========================
+BALLOON AREA
+========================= */
+
+.balloon-area {
+width: 100%;
+
+min-height: 280px;
+
+display: flex;
+
+justify-content: center;
+align-items: center;
+
+gap: 25px;
+
+flex-wrap: wrap;
+
+margin-top: 10px;
+}
+
+
+/* =========================
+BALLOONS
+========================= */
+
+.balloon {
+width: 105px;
+
+height: 135px;
+
+border-radius: 55% 55% 48% 48%;
+
+position: relative;
+
+cursor: pointer;
+
+border: none;
+
+transform-origin: center bottom;
+
+box-shadow:
+inset -12px -15px 25px rgba(0, 0, 0, 0.08),
+inset 10px 8px 15px rgba(255, 255, 255, 0.5);
+
+transition:
+transform 0.2s ease,
+opacity 0.4s ease;
+}
+
+
+/* Balloon shine */
+
+.balloon::before {
+content: "";
+
+position: absolute;
+
+width: 22px;
+height: 40px;
+
+background: rgba(255, 255, 255, 0.55);
+
+border-radius: 50%;
+
+top: 22px;
+left: 20px;
+
+transform: rotate(25deg);
+}
+
+
+/* Balloon knot */
+
+.balloon::after {
+content: "";
+
+position: absolute;
+
+bottom: -8px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+width: 13px;
+height: 13px;
+
+background: inherit;
+
+clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+
+/* Balloon string */
+
+.balloon span {
+position: absolute;
+
+width: 1px;
+
+height: 70px;
+
+background: rgba(90, 50, 70, 0.4);
+
+left: 50%;
+
+top: 100%;
+
+transform: translateX(-50%);
+}
+
+
+/* Individual balloon colours */
+
+.balloon-one {
+background: linear-gradient(135deg, #ff759d, #d93468);
+}
+
+.balloon-two {
+background: linear-gradient(135deg, #a77cff, #7042d6);
+}
+
+.balloon-three {
+background: linear-gradient(135deg, #ffb55f, #ed6c46);
+}
+
+.balloon-four {
+background: linear-gradient(135deg, #65d7cf, #299e9a);
+}
+
+
+.balloon:hover {
+transform: translateY(-8px) scale(1.05);
+}
+
+
+/* Popped */
+
+.balloon.popped {
+animation: balloonPop 0.45s forwards;
+pointer-events: none;
+}
+
+
+/* =========================
+COUNTER
+========================= */
+
+.counter {
+font-family: Arial, sans-serif;
+
+font-size: 15px;
+
+color: #976078;
+
+margin-top: 20px;
+}
+
+
+/* =========================
+SPECIAL MESSAGE
+========================= */
+
+.special-message {
+position: absolute;
+
+left: 50%;
+bottom: 35px;
+
+width: calc(100% - 50px);
+
+padding: 22px;
+
+border-radius: 22px;
+
+background: rgba(255, 245, 249, 0.96);
+
+box-shadow:
+0 15px 45px rgba(120, 40, 75, 0.18);
+
+opacity: 0;
+
+transform:
+translateX(-50%)
+translateY(30px)
+scale(0.8);
+
+pointer-events: none;
+
+transition:
+opacity 0.6s ease,
+transform 0.6s ease;
+}
+
+.special-message.show {
+opacity: 1;
+
+transform:
+translateX(-50%)
+translateY(0)
+scale(1);
+
+pointer-events: auto;
+}
+
+.message-heart {
+font-size: 28px;
+
+margin-bottom: 5px;
+}
+
+.special-message h3 {
+font-size: 28px;
+
+color: #a52e5c;
+
+margin-bottom: 6px;
+}
+
+.special-message p {
+font-family: Arial, sans-serif;
+
+color: #80566a;
+
+font-size: 14px;
+
+margin-bottom: 15px;
+}
+
+
+/* =========================
+CONTINUE BUTTON
+========================= */
+
+.continue-button {
+padding: 12px 25px;
+
+border-radius: 30px;
+
+color: white;
+
+background: linear-gradient(135deg, #d94b7b, #a82d5d);
+
+box-shadow:
+0 8px 20px rgba(168, 45, 93, 0.25);
+}
+
+.continue-button:hover {
+transform: translateY(-2px);
+}
+
+
+/* =========================
+ANIMATIONS
+========================= */
 
 @keyframes heartbeat {
 
@@ -250,1013 +559,120 @@ infinite;
 transform: scale(1);
 }
 
-12% {
-transform: scale(1.1);
-}
-
-25% {
-transform: scale(1);
-}
-
-38% {
-transform: scale(1.07);
-}
-
-52% {
-transform: scale(1);
-}
-}
-
-
-/* =========================================
-PAGE 1 TITLE
-========================================= */
-
-h1 {
-
-color: #562535;
-
-font-size:
-clamp(
-34px,
-9vw,
-46px
-);
-
-line-height: 1.06;
-
-font-weight: 500;
-
-letter-spacing: -1px;
-}
-
-
-h1 span {
-
-color: #d44270;
-
-font-style: italic;
-}
-
-
-/* =========================================
-ORNAMENT
-========================================= */
-
-.ornament {
-
-display: flex;
-
-align-items: center;
-justify-content: center;
-
-gap: 11px;
-
-margin:
-25px
-0;
-}
-
-
-.ornament i {
-
-display: block;
-
-width: 48px;
-height: 1px;
-
-background:
-#e2a5b8;
-}
-
-
-.ornament span {
-
-color: #d35b7b;
-
-font-size: 12px;
-}
-
-
-/* =========================================
-QUESTION
-========================================= */
-
-.question {
-
-margin-bottom: 28px;
-
-color: #713c50;
-
-font-family:
-Arial,
-sans-serif;
-
-font-size: 16px;
-
-line-height: 1.55;
-}
-
-
-.question em {
-
-color: #c73e68;
-
-font-family:
-Georgia,
-serif;
-
-font-size: 23px;
-}
-
-
-/* =========================================
-BUTTONS
-========================================= */
-
-.buttons {
-
-min-height: 58px;
-
-display: flex;
-
-align-items: center;
-justify-content: center;
-
-gap: 13px;
-}
-
-
-button {
-
-border: 0;
-
-outline: 0;
-
-cursor: pointer;
-
--webkit-tap-highlight-color:
-transparent;
-}
-
-
-/* YES */
-
-.yes-button {
-
-padding:
-15px
-27px;
-
-border-radius: 50px;
-
-color: white;
-
-background:
-linear-gradient(
-135deg,
-#eb5b85,
-#cc3968
-);
-
-font-family:
-Arial,
-sans-serif;
-
-font-size: 13px;
-
-font-weight: 700;
-
-letter-spacing: 0.5px;
-
-box-shadow:
-0 10px 25px
-rgba(204,57,104,0.28);
-
-transition:
-transform 0.2s ease,
-box-shadow 0.2s ease;
-}
-
-
-.yes-button:hover {
-
-transform:
-translateY(-3px)
-scale(1.03);
-
-box-shadow:
-0 15px 32px
-rgba(204,57,104,0.34);
-}
-
-
-/* NO */
-
-.no-button {
-
-padding:
-15px
-27px;
-
-border-radius: 50px;
-
-color: #9d506a;
-
-background:
-rgba(255,255,255,0.9);
-
-border:
-1px solid
-#e8bac9;
-
-font-family:
-Arial,
-sans-serif;
-
-font-size: 13px;
-
-font-weight: 700;
-
-transition:
-left 0.18s ease,
-top 0.18s ease;
-}
-
-
-/* =========================================
-BOTTOM TEXT
-========================================= */
-
-.choose-text {
-
-margin-top: 21px;
-
-color: #aa7788;
-
-font-family:
-Arial,
-sans-serif;
-
-font-size: 11px;
-
-letter-spacing: 1px;
-}
-
-
-/* =========================================
-FLOATING HEARTS
-========================================= */
-
-.floating-heart {
-
-position: absolute;
-
-z-index: 2;
-
-color:
-rgba(205,60,105,0.24);
-
-font-size: 27px;
-
-pointer-events: none;
-
-animation:
-floatingHeart
-6s
-ease-in-out
-infinite;
-}
-
-
-.heart-one {
-left: 7%;
-top: 14%;
-}
-
-
-.heart-two {
-right: 9%;
-top: 17%;
-
-animation-delay: 1s;
-}
-
-
-.heart-three {
-left: 11%;
-bottom: 18%;
-
-animation-delay: 2s;
-}
-
-
-.heart-four {
-right: 8%;
-bottom: 15%;
-
-animation-delay: 3s;
-}
-
-
-.heart-five {
-left: 4%;
-top: 52%;
-
-animation-delay: 1.5s;
-}
-
-
-.heart-six {
-right: 4%;
-top: 50%;
-
-animation-delay: 3.5s;
-}
-
-
-@keyframes floatingHeart {
-
-0%,
-100% {
-
-transform:
-translateY(0)
-rotate(0deg);
-
-opacity: 0.25;
-}
-
 50% {
-
-transform:
-translateY(-25px)
-rotate(10deg);
-
-opacity: 0.75;
+transform: scale(1.15);
 }
 }
 
 
-/* =========================================
-PAGE 2 BACKGROUND
-========================================= */
+@keyframes floatUp {
 
-.page-two {
-
-background:
-
-radial-gradient(
-circle at 50% 5%,
-rgba(255,255,255,0.9),
-transparent 25%
-),
-
-radial-gradient(
-circle at 5% 90%,
-rgba(243,168,194,0.5),
-transparent 35%
-),
-
-linear-gradient(
-145deg,
-#fff7f9,
-#fbd9e6 55%,
-#f2b2c9
-);
+from {
+transform: translateY(0) rotate(0deg);
 }
 
-
-/* =========================================
-PAGE 2 GLOWS
-========================================= */
-
-.background-glow {
-
-position: absolute;
-
-width: 280px;
-height: 280px;
-
-border-radius: 50%;
-
-background:
-rgba(255,255,255,0.35);
-
-filter: blur(70px);
-
-pointer-events: none;
+to {
+transform: translateY(-110vh) rotate(360deg);
 }
-
-
-.glow-one {
-
-top: -130px;
-left: -100px;
-}
-
-
-.glow-two {
-
-right: -130px;
-bottom: -120px;
-}
-
-
-/* =========================================
-PAGE 2 CONTENT
-========================================= */
-
-.page-two-content {
-
-position: relative;
-
-width: 100%;
-height: 100%;
-
-padding-top: 11vh;
-
-text-align: center;
-
-z-index: 5;
-}
-
-
-.page-two .eyebrow {
-
-margin-bottom: 15px;
-}
-
-
-h2 {
-
-color: #592638;
-
-font-size:
-clamp(
-36px,
-10vw,
-50px
-);
-
-line-height: 1.03;
-
-font-weight: 500;
-
-letter-spacing: -1px;
-}
-
-
-h2 span {
-
-color: #d44270;
-
-font-style: italic;
-}
-
-
-.instruction {
-
-margin-top: 13px;
-
-color: #9d6377;
-
-font-family:
-Arial,
-sans-serif;
-
-font-size: 13px;
-
-letter-spacing: 0.5px;
-}
-
-
-/* =========================================
-SPECIAL MESSAGE
-HIDDEN INITIALLY
-========================================= */
-
-.special-message {
-
-position: absolute;
-
-top: 36%;
-
-left: 50%;
-
-transform:
-translateX(-50%)
-scale(0.65);
-
-width: 100%;
-
-color: #713b50;
-
-font-size: 28px;
-
-line-height: 1.05;
-
-opacity: 0;
-
-pointer-events: none;
-
-transition:
-opacity 0.9s ease,
-transform 0.9s
-cubic-bezier(.2,.8,.2,1);
-
-z-index: 1;
-}
-
-
-.special-message strong {
-
-display: block;
-
-margin-top: 3px;
-
-color: #d23e6c;
-
-font-size: 46px;
-
-font-style: italic;
-
-font-weight: 500;
-}
-
-
-.message-heart {
-
-margin-top: 8px;
-
-font-size: 25px;
-}
-
-
-.special-message.show {
-
-opacity: 1;
-
-transform:
-translateX(-50%)
-scale(1);
-}
-
-
-/* =========================================
-BALLOON AREA
-========================================= */
-
-.balloon-area {
-
-position: absolute;
-
-top: 30%;
-
-left: 50%;
-
-transform: translateX(-50%);
-
-width: min(92vw, 400px);
-
-height: 330px;
-
-z-index: 10;
-}
-
-
-/* =========================================
-BALLOONS
-========================================= */
-
-.balloon {
-
-position: absolute;
-
-width: 108px;
-height: 140px;
-
-border-radius:
-52%
-52%
-48%
-48%;
-
-border: 0;
-
-box-shadow:
-
-inset
--13px
--18px
-28px
-rgba(0,0,0,0.09),
-
-inset
-11px
-8px
-17px
-rgba(255,255,255,0.48),
-
-0 14px 25px
-rgba(120,55,85,0.14);
-
-transition:
-transform 0.2s ease;
-}
-
-
-/* Balloon positions */
-
-.balloon-one {
-
-left: 5%;
-top: 5px;
-
-transform:
-rotate(-7deg);
-}
-
-
-.balloon-two {
-
-right: 5%;
-top: 0;
-
-transform:
-rotate(7deg);
-}
-
-
-.balloon-three {
-
-left: 15%;
-top: 155px;
-
-transform:
-rotate(5deg);
-}
-
-
-.balloon-four {
-
-right: 15%;
-top: 150px;
-
-transform:
-rotate(-5deg);
-}
-
-
-/* =========================================
-BALLOON COLOURS
-========================================= */
-
-.balloon-one {
-
-background:
-radial-gradient(
-circle at 33% 23%,
-#ffe2eb 0%,
-#f2739a 38%,
-#d94370 100%
-);
-}
-
-
-.balloon-two {
-
-background:
-radial-gradient(
-circle at 33% 23%,
-#f1e4ff 0%,
-#b47bd8 38%,
-#8051ad 100%
-);
-}
-
-
-.balloon-three {
-
-background:
-radial-gradient(
-circle at 33% 23%,
-#ffe0e5 0%,
-#e9627e 38%,
-#c6385c 100%
-);
-}
-
-
-.balloon-four {
-
-background:
-radial-gradient(
-circle at 33% 23%,
-#ffe9dc 0%,
-#f19a7b 38%,
-#d56d5b 100%
-);
-}
-
-
-/* =========================================
-BALLOON SHINE
-========================================= */
-
-.balloon .shine {
-
-position: absolute;
-
-width: 24px;
-height: 42px;
-
-top: 19px;
-left: 19px;
-
-border-radius: 50%;
-
-background:
-rgba(255,255,255,0.48);
-
-transform:
-rotate(25deg);
-
-filter: blur(1px);
-}
-
-
-/* =========================================
-BALLOON KNOT
-========================================= */
-
-.balloon .knot {
-
-position: absolute;
-
-left: 50%;
-
-bottom: -7px;
-
-width: 14px;
-height: 14px;
-
-transform:
-translateX(-50%)
-rotate(45deg);
-
-background: inherit;
-
-border-radius: 2px;
-}
-
-
-/* =========================================
-BALLOON POP
-========================================= */
-
-.balloon.popped {
-
-pointer-events: none;
-
-animation:
-balloonPop
-0.45s
-ease
-forwards;
 }
 
 
 @keyframes balloonPop {
 
 0% {
-
+transform: scale(1);
 opacity: 1;
-
-transform:
-scale(1)
-rotate(0deg);
 }
 
-25% {
-
-transform:
-scale(1.16)
-rotate(5deg);
-}
-
-55% {
-
-transform:
-scale(0.9)
-rotate(-5deg);
+45% {
+transform: scale(1.25);
+opacity: 1;
 }
 
 100% {
-
+transform: scale(0);
 opacity: 0;
-
-transform:
-scale(0.05)
-rotate(25deg);
 }
 }
 
 
-/* =========================================
-BALLOON COUNTER
-========================================= */
-
-.balloon-counter {
-
-position: absolute;
-
-left: 50%;
-
-top: calc(30% + 320px);
-
-transform:
-translateX(-50%);
-
-color: #a06176;
-
-font-family:
-Arial,
-sans-serif;
-
-font-size: 12px;
-
-letter-spacing: 3px;
-}
-
-
-.counter-slash {
-
-margin:
-0 5px;
-
-color: #d2869f;
-}
-
-
-/* =========================================
-PAGE 2 HEARTS
-========================================= */
-
-.page-two-heart {
-
-z-index: 2;
-}
-
-
-.heart-a {
-
-left: 8%;
-top: 17%;
-}
-
-
-.heart-b {
-
-right: 8%;
-top: 20%;
-
-animation-delay: 1.2s;
-}
-
-
-.heart-c {
-
-left: 7%;
-bottom: 16%;
-
-animation-delay: 2.4s;
-}
-
-
-/* =========================================
+/* =========================
 POP EFFECTS
-========================================= */
-
-.effects {
-
-position: fixed;
-
-inset: 0;
-
-pointer-events: none;
-
-z-index: 50;
-}
-
+========================= */
 
 .pop-heart {
-
-position: absolute;
-
-font-size: 22px;
+position: fixed;
 
 pointer-events: none;
 
-animation:
-popHeart
-1s
-ease-out
-forwards;
-}
+font-size: 24px;
 
+z-index: 50;
+
+animation: popHeart 0.8s ease-out forwards;
+}
 
 @keyframes popHeart {
 
 0% {
-
 opacity: 1;
-
-transform:
-translate(0,0)
-scale(0.4)
-rotate(0);
+transform: translate(0, 0) scale(1);
 }
 
 100% {
-
 opacity: 0;
-
 transform:
 translate(
-var(--move-x),
-var(--move-y)
+var(--x),
+var(--y)
 )
-scale(1.15)
-rotate(
-var(--rotate)
-);
+scale(0.3);
 }
 }
 
 
-/* =========================================
-SMALL PHONES
-========================================= */
+/* =========================
+MOBILE
+========================= */
 
-@media (max-width: 380px) {
+@media (max-width: 600px) {
 
-.birthday-card {
+.card {
+min-height: 500px;
 
-padding:
-35px
-20px
-28px;
+padding: 40px 20px;
+
+border-radius: 25px;
 }
 
-
-h1 {
-
-font-size: 32px;
+.balloon-card {
+min-height: 600px;
 }
-
-
-.balloon {
-
-width: 94px;
-height: 123px;
-}
-
-
-.balloon-one {
-
-left: 4%;
-}
-
-
-.balloon-two {
-
-right: 4%;
-}
-
-
-.balloon-three {
-
-left: 11%;
-top: 140px;
-}
-
-
-.balloon-four {
-
-right: 11%;
-top: 137px;
-}
-
 
 .balloon-area {
+gap: 12px;
 
-height: 290px;
+min-height: 250px;
 }
 
+.balloon {
+width: 78px;
 
-.special-message strong {
-
-font-size: 40px;
+height: 105px;
 }
+
+.balloon span {
+height: 55px;
+}
+
+.special-message {
+bottom: 20px;
+
+width: calc(100% - 30px);
+}
+
+.special-message h3 {
+font-size: 24px;
+}
+
 }
