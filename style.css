@@ -12,143 +12,219 @@ height: 100%;
 
 body {
 overflow: hidden;
-font-family: Georgia, "Times New Roman", serif;
+
+font-family:
+Georgia,
+"Times New Roman",
+serif;
+
+-webkit-tap-highlight-color: transparent;
 }
 
 
-/* =================================
+/* =====================================================
 COMMON PAGE
-================================= */
+===================================================== */
 
 .page {
+
 position: fixed;
+
 inset: 0;
 
 width: 100%;
 height: 100dvh;
 
 display: flex;
+
 align-items: center;
 justify-content: center;
 
 overflow: hidden;
 
 background:
+
 radial-gradient(
-circle at 20% 15%,
-rgba(255,255,255,.9),
-transparent 28%
+circle at 15% 15%,
+rgba(255,255,255,.95),
+transparent 27%
 ),
+
 radial-gradient(
 circle at 85% 85%,
-rgba(255,177,204,.5),
+rgba(255,177,205,.55),
 transparent 32%
 ),
+
 linear-gradient(
 135deg,
-#fff7f9,
-#fbdbe6,
-#f4b6cd
+#fff7fa,
+#fbd9e6,
+#f3b4cb
 );
 
 opacity: 0;
+
 visibility: hidden;
 
-transform: scale(1.03);
+transform: scale(1.04);
 
 transition:
+
 opacity .7s ease,
+
 transform .7s ease,
-visibility .7s;
+
+visibility .7s ease;
+
 }
+
 
 .page.active {
+
 opacity: 1;
+
 visibility: visible;
+
 transform: scale(1);
+
 }
 
 
-/* =================================
-PAGE 1
-================================= */
+/* =====================================================
+PAGE 1 CARD
+===================================================== */
 
 .card {
+
 width: min(88vw, 400px);
 
-padding: 42px 28px 32px;
+padding:
+42px
+28px
+32px;
 
 text-align: center;
 
-background: rgba(255,255,255,.74);
+background:
+rgba(255,255,255,.76);
 
-border: 1px solid rgba(255,255,255,.95);
+border:
+1px solid
+rgba(255,255,255,.95);
 
 border-radius: 32px;
 
 box-shadow:
-0 25px 70px rgba(140,55,85,.18),
-inset 0 1px 0 rgba(255,255,255,.9);
+
+0 25px 70px
+rgba(140,55,85,.18),
+
+inset 0 1px 0
+rgba(255,255,255,.95);
 
 backdrop-filter: blur(18px);
 
 position: relative;
+
 z-index: 10;
 
-animation: cardAppear 1s ease;
+animation:
+cardAppear 1s ease;
+
 }
 
+
 @keyframes cardAppear {
+
 from {
+
 opacity: 0;
-transform: translateY(25px) scale(.95);
+
+transform:
+translateY(25px)
+scale(.95);
+
 }
 
 to {
+
 opacity: 1;
-transform: translateY(0) scale(1);
+
+transform:
+translateY(0)
+scale(1);
+
 }
+
 }
+
 
 .small-text,
 .scene-label {
-font-family: Arial, sans-serif;
+
+font-family:
+Arial,
+sans-serif;
+
 font-size: 10px;
+
 letter-spacing: 3px;
+
 color: #b65d78;
+
 }
+
 
 .small-text {
+
 margin-bottom: 22px;
+
 }
 
+
 .main-heart {
+
 width: 62px;
 height: 62px;
 
-margin: 0 auto 22px;
+margin:
+0
+auto
+22px;
 
 display: flex;
+
 align-items: center;
 justify-content: center;
 
 border-radius: 50%;
 
 background:
-linear-gradient(145deg,#ef7095,#d33d6c);
+linear-gradient(
+145deg,
+#ef7095,
+#d33d6c
+);
 
 color: white;
 
 font-size: 28px;
 
 box-shadow:
-0 12px 30px rgba(210,55,105,.3);
+0 12px 30px
+rgba(210,55,105,.3);
 
-animation: heartbeat 1.6s infinite;
+animation:
+heartbeat 1.6s infinite;
+
 }
 
+
 @keyframes heartbeat {
-0%,100% {
+
+0%,
+100% {
 transform: scale(1);
 }
 
@@ -167,27 +243,43 @@ transform: scale(1.08);
 60% {
 transform: scale(1);
 }
+
 }
 
+
 h1 {
+
 color: #572638;
 
-font-size: clamp(32px,9vw,44px);
+font-size:
+clamp(
+32px,
+9vw,
+44px
+);
 
 line-height: 1.08;
 
 font-weight: 500;
 
 letter-spacing: -1px;
+
 }
+
 
 h1 span {
+
 color: #d54270;
+
 font-style: italic;
+
 }
 
+
 .divider {
+
 display: flex;
+
 align-items: center;
 justify-content: center;
 
@@ -196,35 +288,53 @@ gap: 10px;
 margin: 25px 0;
 
 color: #d65b7d;
+
 }
+
 
 .divider span {
+
 width: 45px;
+
 height: 1px;
+
 background: #e5a8ba;
+
 }
 
+
 .question {
+
 color: #743e52;
 
-font-family: Arial, sans-serif;
+font-family:
+Arial,
+sans-serif;
 
 font-size: 16px;
 
 line-height: 1.6;
 
 margin-bottom: 28px;
+
 }
 
+
 .question i {
-font-family: Georgia, serif;
+
+font-family:
+Georgia,
+serif;
 
 font-size: 23px;
 
 color: #c83d68;
+
 }
 
+
 .button-area {
+
 min-height: 58px;
 
 display: flex;
@@ -236,61 +346,83 @@ justify-content: center;
 gap: 12px;
 
 position: relative;
+
 }
 
-button {
-border: none;
 
-font-family: Arial, sans-serif;
+button {
+
+border: none;
 
 cursor: pointer;
 
 -webkit-tap-highlight-color: transparent;
+
 }
 
+
 .yes-button {
+
 color: white;
 
 background:
-linear-gradient(135deg,#eb5d87,#cc3968);
+linear-gradient(
+135deg,
+#eb5d87,
+#cc3968
+);
+
+font-family: Arial, sans-serif;
 
 font-size: 13px;
+
 font-weight: bold;
 
-padding: 15px 25px;
+padding:
+15px
+25px;
 
 border-radius: 50px;
 
 box-shadow:
-0 10px 25px rgba(205,55,103,.3);
+0 10px 25px
+rgba(205,55,103,.3);
 
-transition: transform .2s;
 }
 
-.yes-button:hover {
-transform: translateY(-3px) scale(1.04);
-}
 
 .no-button {
+
 color: #a64f6b;
 
-background: rgba(255,255,255,.9);
+background:
+rgba(255,255,255,.9);
 
-border: 1px solid #e9bdcb;
+border:
+1px solid
+#e9bdcb;
+
+font-family: Arial, sans-serif;
 
 font-size: 13px;
+
 font-weight: bold;
 
-padding: 15px 25px;
+padding:
+15px
+25px;
 
 border-radius: 50px;
 
 transition:
 left .18s ease,
 top .18s ease;
+
 }
 
+
 .bottom-text {
+
 margin-top: 20px;
 
 color: #aa7889;
@@ -300,68 +432,91 @@ font-family: Arial, sans-serif;
 font-size: 11px;
 
 letter-spacing: 1px;
+
 }
 
 
-/* =================================
+/* =====================================================
 FLOATING HEARTS
-================================= */
+===================================================== */
 
 .floating-heart {
+
 position: absolute;
 
-color: rgba(205,60,105,.25);
+color:
+rgba(205,60,105,.25);
 
 font-size: 25px;
 
-animation: floating 6s ease-in-out infinite;
+animation:
+floating 6s
+ease-in-out
+infinite;
+
 }
 
-.h1 {
+
+.heart-one {
 left: 8%;
 top: 15%;
 }
 
-.h2 {
+.heart-two {
 right: 10%;
 top: 18%;
 animation-delay: 1s;
 }
 
-.h3 {
+.heart-three {
 left: 12%;
 bottom: 18%;
 animation-delay: 2s;
 }
 
-.h4 {
+.heart-four {
 right: 8%;
 bottom: 15%;
 animation-delay: 3s;
 }
 
+
 @keyframes floating {
-0%,100% {
-transform: translateY(0);
+
+0%,
+100% {
+
+transform:
+translateY(0);
+
 opacity: .3;
+
 }
 
 50% {
-transform: translateY(-25px) rotate(10deg);
+
+transform:
+translateY(-25px)
+rotate(10deg);
+
 opacity: .8;
+
 }
+
 }
 
 
-/* =================================
+/* =====================================================
 PAGE 2
-================================= */
+===================================================== */
 
 .page-content {
+
 width: 100%;
 height: 100%;
 
 display: flex;
+
 flex-direction: column;
 
 align-items: center;
@@ -372,29 +527,45 @@ padding-top: 12vh;
 
 position: relative;
 
-z-index: 5;
 }
+
 
 .scene-label {
+
 margin-bottom: 16px;
+
 }
 
+
 h2 {
+
 color: #5b2739;
 
-font-size: clamp(34px,10vw,48px);
+font-size:
+clamp(
+34px,
+10vw,
+48px
+);
 
 line-height: 1.05;
 
 font-weight: 500;
+
 }
+
 
 h2 span {
+
 color: #d44470;
+
 font-style: italic;
+
 }
 
+
 .tap-hint {
+
 margin-top: 13px;
 
 font-family: Arial, sans-serif;
@@ -403,42 +574,59 @@ color: #9d6679;
 
 font-size: 13px;
 
-letter-spacing: .5px;
 }
 
 
-/* =================================
+/* =====================================================
 SPECIAL MESSAGE
-================================= */
+===================================================== */
 
 .special-message {
+
 position: absolute;
 
-top: 36%;
+top: 40%;
 
 display: flex;
+
 flex-direction: column;
+
+align-items: center;
+
+justify-content: center;
 
 color: #7b4055;
 
-font-family: Georgia, serif;
+font-family:
+Georgia,
+serif;
 
 font-size: 27px;
 
 line-height: 1.05;
 
-opacity: .18;
+opacity: 0;
+
+visibility: hidden;
+
+transform:
+scale(.65);
 
 transition:
-opacity .8s ease,
-transform .8s ease;
 
-transform: scale(.85);
+opacity .9s ease,
+
+transform .9s cubic-bezier(.2,.8,.2,1),
+
+visibility .9s ease;
 
 z-index: 1;
+
 }
 
+
 .special-message strong {
+
 color: #d33f6c;
 
 font-size: 42px;
@@ -446,122 +634,132 @@ font-size: 42px;
 font-style: italic;
 
 font-weight: 500;
+
 }
 
-.balloon-area.has-pops ~ .special-message {
+
+/* ONLY after all four */
+
+.balloon-area.all-popped
+~ .special-message {
+
 opacity: 1;
+
+visibility: visible;
+
 transform: scale(1);
+
 }
 
 
-/* =================================
+/* =====================================================
 BALLOONS
-================================= */
+===================================================== */
 
 .balloon-area {
-width: min(90vw,390px);
 
-height: 300px;
+width:
+min(
+90vw,
+390px
+);
+
+height: 310px;
 
 position: relative;
 
 margin-top: 20px;
 
 z-index: 10;
+
 }
 
+
 .balloon {
+
 position: absolute;
 
 width: 105px;
+
 height: 135px;
 
-border-radius: 52% 52% 48% 48%;
-
-border: none;
+border-radius:
+52%
+52%
+48%
+48%;
 
 box-shadow:
-inset -12px -15px 25px rgba(0,0,0,.08),
-inset 10px 8px 15px rgba(255,255,255,.45),
-0 12px 20px rgba(130,60,90,.15);
+
+inset -12px -15px 25px
+rgba(0,0,0,.08),
+
+inset 10px 8px 15px
+rgba(255,255,255,.45),
+
+0 12px 20px
+rgba(130,60,90,.15);
 
 transition:
-transform .25s ease,
-opacity .35s ease;
+transform .2s ease;
+
 }
 
 
-/* Balloon shine */
-
 .balloon::before {
+
 content: "";
 
 position: absolute;
 
 width: 22px;
+
 height: 38px;
 
 border-radius: 50%;
 
-background: rgba(255,255,255,.5);
+background:
+rgba(255,255,255,.5);
 
 top: 20px;
+
 left: 20px;
 
-transform: rotate(25deg);
+transform:
+rotate(25deg);
 
-filter: blur(1px);
 }
 
 
-/* Balloon knot */
-
 .balloon span {
+
 position: absolute;
 
 width: 13px;
+
 height: 13px;
 
 bottom: -7px;
 
 left: 50%;
 
-transform: translateX(-50%) rotate(45deg);
+transform:
+translateX(-50%)
+rotate(45deg);
 
 background: inherit;
+
 }
 
 
-/* Balloon positions */
+.balloon-one {
 
-.balloon:nth-child(1) {
 left: 7%;
 top: 15px;
-transform: rotate(-7deg);
-}
 
-.balloon:nth-child(2) {
-right: 7%;
-top: 5px;
-transform: rotate(7deg);
-}
+transform:
+rotate(-7deg);
 
-.balloon:nth-child(3) {
-left: 16%;
-top: 145px;
-transform: rotate(5deg);
-}
-
-.balloon:nth-child(4) {
-right: 16%;
-top: 135px;
-transform: rotate(-5deg);
-}
-
-
-/* Balloon colours */
-
-.balloon-pink {
 background:
 radial-gradient(
 circle at 35% 25%,
@@ -569,9 +767,18 @@ circle at 35% 25%,
 #ef6f96 45%,
 #d94772
 );
+
 }
 
-.balloon-purple {
+
+.balloon-two {
+
+right: 7%;
+top: 5px;
+
+transform:
+rotate(7deg);
+
 background:
 radial-gradient(
 circle at 35% 25%,
@@ -579,9 +786,18 @@ circle at 35% 25%,
 #aa76d6 45%,
 #8052ae
 );
+
 }
 
-.balloon-rose {
+
+.balloon-three {
+
+left: 16%;
+top: 145px;
+
+transform:
+rotate(5deg);
+
 background:
 radial-gradient(
 circle at 35% 25%,
@@ -589,9 +805,18 @@ circle at 35% 25%,
 #e55d78 45%,
 #c4385d
 );
+
 }
 
-.balloon-peach {
+
+.balloon-four {
+
+right: 16%;
+top: 135px;
+
+transform:
+rotate(-5deg);
+
 background:
 radial-gradient(
 circle at 35% 25%,
@@ -599,42 +824,58 @@ circle at 35% 25%,
 #f39a78 45%,
 #dc705c
 );
+
 }
 
-
-/* =================================
-POP ANIMATION
-================================= */
 
 .balloon.popped {
+
 pointer-events: none;
 
-animation: balloonPop .45s ease forwards;
+animation:
+balloonPop .45s
+ease
+forwards;
+
 }
+
 
 @keyframes balloonPop {
 
 0% {
-transform: scale(1);
+
+transform:
+scale(1);
+
 opacity: 1;
+
 }
 
 35% {
-transform: scale(1.18);
+
+transform:
+scale(1.2);
+
 }
 
 100% {
-transform: scale(.05);
+
+transform:
+scale(.05);
+
 opacity: 0;
+
 }
+
 }
 
 
-/* =================================
-COUNT
-================================= */
+/* =====================================================
+BALLOON COUNT
+===================================================== */
 
 .balloon-count {
+
 margin-top: 8px;
 
 font-family: Arial, sans-serif;
@@ -644,43 +885,55 @@ font-size: 12px;
 letter-spacing: 2px;
 
 color: #9c6074;
+
 }
 
 
-/* =================================
-CONFETTI
-================================= */
+/* =====================================================
+POP CONFETTI
+===================================================== */
 
 #confetti {
+
 position: fixed;
+
 inset: 0;
 
 pointer-events: none;
 
-z-index: 30;
+z-index: 50;
+
 }
+
 
 .confetti-piece {
+
 position: absolute;
 
-font-size: 20px;
-
 animation:
-confettiFall 1s ease-out forwards;
+confettiFall
+1s
+ease-out
+forwards;
+
 }
+
 
 @keyframes confettiFall {
 
 0% {
+
 transform:
 translate(0,0)
 scale(.5)
 rotate(0);
 
 opacity: 1;
+
 }
 
 100% {
+
 transform:
 translate(
 var(--x),
@@ -690,45 +943,573 @@ scale(1)
 rotate(360deg);
 
 opacity: 0;
+
 }
+
 }
 
 
-/* =================================
-MOBILE
-================================= */
+/* =====================================================
+PAGE 3 — CANDLE
+===================================================== */
+
+.candle-page {
+
+width: 100%;
+
+height: 100%;
+
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+
+text-align: center;
+
+padding-top: 11vh;
+
+}
+
+
+.candle-subtitle {
+
+margin-top: 13px;
+
+font-family: Arial, sans-serif;
+
+color: #956073;
+
+font-size: 13px;
+
+}
+
+
+/* =====================================================
+CANDLE SCENE
+===================================================== */
+
+.candle-scene {
+
+position: relative;
+
+width: 300px;
+
+height: 300px;
+
+margin-top: 25px;
+
+}
+
+
+/* Cake plate */
+
+.cake-plate {
+
+position: absolute;
+
+width: 250px;
+
+height: 25px;
+
+left: 25px;
+
+bottom: 48px;
+
+border-radius: 50%;
+
+background:
+linear-gradient(
+#fff,
+#f1dbe3
+);
+
+box-shadow:
+0 8px 15px
+rgba(120,50,75,.15);
+
+}
+
+
+/* Cake */
+
+.cake {
+
+position: absolute;
+
+width: 190px;
+
+height: 115px;
+
+left: 55px;
+
+bottom: 65px;
+
+}
+
+
+.cake-body {
+
+position: absolute;
+
+bottom: 0;
+
+width: 190px;
+
+height: 85px;
+
+border-radius:
+18px
+18px
+25px
+25px;
+
+background:
+linear-gradient(
+90deg,
+#f8b9c9,
+#ffd8e2,
+#ef9fb5
+);
+
+box-shadow:
+inset 0 -10px 15px
+rgba(170,65,95,.12);
+
+}
+
+
+.cake-top {
+
+position: absolute;
+
+top: 5px;
+
+width: 190px;
+
+height: 55px;
+
+border-radius: 50%;
+
+background:
+radial-gradient(
+ellipse,
+#fff1f5,
+#f5b5c7
+);
+
+z-index: 2;
+
+}
+
+
+.icing {
+
+position: absolute;
+
+top: 37px;
+
+left: 10px;
+
+width: 170px;
+
+height: 30px;
+
+border-radius: 0 0 30px 30px;
+
+background: #fff4f7;
+
+z-index: 3;
+
+}
+
+
+/* =====================================================
+CANDLE
+===================================================== */
+
+.candle {
+
+position: absolute;
+
+left: 50%;
+
+bottom: 150px;
+
+transform:
+translateX(-50%);
+
+width: 32px;
+
+height: 100px;
+
+z-index: 10;
+
+}
+
+
+.candle-stick {
+
+position: absolute;
+
+bottom: 0;
+
+width: 32px;
+
+height: 78px;
+
+border-radius:
+7px
+7px
+4px
+4px;
+
+background:
+repeating-linear-gradient(
+135deg,
+#fff,
+#fff 8px,
+#f28baa 8px,
+#f28baa 16px
+);
+
+box-shadow:
+0 5px 10px
+rgba(100,40,65,.12);
+
+}
+
+
+/* Flame */
+
+.flame {
+
+position: absolute;
+
+width: 27px;
+
+height: 38px;
+
+left: 50%;
+
+top: -34px;
+
+transform:
+translateX(-50%)
+rotate(45deg);
+
+border-radius:
+50%
+50%
+50%
+0;
+
+background:
+linear-gradient(
+135deg,
+#fff4a5,
+#ff9d32
+);
+
+box-shadow:
+0 0 20px
+rgba(255,154,40,.5);
+
+animation:
+flameFlicker
+.7s
+ease-in-out
+infinite
+alternate;
+
+}
+
+
+.flame-inner {
+
+position: absolute;
+
+width: 11px;
+
+height: 18px;
+
+left: 5px;
+
+top: 9px;
+
+border-radius:
+50%
+50%
+50%
+0;
+
+background: #fff7d0;
+
+}
+
+
+/* Flame flicker */
+
+@keyframes flameFlicker {
+
+from {
+
+transform:
+translateX(-50%)
+rotate(42deg)
+scale(1);
+
+}
+
+to {
+
+transform:
+translateX(-50%)
+rotate(48deg)
+scale(1.08);
+
+}
+
+}
+
+
+/* Flame goes out */
+
+.candle-scene.blown .flame {
+
+animation:
+flameOut
+.5s
+ease
+forwards;
+
+}
+
+
+@keyframes flameOut {
+
+0% {
+
+opacity: 1;
+
+transform:
+translateX(-50%)
+rotate(45deg)
+scale(1);
+
+}
+
+50% {
+
+opacity: .6;
+
+transform:
+translateX(-50%)
+rotate(45deg)
+scale(1.35);
+
+}
+
+100% {
+
+opacity: 0;
+
+transform:
+translateX(-50%)
+rotate(45deg)
+scale(.1);
+
+}
+
+}
+
+
+/* Smoke */
+
+.candle-scene.blown::after {
+
+content: "〰";
+
+position: absolute;
+
+top: 67px;
+
+left: 50%;
+
+color: rgba(130,110,120,.5);
+
+font-size: 28px;
+
+animation:
+smokeRise
+1.3s
+ease-out
+forwards;
+
+}
+
+
+@keyframes smokeRise {
+
+from {
+
+opacity: .7;
+
+transform:
+translate(-50%,0)
+scale(.7);
+
+}
+
+to {
+
+opacity: 0;
+
+transform:
+translate(-50%,-55px)
+scale(1.4);
+
+}
+
+}
+
+
+/* =====================================================
+BLOW BUTTON
+===================================================== */
+
+.blow-button {
+
+padding:
+16px
+30px;
+
+border-radius: 50px;
+
+color: white;
+
+background:
+linear-gradient(
+135deg,
+#e95d87,
+#cb3d6a
+);
+
+font-family: Arial, sans-serif;
+
+font-size: 14px;
+
+font-weight: bold;
+
+box-shadow:
+0 12px 25px
+rgba(200,55,100,.25);
+
+transition:
+transform .2s ease;
+
+}
+
+
+.blow-button:active {
+
+transform:
+scale(.94);
+
+}
+
+
+.blow-button.hidden {
+
+opacity: 0;
+
+pointer-events: none;
+
+}
+
+
+.wish-text {
+
+margin-top: 14px;
+
+font-family:
+Georgia,
+serif;
+
+font-size: 14px;
+
+color: #a15c73;
+
+transition:
+opacity .4s ease;
+
+}
+
+
+.wish-text.blow {
+
+color: #d33f6c;
+
+font-size: 17px;
+
+}
+
+
+/* =====================================================
+SMALL PHONES
+===================================================== */
 
 @media (max-width: 380px) {
 
 .card {
-padding: 34px 20px 28px;
+
+padding:
+34px
+20px
+28px;
+
 }
 
 h1 {
+
 font-size: 31px;
+
 }
 
 .balloon {
+
 width: 92px;
+
 height: 120px;
+
 }
 
-.balloon:nth-child(1) {
+.balloon-one {
+
 left: 5%;
+
 }
 
-.balloon:nth-child(2) {
+.balloon-two {
+
 right: 5%;
+
 }
 
-.balloon:nth-child(3) {
+.balloon-three {
+
 left: 12%;
+
 top: 135px;
+
 }
 
-.balloon:nth-child(4) {
+.balloon-four {
+
 right: 12%;
+
 top: 125px;
+
 }
 
 }
