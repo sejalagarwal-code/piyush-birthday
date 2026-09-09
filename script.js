@@ -1,718 +1,276 @@
-/* =========================================
-PAGE CONTROL
-========================================= */
+/* ================= PAGE CONTROL ================= */
 
-const page1 =
-document.getElementById("page1");
+const pages = document.querySelectorAll(".page");
 
-const page2 =
-document.getElementById("page2");
-
-const page3 =
-document.getElementById("page3");
-
-const page4 =
-document.getElementById("page4");
-
-
-function showPage(page) {
-
-document
-.querySelectorAll(".page")
-.forEach(function (p) {
-
-p.classList.remove("active");
-
+function showPage(pageNumber) {
+pages.forEach(page => {
+page.classList.remove("active");
 });
 
+const target = document.getElementById(`page${pageNumber}`);
 
-page.classList.add("active");
+if (target) {
+target.classList.add("active");
+}
 }
 
 
+/* ================= PAGE 1 ================= */
 
-/* =========================================
-MUSIC
-========================================= */
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const birthdayMusic = document.getElementById("birthdayMusic");
 
-const birthdayMusic =
-document.getElementById("birthdayMusic");
+yesBtn.addEventListener("click", () => {
 
+birthdayMusic.currentTime = 0;
 
+birthdayMusic.play().catch(() => {});
 
-/* =========================================
-PAGE 1 — YES
-========================================= */
-
-const yesButton =
-document.getElementById("yesButton");
-
-
-yesButton.addEventListener(
-"click",
-function () {
-
-birthdayMusic.volume = 0.4;
-
-
-birthdayMusic
-.play()
-.catch(function (error) {
-
-console.log(
-"Music could not start:",
-error
-);
-
+showPage(2);
 });
-
-
-showPage(page2);
-
-}
-);
-
-
-
-/* =========================================
-PAGE 1 — NO
-========================================= */
-
-const noButton =
-document.getElementById("noButton");
 
 
 function moveNoButton() {
 
-noButton.style.position = "fixed";
+const buttonWidth = noBtn.offsetWidth;
+const buttonHeight = noBtn.offsetHeight;
 
+const maxX = window.innerWidth - buttonWidth - 15;
+const maxY = window.innerHeight - buttonHeight - 15;
 
-const buttonWidth =
-noButton.offsetWidth;
+const x = Math.max(10, Math.random() * maxX);
+const y = Math.max(10, Math.random() * maxY);
 
-const buttonHeight =
-noButton.offsetHeight;
-
-
-const padding = 25;
-
-
-const maxX =
-window.innerWidth -
-buttonWidth -
-padding;
-
-
-const maxY =
-window.innerHeight -
-buttonHeight -
-padding;
-
-
-const minX = padding;
-
-const minY = padding;
-
-
-const randomX =
-
-Math.floor(
-Math.random() *
-(maxX - minX + 1)
-) + minX;
-
-
-const randomY =
-
-Math.floor(
-Math.random() *
-(maxY - minY + 1)
-) + minY;
-
-
-noButton.style.left =
-randomX + "px";
-
-
-noButton.style.top =
-randomY + "px";
+noBtn.style.position = "fixed";
+noBtn.style.left = `${x}px`;
+noBtn.style.top = `${y}px`;
 }
 
-
-noButton.addEventListener(
-"mouseenter",
-moveNoButton
-);
+noBtn.addEventListener("mouseenter", moveNoButton);
+noBtn.addEventListener("touchstart", moveNoButton);
 
 
-noButton.addEventListener(
-"touchstart",
-function (event) {
+/* Floating hearts */
 
-event.preventDefault();
+const heartsContainer = document.querySelector(".hearts-container");
 
-moveNoButton();
+function createFloatingHeart() {
 
-},
-{
-passive: false
+if (!heartsContainer) return;
+
+const heart = document.createElement("div");
+
+heart.className = "floating-heart";
+
+heart.textContent = Math.random() > 0.5 ? "♥" : "♡";
+
+heart.style.left = `${Math.random() * 100}%`;
+heart.style.fontSize = `${12 + Math.random() * 18}px`;
+
+const duration = 6 + Math.random() * 5;
+
+heart.style.animationDuration = `${duration}s`;
+
+heartsContainer.appendChild(heart);
+
+setTimeout(() => {
+heart.remove();
+}, duration * 1000);
 }
-);
+
+setInterval(createFloatingHeart, 750);
 
 
+/* ================= PAGE 2 ================= */
 
-/* =========================================
-PAGE 2 — BALLOONS
-========================================= */
+const balloons = document.querySelectorAll(".balloon");
+const balloonCounter = document.getElementById("balloonCounter");
+const balloonComplete = document.getElementById("balloonComplete");
+const continueBtn = document.getElementById("continueBtn");
 
-const balloons =
-document.querySelectorAll(".balloon");
+let poppedBalloons = 0;
 
+balloons.forEach(balloon => {
 
-const balloonCount =
-document.getElementById("balloonCount");
+balloon.addEventListener("click", () => {
 
+if (balloon.classList.contains("popped")) {
+return;
+}
 
-const specialMessage =
-document.getElementById("specialMessage");
+balloon.classList.add("popped");
 
+poppedBalloons++;
 
-let popped = 0;
+balloonCounter.textContent = `${poppedBalloons} / 4`;
 
+createPopHearts(balloon);
 
+if (poppedBalloons === 4) {
 
-/* =========================================
-BALLOON POP EFFECT
-========================================= */
+setTimeout(() => {
 
-function createPopEffect(balloon) {
+balloonComplete.classList.add("show");
+continueBtn.classList.add("show");
 
-const rect =
-balloon.getBoundingClientRect();
+}, 350);
+}
+});
 
-
-const centerX =
-rect.left +
-rect.width / 2;
-
-
-const centerY =
-rect.top +
-rect.height / 2;
+});
 
 
-const effects =
-document.getElementById("effects");
+function createPopHearts(balloon) {
 
+const rect = balloon.getBoundingClientRect();
 
-for (let i = 0; i < 7; i++) {
+for (let i = 0; i < 8; i++) {
 
-const heart =
-document.createElement("div");
+const heart = document.createElement("div");
 
+heart.className = "pop-heart";
 
-heart.className =
-"pop-heart";
-
-
-heart.innerHTML =
-Math.random() > 0.5
-? "♥"
-: "♡";
-
+heart.textContent = Math.random() > 0.5 ? "♥" : "♡";
 
 heart.style.left =
-centerX + "px";
-
+`${rect.left + rect.width / 2}px`;
 
 heart.style.top =
-centerY + "px";
-
+`${rect.top + rect.height / 2}px`;
 
 heart.style.setProperty(
 "--x",
-(Math.random() * 100 - 50) + "px"
+`${(Math.random() - 0.5) * 130}px`
 );
-
 
 heart.style.setProperty(
 "--y",
-(Math.random() * -100 - 30) + "px"
+`${(Math.random() - 0.5) * 130}px`
 );
 
+document.body.appendChild(heart);
 
-effects.appendChild(heart);
-
-
-setTimeout(
-function () {
+setTimeout(() => {
 heart.remove();
-},
-900
-);
-
+}, 900);
 }
-
 }
 
 
-
-/* =========================================
-POP BALLOONS
-========================================= */
-
-balloons.forEach(
-function (balloon) {
-
-balloon.addEventListener(
-"click",
-function () {
+continueBtn.addEventListener("click", () => {
+showPage(3);
+});
 
 
-if (
-balloon.classList
-.contains("popped")
-) {
-return;
-}
+/* ================= PAGE 3 ================= */
 
+const swipeTrack = document.getElementById("swipeTrack");
+const swipeButton = document.getElementById("swipeButton");
+const flame = document.getElementById("flame");
+const wishMessage = document.getElementById("wishMessage");
+const blowText = document.querySelector(".blow-text");
 
-popped++;
-
-
-createPopEffect(
-balloon
-);
-
-
-balloon.classList.add(
-"popped"
-);
-
-
-balloonCount.textContent =
-popped;
-
-
-
-/* All 4 balloons */
-
-if (popped === 4) {
-
-setTimeout(
-function () {
-
-specialMessage
-.classList
-.add("show");
-
-},
-450
-);
-
-}
-
-}
-);
-
-}
-);
-
-
-
-/* =========================================
-PAGE 2 → PAGE 3
-========================================= */
-
-const continueButton =
-document.getElementById(
-"continueButton"
-);
-
-
-continueButton.addEventListener(
-"click",
-function () {
-
-showPage(page3);
-
-}
-);
-
-
-
-/* =========================================
-PAGE 3 — SWIPE
-========================================= */
-
-const swipeTrack =
-document.getElementById(
-"swipeTrack"
-);
-
-
-const swipeButton =
-document.getElementById(
-"swipeButton"
-);
-
-
-const flame =
-document.getElementById(
-"flame"
-);
-
-
-const wishMessage =
-document.getElementById(
-"wishMessage"
-);
-
-
-let isDragging = false;
-
+let isSwiping = false;
 let startX = 0;
-
 let currentX = 0;
+let finishedCandle = false;
 
-let candleBlown = false;
-
-
-
-/* =========================================
-MAXIMUM SWIPE
-========================================= */
 
 function getMaxSwipe() {
-
-return (
-
-swipeTrack.offsetWidth -
-
-swipeButton.offsetWidth -
-
-12
-
-);
-
+return swipeTrack.offsetWidth - swipeButton.offsetWidth - 10;
 }
 
 
+swipeButton.addEventListener("pointerdown", event => {
 
-/* =========================================
-POINTER DOWN
-========================================= */
+if (finishedCandle) return;
 
-swipeButton.addEventListener(
-"pointerdown",
-function (event) {
+isSwiping = true;
 
+startX = event.clientX - swipeButton.offsetLeft;
 
-if (candleBlown) {
-return;
-}
+swipeButton.setPointerCapture(event.pointerId);
+});
 
 
-isDragging = true;
+swipeButton.addEventListener("pointermove", event => {
 
+if (!isSwiping || finishedCandle) return;
 
-startX =
-event.clientX -
-currentX;
+currentX =
+event.clientX - swipeTrack.getBoundingClientRect().left - startX;
 
+const maxSwipe = getMaxSwipe();
 
-swipeButton.setPointerCapture(
-event.pointerId
-);
+currentX = Math.max(0, Math.min(currentX, maxSwipe));
 
-}
-);
+swipeButton.style.left = `${5 + currentX}px`;
 
-
-
-/* =========================================
-POINTER MOVE
-========================================= */
-
-swipeButton.addEventListener(
-"pointermove",
-function (event) {
-
-
-if (
-!isDragging ||
-candleBlown
-) {
-return;
-}
-
-
-let newX =
-event.clientX -
-startX;
-
-
-const maxSwipe =
-getMaxSwipe();
-
-
-newX =
-Math.max(
-0,
-Math.min(
-newX,
-maxSwipe
-)
-);
-
-
-currentX = newX;
-
-
-swipeButton.style.transform =
-"translateX(" +
-currentX +
-"px)";
-
-
-const progress =
-currentX /
-maxSwipe;
-
+const progress = currentX / maxSwipe;
 
 if (progress >= 0.78) {
-
 finishCandle();
-
 }
-
-}
-);
+});
 
 
+function resetSwipe() {
 
-/* =========================================
-POINTER UP
-========================================= */
+if (finishedCandle) return;
 
-swipeButton.addEventListener(
-"pointerup",
-function () {
-
-
-if (candleBlown) {
-return;
-}
-
-
-isDragging = false;
-
+isSwiping = false;
 
 swipeButton.style.transition =
-"transform 0.3s ease";
+"left .35s ease";
 
+swipeButton.style.left = "5px";
 
-currentX = 0;
-
-
-swipeButton.style.transform =
-"translateX(0)";
-
-
-setTimeout(
-function () {
-
-swipeButton.style.transition =
-"";
-
-},
-300
-);
-
+setTimeout(() => {
+swipeButton.style.transition = "";
+}, 350);
 }
-);
 
 
+swipeButton.addEventListener("pointerup", resetSwipe);
+swipeButton.addEventListener("pointercancel", resetSwipe);
 
-swipeButton.addEventListener(
-"pointercancel",
-function () {
-
-isDragging = false;
-
-}
-);
-
-
-
-/* =========================================
-BLOW OUT CANDLE
-========================================= */
 
 function finishCandle() {
 
+if (finishedCandle) return;
 
-if (candleBlown) {
-return;
+finishedCandle = true;
+isSwiping = false;
+
+const maxSwipe = getMaxSwipe();
+
+swipeButton.style.left =
+`${5 + maxSwipe}px`;
+
+flame.classList.add("off");
+
+blowText.textContent = "Wish made ✨";
+
+wishMessage.classList.add("show");
+
+setTimeout(() => {
+showPage(4);
+}, 1150);
 }
 
 
-candleBlown = true;
+/* ================= PAGE 4 ================= */
 
+const envelope = document.getElementById("envelope");
+const letterIntro = document.getElementById("letterIntro");
+const tapToOpen = document.getElementById("tapToOpen");
+const letterPaper = document.getElementById("letterPaper");
+const finalLetterStage = document.getElementById("finalLetterStage");
+const typedMessage = document.getElementById("typedMessage");
 
-isDragging = false;
 
-
-
-/* Finish swipe */
-
-currentX =
-getMaxSwipe();
-
-
-swipeButton.style.transition =
-"transform 0.25s ease";
-
-
-swipeButton.style.transform =
-"translateX(" +
-currentX +
-"px)";
-
-
-
-/* Flame disappears */
-
-setTimeout(
-function () {
-
-flame.classList.add(
-"off"
-);
-
-},
-100
-);
-
-
-
-/* Change text */
-
-setTimeout(
-function () {
-
-const blowText =
-document.querySelector(
-".blow-text"
-);
-
-
-if (blowText) {
-
-blowText.textContent =
-"Wish made ✨";
-
-}
-
-},
-350
-);
-
-
-
-/* Show wish */
-
-setTimeout(
-function () {
-
-wishMessage
-.classList
-.add("show");
-
-},
-550
-);
-
-
-
-/*
-Short smooth transition
-after flame disappears.
-*/
-
-setTimeout(
-function () {
-
-showPage(page4);
-
-},
-1150
-);
-
-}
-
-
-
-/* =========================================
-PREVENT CONTEXT MENU
-========================================= */
-
-swipeButton.addEventListener(
-"contextmenu",
-function (event) {
-
-event.preventDefault();
-
-}
-);
-
-
-
-/* =========================================
-PAGE 4 — ENVELOPE
-========================================= */
-
-const envelope =
-document.getElementById(
-"envelope"
-);
-
-
-const letterIntro =
-document.getElementById(
-"letterIntro"
-);
-
-
-const tapToOpen =
-document.getElementById(
-"tapToOpen"
-);
-
-
-const letterPaper =
-document.getElementById(
-"letterPaper"
-);
-
-
-const finalLetterStage =
-document.getElementById(
-"finalLetterStage"
-);
-
-
-let envelopeOpened = false;
-
-let typingStarted = false;
-
-
-
-/* =========================================
-LETTER TEXT
-========================================= */
-
-const letterText = `Happy Birthday Chotu ❤️
+const messageText = `Happy Birthday Chotu ❤️
 
 Who knew one random, unplanned coffee date would bring you into my life? 🥹
 
@@ -725,96 +283,39 @@ More memories, more adventures, more us.
 Love you always ❤️`;
 
 
+let envelopeOpened = false;
 
-/* =========================================
-OPEN ENVELOPE
-========================================= */
 
 function openEnvelope() {
 
-
-if (envelopeOpened) {
-return;
-}
-
+if (envelopeOpened) return;
 
 envelopeOpened = true;
 
+envelope.classList.add("open");
 
-envelope.classList.add(
-"open"
-);
+tapToOpen.style.opacity = "0";
 
+setTimeout(() => {
 
-tapToOpen.style.opacity =
-"0";
+letterIntro.classList.add("hidden");
 
+finalLetterStage.appendChild(letterPaper);
 
+letterPaper.classList.add("final-letter-paper");
 
-/*
-Let the envelope open first.
-*/
-
-setTimeout(
-function () {
-
-letterIntro.classList.add(
-"hide"
-);
-
-
-/*
-Move the same letter
-from the envelope into
-the final letter stage.
-*/
-
-finalLetterStage.appendChild(
-letterPaper
-);
-
-
-letterPaper.classList.add(
-"final-letter-paper"
-);
-
-
-setTimeout(
-function () {
-
+setTimeout(() => {
 typeLetter();
+}, 500);
 
-},
-500
-);
-
-},
-850
-);
-
+}, 850);
 }
 
 
-
-/* =========================================
-TAP / CLICK
-========================================= */
-
-envelope.addEventListener(
-"click",
-openEnvelope
-);
+envelope.addEventListener("click", openEnvelope);
 
 
-
-/* =========================================
-KEYBOARD
-========================================= */
-
-envelope.addEventListener(
-"keydown",
-function (event) {
-
+envelope.addEventListener("keydown", event => {
 
 if (
 event.key === "Enter" ||
@@ -824,217 +325,93 @@ event.key === " "
 event.preventDefault();
 
 openEnvelope();
-
 }
 
-}
-);
+});
 
 
-
-/* =========================================
-TYPING
-========================================= */
+/* ================= LETTER TYPING ================= */
 
 function typeLetter() {
 
-
-if (typingStarted) {
-return;
-}
-
-
-typingStarted = true;
-
-
-const message =
-document.getElementById(
-"typedMessage"
-);
-
-
-message.textContent =
-"";
-
+typedMessage.textContent = "";
 
 let index = 0;
 
+function typeNext() {
 
-function typeNextCharacter() {
+if (index >= messageText.length) {
 
-
-if (
-index >=
-letterText.length
-) {
-
-/*
-Typing finished.
-Wait slightly, then
-shower kisses.
-*/
-
-setTimeout(
-function () {
-
+setTimeout(() => {
 createKissShower();
-
-},
-500
-);
+}, 500);
 
 return;
-
 }
 
+const character = messageText[index];
 
-message.textContent +=
-letterText.charAt(index);
-
+typedMessage.textContent += character;
 
 index++;
 
-
 let delay = 28;
-
-
-const character =
-letterText.charAt(
-index - 1
-);
-
-
-
-/* Natural pauses */
 
 if (
 character === "." ||
 character === "!" ||
 character === "?"
 ) {
-
 delay = 260;
-
 }
 
-else if (
-character === ","
-) {
-
+if (character === ",") {
 delay = 140;
-
 }
 
-else if (
-character === "\n"
-) {
-
+if (character === "\n") {
 delay = 400;
+}
 
+setTimeout(typeNext, delay);
+}
+
+typeNext();
 }
 
 
-setTimeout(
-typeNextCharacter,
-delay
-);
-
-}
-
-
-typeNextCharacter();
-
-}
-
-
-
-/* =========================================
-KISS SHOWER
-========================================= */
+/* ================= KISS SHOWER ================= */
 
 function createKissShower() {
 
-
-const effects =
-document.getElementById(
-"effects"
-);
-
-
 const kissCount = 14;
 
+for (let i = 0; i < kissCount; i++) {
 
-for (
-let i = 0;
-i < kissCount;
-i++
-) {
+setTimeout(() => {
 
+const kiss = document.createElement("div");
 
-setTimeout(
-function () {
-
-
-const kiss =
-document.createElement(
-"div"
-);
-
-
-kiss.className =
-"kiss";
-
+kiss.className = "kiss";
 
 kiss.textContent =
-
-Math.random() > 0.5
-? "💋"
-: "😘";
-
+Math.random() > 0.5 ? "💋" : "😘";
 
 kiss.style.left =
+`${10 + Math.random() * 80}%`;
 
-(
-8 +
-Math.random() * 84
-) + "%";
+kiss.style.bottom =
+`${10 + Math.random() * 20}%`;
 
+kiss.style.animationDuration =
+`${2 + Math.random() * 1.2}s`;
 
-kiss.style.top =
+document.body.appendChild(kiss);
 
-(
-65 +
-Math.random() * 25
-) + "%";
-
-
-kiss.style.fontSize =
-
-(
-15 +
-Math.random() * 9
-) + "px";
-
-
-effects.appendChild(
-kiss
-);
-
-
-setTimeout(
-function () {
-
+setTimeout(() => {
 kiss.remove();
+}, 3500);
 
-},
-2200
-);
-
-
-},
-i * 110
-);
-
+}, i * 130);
 }
-
 }
