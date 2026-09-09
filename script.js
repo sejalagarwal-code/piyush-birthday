@@ -2,33 +2,23 @@
 PAGE CONTROL
 ========================================= */
 
-const page1 =
-document.getElementById("page1");
-
-const page2 =
-document.getElementById("page2");
-
-const page3 =
-document.getElementById("page3");
-
-const page4 =
-document.getElementById("page4");
-
+const pages = {
+page1: document.getElementById("page1"),
+page2: document.getElementById("page2"),
+page3: document.getElementById("page3"),
+page4: document.getElementById("page4")
+};
 
 function showPage(page) {
 
-document
-.querySelectorAll(".page")
-.forEach(function (p) {
-
+Object.values(pages).forEach((p) => {
 p.classList.remove("active");
-
 });
 
-
+setTimeout(() => {
 page.classList.add("active");
+}, 80);
 }
-
 
 
 /* =========================================
@@ -39,53 +29,48 @@ const birthdayMusic =
 document.getElementById("birthdayMusic");
 
 
+function startMusic() {
+
+birthdayMusic.volume = 0.75;
+
+const playPromise = birthdayMusic.play();
+
+if (playPromise !== undefined) {
+
+playPromise.catch(() => {
+// Browser may block autoplay until user interaction.
+});
+
+}
+}
+
 
 /* =========================================
-PAGE 1 — YES
+PAGE 1 — YES BUTTON
 ========================================= */
 
 const yesButton =
 document.getElementById("yesButton");
 
+yesButton.addEventListener("click", () => {
 
-yesButton.addEventListener(
-"click",
-function () {
+startMusic();
 
-birthdayMusic.volume = 0.4;
-
-
-birthdayMusic
-.play()
-.catch(function (error) {
-
-console.log(
-"Music could not start:",
-error
-);
+showPage(pages.page2);
 
 });
 
 
-showPage(page2);
-
-}
-);
-
-
-
 /* =========================================
-PAGE 1 — NO
+PAGE 1 — NO BUTTON
 ========================================= */
 
 const noButton =
 document.getElementById("noButton");
 
-
 function moveNoButton() {
 
-noButton.style.position = "fixed";
-
+const padding = 20;
 
 const buttonWidth =
 noButton.offsetWidth;
@@ -93,72 +78,56 @@ noButton.offsetWidth;
 const buttonHeight =
 noButton.offsetHeight;
 
-
-const padding = 25;
-
-
 const maxX =
 window.innerWidth -
 buttonWidth -
 padding;
-
 
 const maxY =
 window.innerHeight -
 buttonHeight -
 padding;
 
-
 const minX = padding;
-
 const minY = padding;
 
-
 const randomX =
-
-Math.floor(
 Math.random() *
-(maxX - minX + 1)
-) + minX;
-
+(maxX - minX) +
+minX;
 
 const randomY =
-
-Math.floor(
 Math.random() *
-(maxY - minY + 1)
-) + minY;
+(maxY - minY) +
+minY;
 
+noButton.style.position = "fixed";
 
 noButton.style.left =
-randomX + "px";
-
+`${randomX}px`;
 
 noButton.style.top =
-randomY + "px";
-}
+`${randomY}px`;
 
+noButton.style.zIndex = "50";
+}
 
 noButton.addEventListener(
 "mouseenter",
 moveNoButton
 );
 
-
 noButton.addEventListener(
 "touchstart",
-function (event) {
+(event) => {
 
 event.preventDefault();
 
 moveNoButton();
 
 },
-{
-passive: false
-}
+{ passive: false }
 );
-
 
 
 /* =========================================
@@ -168,260 +137,172 @@ PAGE 2 — BALLOONS
 const balloons =
 document.querySelectorAll(".balloon");
 
-
-const balloonCount =
-document.getElementById("balloonCount");
-
-
 const specialMessage =
 document.getElementById("specialMessage");
 
+let poppedBalloons = 0;
 
-let popped = 0;
+balloons.forEach((balloon) => {
+
+balloon.addEventListener("click", () => {
+
+if (balloon.classList.contains("popped")) {
+return;
+}
+
+balloon.classList.add("popped");
+
+poppedBalloons++;
+
+createPopEffect(balloon);
+
+if (poppedBalloons === 4) {
+
+setTimeout(() => {
+specialMessage.classList.add("show");
+}, 350);
+
+}
+
+});
+
+});
 
 
-
-/* =========================================
-BALLOON POP EFFECT
-========================================= */
+/* Balloon pop effect */
 
 function createPopEffect(balloon) {
 
 const rect =
 balloon.getBoundingClientRect();
 
+for (let i = 0; i < 9; i++) {
 
-const centerX =
-rect.left +
-rect.width / 2;
+const particle =
+document.createElement("span");
 
+particle.style.position = "fixed";
 
-const centerY =
-rect.top +
-rect.height / 2;
+particle.style.left =
+`${rect.left + rect.width / 2}px`;
 
+particle.style.top =
+`${rect.top + rect.height / 2}px`;
 
-const effects =
-document.getElementById("effects");
+particle.style.width = "5px";
+particle.style.height = "5px";
 
+particle.style.borderRadius = "50%";
 
-for (let i = 0; i < 7; i++) {
+particle.style.background =
+"rgba(255,255,255,0.8)";
 
-const heart =
-document.createElement("div");
+particle.style.pointerEvents =
+"none";
 
+particle.style.zIndex = "100";
 
-heart.className =
-"pop-heart";
+const angle =
+Math.random() * Math.PI * 2;
 
+const distance =
+30 + Math.random() * 45;
 
-heart.innerHTML =
-Math.random() > 0.5
-? "♥"
-: "♡";
+const x =
+Math.cos(angle) * distance;
 
+const y =
+Math.sin(angle) * distance;
 
-heart.style.left =
-centerX + "px";
-
-
-heart.style.top =
-centerY + "px";
-
-
-heart.style.setProperty(
-"--x",
-(Math.random() * 100 - 50) + "px"
-);
-
-
-heart.style.setProperty(
-"--y",
-(Math.random() * -100 - 30) + "px"
-);
-
-
-effects.appendChild(heart);
-
-
-setTimeout(
-function () {
-heart.remove();
+particle.animate(
+[
+{
+transform: "translate(0,0)",
+opacity: 1
 },
-900
+{
+transform:
+`translate(${x}px, ${y}px)`,
+opacity: 0
+}
+],
+{
+duration:
+550 + Math.random() * 250,
+
+easing: "ease-out",
+
+fill: "forwards"
+}
 );
 
-}
+document.body.appendChild(particle);
+
+setTimeout(() => {
+particle.remove();
+}, 900);
 
 }
 
+}
 
 
 /* =========================================
-POP BALLOONS
+PAGE 2 — CONTINUE
 ========================================= */
 
-balloons.forEach(
-function (balloon) {
+const balloonContinue =
+document.getElementById("balloonContinue");
 
-balloon.addEventListener(
-"click",
-function () {
+balloonContinue.addEventListener("click", () => {
 
+showPage(pages.page3);
 
-if (
-balloon.classList
-.contains("popped")
-) {
-return;
-}
-
-
-popped++;
-
-
-createPopEffect(
-balloon
-);
-
-
-balloon.classList.add(
-"popped"
-);
-
-
-balloonCount.textContent =
-popped;
-
-
-
-/* All 4 balloons */
-
-if (popped === 4) {
-
-setTimeout(
-function () {
-
-specialMessage
-.classList
-.add("show");
-
-},
-450
-);
-
-}
-
-}
-);
-
-}
-);
-
+});
 
 
 /* =========================================
-PAGE 2 → PAGE 3
-========================================= */
-
-const continueButton =
-document.getElementById(
-"continueButton"
-);
-
-
-continueButton.addEventListener(
-"click",
-function () {
-
-showPage(page3);
-
-}
-);
-
-
-
-/* =========================================
-PAGE 3 — SWIPE
+PAGE 3 — SWIPE TO BLOW CANDLE
 ========================================= */
 
 const swipeTrack =
-document.getElementById(
-"swipeTrack"
-);
+document.getElementById("swipeTrack");
 
-
-const swipeButton =
-document.getElementById(
-"swipeButton"
-);
-
+const swipeThumb =
+document.getElementById("swipeThumb");
 
 const flame =
-document.getElementById(
-"flame"
-);
+document.getElementById("flame");
 
-
-const wishMessage =
-document.getElementById(
-"wishMessage"
-);
-
-
-let isDragging = false;
-
+let dragging = false;
 let startX = 0;
-
 let currentX = 0;
 
-let candleBlown = false;
+const thumbPadding = 4;
 
-
-
-/* =========================================
-MAXIMUM SWIPE
-========================================= */
 
 function getMaxSwipe() {
 
 return (
-
-swipeTrack.offsetWidth -
-
-swipeButton.offsetWidth -
-
-12
-
+swipeTrack.clientWidth -
+swipeThumb.clientWidth -
+thumbPadding * 2
 );
 
 }
 
 
+/* Pointer start */
 
-/* =========================================
-POINTER DOWN
-========================================= */
-
-swipeButton.addEventListener(
+swipeThumb.addEventListener(
 "pointerdown",
-function (event) {
+(event) => {
 
+dragging = true;
 
-if (candleBlown) {
-return;
-}
+startX = event.clientX;
 
-
-isDragging = true;
-
-
-startX =
-event.clientX -
-currentX;
-
-
-swipeButton.setPointerCapture(
+swipeThumb.setPointerCapture(
 event.pointerId
 );
 
@@ -429,243 +310,114 @@ event.pointerId
 );
 
 
+/* Pointer movement */
 
-/* =========================================
-POINTER MOVE
-========================================= */
-
-swipeButton.addEventListener(
+swipeThumb.addEventListener(
 "pointermove",
-function (event) {
+(event) => {
 
-
-if (
-!isDragging ||
-candleBlown
-) {
+if (!dragging) {
 return;
 }
 
-
-let newX =
-event.clientX -
-startX;
-
+const difference =
+event.clientX - startX;
 
 const maxSwipe =
 getMaxSwipe();
 
-
-newX =
+currentX =
 Math.max(
 0,
 Math.min(
-newX,
+difference,
 maxSwipe
 )
 );
 
+swipeThumb.style.transform =
+`translateX(${currentX}px)`;
 
-currentX = newX;
-
-
-swipeButton.style.transform =
-"translateX(" +
-currentX +
-"px)";
+}
+);
 
 
-const progress =
-currentX /
-maxSwipe;
+/* Pointer release */
+
+swipeThumb.addEventListener(
+"pointerup",
+finishSwipe
+);
+
+swipeThumb.addEventListener(
+"pointercancel",
+finishSwipe
+);
 
 
-if (progress >= 0.78) {
+function finishSwipe() {
+
+if (!dragging) {
+return;
+}
+
+dragging = false;
+
+const maxSwipe =
+getMaxSwipe();
+
+if (currentX >= maxSwipe * 0.72) {
 
 finishCandle();
 
-}
+} else {
 
-}
-);
+swipeThumb.style.transition =
+"transform 0.4s ease";
 
-
-
-/* =========================================
-POINTER UP
-========================================= */
-
-swipeButton.addEventListener(
-"pointerup",
-function () {
-
-
-if (candleBlown) {
-return;
-}
-
-
-isDragging = false;
-
-
-swipeButton.style.transition =
-"transform 0.3s ease";
-
-
-currentX = 0;
-
-
-swipeButton.style.transform =
+swipeThumb.style.transform =
 "translateX(0)";
 
+setTimeout(() => {
 
-setTimeout(
-function () {
-
-swipeButton.style.transition =
+swipeThumb.style.transition =
 "";
 
-},
-300
-);
+}, 450);
 
 }
-);
-
-
-
-swipeButton.addEventListener(
-"pointercancel",
-function () {
-
-isDragging = false;
 
 }
-);
 
 
+let candleFinished = false;
 
-/* =========================================
-BLOW OUT CANDLE
-========================================= */
 
 function finishCandle() {
 
-
-if (candleBlown) {
+if (candleFinished) {
 return;
 }
 
+candleFinished = true;
 
-candleBlown = true;
+swipeThumb.style.transform =
+`translateX(${getMaxSwipe()}px)`;
 
+flame.classList.add("off");
 
-isDragging = false;
+/* Small pause after blowing,
+then transition to final page */
 
+setTimeout(() => {
 
+showPage(pages.page4);
 
-/* Finish swipe */
+resetLetterPage();
 
-currentX =
-getMaxSwipe();
-
-
-swipeButton.style.transition =
-"transform 0.25s ease";
-
-
-swipeButton.style.transform =
-"translateX(" +
-currentX +
-"px)";
-
-
-
-/* Flame disappears */
-
-setTimeout(
-function () {
-
-flame.classList.add(
-"off"
-);
-
-},
-100
-);
-
-
-
-/* Change text */
-
-setTimeout(
-function () {
-
-const blowText =
-document.querySelector(
-".blow-text"
-);
-
-
-if (blowText) {
-
-blowText.textContent =
-"Wish made ✨";
+}, 1150);
 
 }
-
-},
-350
-);
-
-
-
-/* Show wish */
-
-setTimeout(
-function () {
-
-wishMessage
-.classList
-.add("show");
-
-},
-550
-);
-
-
-
-/*
-Short smooth transition
-after flame disappears.
-*/
-
-setTimeout(
-function () {
-
-showPage(page4);
-
-},
-1150
-);
-
-}
-
-
-
-/* =========================================
-PREVENT CONTEXT MENU
-========================================= */
-
-swipeButton.addEventListener(
-"contextmenu",
-function (event) {
-
-event.preventDefault();
-
-}
-);
-
 
 
 /* =========================================
@@ -673,111 +425,31 @@ PAGE 4 — ENVELOPE
 ========================================= */
 
 const envelope =
-document.getElementById(
-"envelope"
-);
+document.getElementById("envelope");
 
+const letterIntro =
+document.getElementById("letterIntro");
 
 const tapToOpen =
-document.getElementById(
-"tapToOpen"
-);
+document.getElementById("tapToOpen");
 
+const letterPaper =
+document.getElementById("letterPaper");
 
-const typedMessage =
-document.getElementById(
-"typedMessage"
-);
-
+const finalLetterStage =
+document.getElementById("finalLetterStage");
 
 let envelopeOpened = false;
 
-
-
-/* =========================================
-LETTER TEXT
-========================================= */
-
-const letterText = `Happy Birthday Chotu ❤️
-
-Who knew one random, unplanned coffee date would bring you into my life? 🥹
-
-Since then, you’ve filled my life with so many laughs, memories, adventures, and little moments that mean more than you know.
-
-I hope this year brings you everything you wish for, and I hope I get to be beside you through all of it. ❤️
-
-More memories, more adventures, more us.
-
-Love you always`;
-
-
-
-/* =========================================
-OPEN ENVELOPE
-========================================= */
-
-function openEnvelope() {
-
-
-if (envelopeOpened) {
-return;
-}
-
-
-envelopeOpened = true;
-
-
-envelope.classList.add(
-"open"
-);
-
-
-tapToOpen.style.opacity =
-"0";
-
-
-
-/*
-Wait for envelope animation,
-then start handwriting.
-*/
-
-setTimeout(
-function () {
-
-typedMessage.style.opacity =
-"1";
-
-
-typeLetter();
-
-},
-950
-);
-
-}
-
-
-
-/* =========================================
-TAP
-========================================= */
 
 envelope.addEventListener(
 "click",
 openEnvelope
 );
 
-
-
-/* =========================================
-KEYBOARD
-========================================= */
-
 envelope.addEventListener(
 "keydown",
-function (event) {
-
+(event) => {
 
 if (
 event.key === "Enter" ||
@@ -794,91 +466,226 @@ openEnvelope();
 );
 
 
+function openEnvelope() {
+
+if (envelopeOpened) {
+return;
+}
+
+envelopeOpened = true;
+
+envelope.classList.add("open");
+
+tapToOpen.style.opacity = "0";
+
+/*
+Let the envelope opening animation
+play first.
+*/
+
+setTimeout(() => {
+
+letterIntro.classList.add("hide");
+
+/*
+Move the SAME letter out of the
+envelope and into the final stage.
+*/
+
+finalLetterStage.appendChild(
+letterPaper
+);
+
+letterPaper.classList.add(
+"final-letter-paper"
+);
+
+/*
+Start typing after the letter
+reaches the screen.
+*/
+
+setTimeout(() => {
+
+typeLetter();
+
+}, 500);
+
+}, 850);
+
+}
+
 
 /* =========================================
-TYPING ANIMATION
+PAGE 4 — LETTER TEXT
 ========================================= */
+
+const messageText =
+`Happy Birthday Chotu ❤️
+
+Who knew one random, unplanned coffee date would bring you into my life? 🥹
+
+Since then, you’ve filled my life with so many laughs, memories, adventures, and little moments that mean more than you know.
+
+I hope this year brings you everything you wish for, and I hope I get to be beside you through all of it. ❤️
+
+More memories, more adventures, more us.
+
+Love you always ❤️`;
+
+
+let typingStarted = false;
+
 
 function typeLetter() {
 
+if (typingStarted) {
+return;
+}
 
-typedMessage.textContent =
-"";
+typingStarted = true;
 
+const typedMessage =
+document.getElementById("typedMessage");
+
+typedMessage.textContent = "";
 
 let index = 0;
 
+/*
+Slightly slower typing makes the
+letter feel intentional and personal.
+*/
+
+const typingSpeed = 24;
 
 
 function typeNextCharacter() {
 
+if (index >= messageText.length) {
 
-if (
-index >=
-letterText.length
-) {
+setTimeout(() => {
+
+createKissShower();
+
+}, 500);
 
 return;
-
 }
 
-
 typedMessage.textContent +=
-letterText.charAt(index);
-
+messageText.charAt(index);
 
 index++;
 
-
-let delay = 32;
-
-
-const character =
-letterText.charAt(
-index - 1
-);
-
-
-
-/* Natural pauses */
-
-if (
-character === "." ||
-character === "!" ||
-character === "?"
-) {
-
-delay = 260;
-
-}
-
-
-else if (
-character === ","
-) {
-
-delay = 150;
-
-}
-
-
-else if (
-character === "\n"
-) {
-
-delay = 420;
-
-}
-
-
 setTimeout(
 typeNextCharacter,
-delay
+typingSpeed
 );
 
 }
 
-
 typeNextCharacter();
+
+}
+
+
+/* =========================================
+PAGE 4 — KISS SHOWER
+========================================= */
+
+function createKissShower() {
+
+const effects =
+document.getElementById("effects");
+
+const kissCount = 14;
+
+for (
+let i = 0;
+i < kissCount;
+i++
+) {
+
+setTimeout(() => {
+
+const kiss =
+document.createElement("div");
+
+kiss.className = "kiss";
+
+kiss.textContent =
+Math.random() > 0.5
+? "💋"
+: "😘";
+
+kiss.style.left =
+`${10 + Math.random() * 80}%`;
+
+kiss.style.top =
+`${65 + Math.random() * 25}%`;
+
+kiss.style.fontSize =
+`${15 + Math.random() * 9}px`;
+
+kiss.style.animationDelay =
+`${Math.random() * 0.25}s`;
+
+effects.appendChild(kiss);
+
+setTimeout(() => {
+
+kiss.remove();
+
+}, 2200);
+
+}, i * 110);
+
+}
+
+}
+
+
+/* =========================================
+PAGE 4 — RESET
+========================================= */
+
+function resetLetterPage() {
+
+envelopeOpened = false;
+typingStarted = false;
+
+envelope.classList.remove("open");
+
+tapToOpen.style.opacity = "";
+
+letterIntro.classList.remove("hide");
+
+/*
+If the letter had previously been moved
+to the final stage, return it to envelope.
+*/
+
+if (
+letterPaper.parentElement !== envelope
+) {
+
+envelope.insertBefore(
+letterPaper,
+envelope.querySelector(
+".envelope-front"
+)
+);
+
+}
+
+letterPaper.classList.remove(
+"final-letter-paper"
+);
+
+const typedMessage =
+document.getElementById("typedMessage");
+
+typedMessage.textContent = "";
 
 }
