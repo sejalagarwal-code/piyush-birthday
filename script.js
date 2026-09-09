@@ -1,171 +1,20 @@
-/* =====================================================
-PIYUSH BIRTHDAY WEBSITE
-PAGE 1 → PAGE 2 → PAGE 3
-===================================================== */
+/* =========================================
+GET ELEMENTS
+========================================= */
 
+const page1 =
+document.getElementById("page1");
 
-/* =====================================================
-PAGE SWITCHING
-===================================================== */
+const page2 =
+document.getElementById("page2");
 
-function showPage(number) {
-
-document.querySelectorAll(".page").forEach(function(page) {
-
-page.classList.remove("active");
-
-});
-
-
-const targetPage =
-document.getElementById("page" + number);
-
-
-if (targetPage) {
-
-targetPage.classList.add("active");
-
-}
-
-}
-
-
-/* =====================================================
-MUSIC
-===================================================== */
-
-const music =
-document.getElementById("birthdayMusic");
-
-
-music.volume = 0.65;
-
-
-/* =====================================================
-PAGE 1 — YES
-===================================================== */
 
 const yesButton =
 document.getElementById("yesButton");
 
-
-yesButton.addEventListener("click", function() {
-
-/*
-The music is started directly inside
-the YES click so the browser allows it.
-*/
-
-music.play()
-.then(function() {
-
-console.log(
-"Birthday music started 🎵"
-);
-
-})
-.catch(function(error) {
-
-console.log(
-"Music could not start:",
-error
-);
-
-});
-
-
-/*
-Move to Page 2.
-*/
-
-showPage(2);
-
-});
-
-
-/* =====================================================
-PAGE 1 — NO
-===================================================== */
-
 const noButton =
 document.getElementById("noButton");
 
-
-function moveNoButton() {
-
-const buttonWidth =
-noButton.offsetWidth;
-
-const buttonHeight =
-noButton.offsetHeight;
-
-
-const maxX =
-Math.max(
-10,
-window.innerWidth -
-buttonWidth -
-15
-);
-
-
-const maxY =
-Math.max(
-10,
-window.innerHeight -
-buttonHeight -
-15
-);
-
-
-const x =
-10 +
-Math.random() *
-(maxX - 10);
-
-
-const y =
-10 +
-Math.random() *
-(maxY - 10);
-
-
-noButton.style.position =
-"fixed";
-
-noButton.style.left =
-x + "px";
-
-noButton.style.top =
-y + "px";
-
-noButton.style.zIndex =
-"9999";
-
-}
-
-
-noButton.addEventListener(
-"mouseenter",
-moveNoButton
-);
-
-
-noButton.addEventListener(
-"touchstart",
-function(event) {
-
-event.preventDefault();
-
-moveNoButton();
-
-}
-);
-
-
-/* =====================================================
-PAGE 2 — BALLOONS
-===================================================== */
 
 const balloons =
 document.querySelectorAll(".balloon");
@@ -179,33 +28,352 @@ const specialMessage =
 document.getElementById("specialMessage");
 
 
-let poppedBalloons = 0;
+const effects =
+document.getElementById("effects");
 
-let allBalloonsPopped = false;
+
+/* =========================================
+MUSIC VARIABLES
+========================================= */
+
+let audioContext = null;
+
+let musicStarted = false;
+
+let musicInterval = null;
 
 
-/* =====================================================
-BALLOON CLICK
-===================================================== */
+/* =========================================
+PAGE TRANSITION
+========================================= */
 
-balloons.forEach(function(balloon) {
+function showPage(page) {
+
+document
+.querySelectorAll(".page")
+.forEach(function(section) {
+
+section.classList.remove("active");
+
+});
+
+
+page.classList.add("active");
+}
+
+
+/* =========================================
+HAPPY BIRTHDAY MUSIC
+========================================= */
+
+function startBirthdayMusic() {
+
+if (musicStarted) {
+return;
+}
+
+
+musicStarted = true;
+
+
+const AudioContext =
+window.AudioContext ||
+window.webkitAudioContext;
+
+
+if (!AudioContext) {
+return;
+}
+
+
+audioContext =
+new AudioContext();
+
+
+/*
+Simple Happy Birthday melody.
+
+It begins ONLY when YES is tapped,
+which allows the browser to play
+audio on mobile devices.
+*/
+
+
+const melody = [
+
+261.63,
+261.63,
+293.66,
+261.63,
+349.23,
+329.63,
+
+261.63,
+261.63,
+293.66,
+261.63,
+392.00,
+349.23,
+
+261.63,
+261.63,
+523.25,
+440.00,
+349.23,
+329.63,
+293.66,
+
+466.16,
+466.16,
+440.00,
+349.23,
+392.00,
+349.23
+
+];
+
+
+let note = 0;
+
+
+function playNote() {
+
+if (!audioContext) {
+return;
+}
+
+
+const oscillator =
+audioContext.createOscillator();
+
+
+const gain =
+audioContext.createGain();
+
+
+oscillator.type =
+"sine";
+
+
+oscillator.frequency.value =
+melody[note];
+
+
+gain.gain.setValueAtTime(
+0,
+audioContext.currentTime
+);
+
+
+gain.gain.linearRampToValueAtTime(
+0.13,
+audioContext.currentTime + 0.03
+);
+
+
+gain.gain.exponentialRampToValueAtTime(
+0.001,
+audioContext.currentTime + 0.48
+);
+
+
+oscillator.connect(gain);
+
+gain.connect(
+audioContext.destination
+);
+
+
+oscillator.start();
+
+
+oscillator.stop(
+audioContext.currentTime + 0.5
+);
+
+
+note++;
+
+
+if (note >= melody.length) {
+note = 0;
+}
+}
+
+
+playNote();
+
+
+musicInterval =
+setInterval(
+playNote,
+500
+);
+}
+
+
+/* =========================================
+YES BUTTON
+========================================= */
+
+yesButton.addEventListener(
+"click",
+function() {
+
+/*
+Music starts immediately
+from this user interaction.
+*/
+
+startBirthdayMusic();
+
+
+/*
+Move from Page 1
+to Page 2.
+*/
+
+showPage(page2);
+
+}
+);
+
+
+/* =========================================
+NO BUTTON
+========================================= */
+
+function moveNoButton() {
+
+const buttonWidth =
+noButton.offsetWidth;
+
+
+const buttonHeight =
+noButton.offsetHeight;
+
+
+/*
+Keep the button away from
+the edges of the screen.
+*/
+
+const margin = 25;
+
+
+const maxX =
+window.innerWidth -
+buttonWidth -
+margin;
+
+
+const maxY =
+window.innerHeight -
+buttonHeight -
+margin;
+
+
+const x =
+margin +
+Math.random() *
+Math.max(
+1,
+maxX - margin
+);
+
+
+const y =
+margin +
+Math.random() *
+Math.max(
+1,
+maxY - margin
+);
+
+
+noButton.style.position =
+"fixed";
+
+
+noButton.style.left =
+x + "px";
+
+
+noButton.style.top =
+y + "px";
+
+
+noButton.style.zIndex =
+"100";
+}
+
+
+/* Desktop */
+
+noButton.addEventListener(
+"mouseenter",
+moveNoButton
+);
+
+
+/* Mobile */
+
+noButton.addEventListener(
+"touchstart",
+function(event) {
+
+event.preventDefault();
+
+moveNoButton();
+
+},
+{
+passive: false
+}
+);
+
+
+/* Pointer devices */
+
+noButton.addEventListener(
+"pointerdown",
+function(event) {
+
+event.preventDefault();
+
+moveNoButton();
+
+}
+);
+
+
+/* =========================================
+BALLOONS
+========================================= */
+
+let popped =
+0;
+
+
+balloons.forEach(
+function(balloon) {
 
 balloon.addEventListener(
 "click",
 function() {
 
-
 /*
-Prevent the same balloon from
-being counted twice.
+Don't allow an already
+popped balloon to pop again.
 */
 
 if (
-balloon.classList.contains("popped")
+balloon.classList.contains(
+"popped"
+)
 ) {
 
 return;
-
 }
 
 
@@ -213,302 +381,166 @@ return;
 Pop balloon.
 */
 
-balloon.classList.add("popped");
+balloon.classList.add(
+"popped"
+);
+
+
+popped++;
 
 
 /*
-Increase counter.
+Update counter.
 */
-
-poppedBalloons++;
-
 
 balloonCount.textContent =
-poppedBalloons +
-" / 4 popped";
+popped;
 
 
 /*
-Small pop celebration.
+Create little heart
+explosion.
 */
 
-createPopConfetti(balloon);
+createPopEffect(
+balloon
+);
 
 
-/* =================================================
-IMPORTANT:
+/*
+ONLY after all four
+balloons are popped...
+*/
 
-DO NOT SHOW THE SPECIAL MESSAGE
-UNTIL ALL 4 BALLOONS ARE POPPED.
-================================================= */
+if (popped === 4) {
 
-if (
-poppedBalloons === 4 &&
-!allBalloonsPopped
+setTimeout(
+function() {
+
+specialMessage
+.classList
+.add("show");
+
+},
+350
+);
+
+}
+
+}
+);
+
+}
+);
+
+
+/* =========================================
+BALLOON POP HEART EFFECT
+========================================= */
+
+function createPopEffect(
+balloon
 ) {
-
-allBalloonsPopped = true;
-
-
-/*
-Give the final balloon time
-to disappear.
-*/
-
-setTimeout(
-function() {
-
-
-/*
-NOW reveal:
-
-"You are so special"
-*/
-
-specialMessage.classList.add(
-"show"
-);
-
-
-createBigConfetti();
-
-
-/*
-Keep the message visible
-for 3 seconds.
-
-Then Page 3.
-*/
-
-setTimeout(
-function() {
-
-showPage(3);
-
-},
-3000
-);
-
-
-},
-450
-);
-
-}
-
-}
-);
-
-});
-
-
-/* =====================================================
-POP CONFETTI
-===================================================== */
-
-function createPopConfetti(balloon) {
 
 const rect =
 balloon.getBoundingClientRect();
 
 
-const container =
-document.getElementById("confetti");
-
-
-for (
-let i = 0;
-i < 12;
-i++
-) {
-
-const piece =
-document.createElement("div");
-
-
-piece.className =
-"confetti-piece";
-
-
-piece.style.left =
-(
+const centerX =
 rect.left +
-rect.width / 2
-) + "px";
+rect.width / 2;
 
 
-piece.style.top =
-(
+const centerY =
 rect.top +
-rect.height / 2
-) + "px";
+rect.height / 2;
 
 
-piece.style.background =
-[
-"#e889a7",
-"#b978a4",
-"#f4b6c8",
-"#d98ca7"
-][
-Math.floor(
-Math.random() * 4
-)
+const symbols = [
+"💗",
+"💕",
+"💖",
+"✨",
+"♥"
 ];
-
-
-piece.style.transform =
-"rotate(" +
-Math.random() * 360 +
-"deg";
-
-
-container.appendChild(piece);
-
-
-setTimeout(
-function() {
-
-piece.remove();
-
-},
-1800
-);
-
-}
-
-}
-
-
-/* =====================================================
-BIG CONFETTI
-===================================================== */
-
-function createBigConfetti() {
-
-const container =
-document.getElementById("confetti");
 
 
 for (
 let i = 0;
-i < 55;
+i < 16;
 i++
 ) {
 
-const piece =
-document.createElement("div");
+const heart =
+document.createElement(
+"div"
+);
 
 
-piece.className =
-"confetti-piece";
+heart.className =
+"pop-heart";
 
 
-piece.style.left =
-Math.random() * 100 +
-"vw";
-
-
-piece.style.top =
-Math.random() * 25 +
-"vh";
-
-
-piece.style.background =
-[
-"#e889a7",
-"#b978a4",
-"#f4b6c8",
-"#d98ca7",
-"#efc5d2"
-][
+heart.textContent =
+symbols[
 Math.floor(
-Math.random() * 5
+Math.random() *
+symbols.length
 )
 ];
 
 
-piece.style.animationDuration =
+heart.style.left =
+centerX + "px";
+
+
+heart.style.top =
+centerY + "px";
+
+
+heart.style.setProperty(
+"--move-x",
 (
-1.5 +
-Math.random() * 1.5
-) + "s";
+Math.random() *
+180 -
+90
+) + "px"
+);
 
 
-container.appendChild(piece);
+heart.style.setProperty(
+"--move-y",
+(
+Math.random() *
+180 -
+90
+) + "px"
+);
+
+
+heart.style.setProperty(
+"--rotate",
+(
+Math.random() *
+180 -
+90
+) + "deg"
+);
+
+
+effects.appendChild(
+heart
+);
 
 
 setTimeout(
 function() {
 
-piece.remove();
+heart.remove();
 
 },
-3500
+1100
 );
 
 }
-
 }
-
-
-/* =====================================================
-PAGE 3 — CANDLE
-===================================================== */
-
-const blowButton =
-document.getElementById("blowButton");
-
-
-const flame =
-document.getElementById("flame");
-
-
-const wishText =
-document.getElementById("wishText");
-
-
-blowButton.addEventListener(
-"click",
-function() {
-
-
-/*
-Extinguish flame.
-*/
-
-flame.style.opacity = "0";
-
-flame.style.transform =
-"scale(0)";
-
-
-/*
-Hide blow button.
-*/
-
-blowButton.style.display =
-"none";
-
-
-/*
-Show wish message.
-*/
-
-wishText.textContent =
-"Wish made? ✨ ❤️";
-
-
-wishText.classList.add(
-"show"
-);
-
-
-/*
-Little celebration.
-*/
-
-createBigConfetti();
-
-}
-);
