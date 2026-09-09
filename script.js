@@ -2,23 +2,33 @@
 PAGE CONTROL
 ========================================= */
 
-const pages = {
-page1: document.getElementById("page1"),
-page2: document.getElementById("page2"),
-page3: document.getElementById("page3"),
-page4: document.getElementById("page4")
-};
+const page1 =
+document.getElementById("page1");
+
+const page2 =
+document.getElementById("page2");
+
+const page3 =
+document.getElementById("page3");
+
+const page4 =
+document.getElementById("page4");
+
 
 function showPage(page) {
 
-Object.values(pages).forEach((p) => {
+document
+.querySelectorAll(".page")
+.forEach(function (p) {
+
 p.classList.remove("active");
+
 });
 
-setTimeout(() => {
+
 page.classList.add("active");
-}, 80);
 }
+
 
 
 /* =========================================
@@ -29,48 +39,53 @@ const birthdayMusic =
 document.getElementById("birthdayMusic");
 
 
-function startMusic() {
-
-birthdayMusic.volume = 0.75;
-
-const playPromise = birthdayMusic.play();
-
-if (playPromise !== undefined) {
-
-playPromise.catch(() => {
-// Browser may block autoplay until user interaction.
-});
-
-}
-}
-
 
 /* =========================================
-PAGE 1 — YES BUTTON
+PAGE 1 — YES
 ========================================= */
 
 const yesButton =
 document.getElementById("yesButton");
 
-yesButton.addEventListener("click", () => {
 
-startMusic();
+yesButton.addEventListener(
+"click",
+function () {
 
-showPage(pages.page2);
+birthdayMusic.volume = 0.4;
+
+
+birthdayMusic
+.play()
+.catch(function (error) {
+
+console.log(
+"Music could not start:",
+error
+);
 
 });
 
 
+showPage(page2);
+
+}
+);
+
+
+
 /* =========================================
-PAGE 1 — NO BUTTON
+PAGE 1 — NO
 ========================================= */
 
 const noButton =
 document.getElementById("noButton");
 
+
 function moveNoButton() {
 
-const padding = 20;
+noButton.style.position = "fixed";
+
 
 const buttonWidth =
 noButton.offsetWidth;
@@ -78,56 +93,72 @@ noButton.offsetWidth;
 const buttonHeight =
 noButton.offsetHeight;
 
+
+const padding = 25;
+
+
 const maxX =
 window.innerWidth -
 buttonWidth -
 padding;
+
 
 const maxY =
 window.innerHeight -
 buttonHeight -
 padding;
 
+
 const minX = padding;
+
 const minY = padding;
 
+
 const randomX =
+
+Math.floor(
 Math.random() *
-(maxX - minX) +
-minX;
+(maxX - minX + 1)
+) + minX;
+
 
 const randomY =
-Math.random() *
-(maxY - minY) +
-minY;
 
-noButton.style.position = "fixed";
+Math.floor(
+Math.random() *
+(maxY - minY + 1)
+) + minY;
+
 
 noButton.style.left =
-`${randomX}px`;
+randomX + "px";
+
 
 noButton.style.top =
-`${randomY}px`;
-
-noButton.style.zIndex = "50";
+randomY + "px";
 }
+
 
 noButton.addEventListener(
 "mouseenter",
 moveNoButton
 );
 
+
 noButton.addEventListener(
 "touchstart",
-(event) => {
+function (event) {
 
 event.preventDefault();
 
 moveNoButton();
 
 },
-{ passive: false }
+{
+passive: false
+}
 );
+
 
 
 /* =========================================
@@ -137,172 +168,260 @@ PAGE 2 — BALLOONS
 const balloons =
 document.querySelectorAll(".balloon");
 
+
+const balloonCount =
+document.getElementById("balloonCount");
+
+
 const specialMessage =
 document.getElementById("specialMessage");
 
-let poppedBalloons = 0;
 
-balloons.forEach((balloon) => {
-
-balloon.addEventListener("click", () => {
-
-if (balloon.classList.contains("popped")) {
-return;
-}
-
-balloon.classList.add("popped");
-
-poppedBalloons++;
-
-createPopEffect(balloon);
-
-if (poppedBalloons === 4) {
-
-setTimeout(() => {
-specialMessage.classList.add("show");
-}, 350);
-
-}
-
-});
-
-});
+let popped = 0;
 
 
-/* Balloon pop effect */
+
+/* =========================================
+BALLOON POP EFFECT
+========================================= */
 
 function createPopEffect(balloon) {
 
 const rect =
 balloon.getBoundingClientRect();
 
-for (let i = 0; i < 9; i++) {
 
-const particle =
-document.createElement("span");
+const centerX =
+rect.left +
+rect.width / 2;
 
-particle.style.position = "fixed";
 
-particle.style.left =
-`${rect.left + rect.width / 2}px`;
+const centerY =
+rect.top +
+rect.height / 2;
 
-particle.style.top =
-`${rect.top + rect.height / 2}px`;
 
-particle.style.width = "5px";
-particle.style.height = "5px";
+const effects =
+document.getElementById("effects");
 
-particle.style.borderRadius = "50%";
 
-particle.style.background =
-"rgba(255,255,255,0.8)";
+for (let i = 0; i < 7; i++) {
 
-particle.style.pointerEvents =
-"none";
+const heart =
+document.createElement("div");
 
-particle.style.zIndex = "100";
 
-const angle =
-Math.random() * Math.PI * 2;
+heart.className =
+"pop-heart";
 
-const distance =
-30 + Math.random() * 45;
 
-const x =
-Math.cos(angle) * distance;
+heart.innerHTML =
+Math.random() > 0.5
+? "♥"
+: "♡";
 
-const y =
-Math.sin(angle) * distance;
 
-particle.animate(
-[
-{
-transform: "translate(0,0)",
-opacity: 1
+heart.style.left =
+centerX + "px";
+
+
+heart.style.top =
+centerY + "px";
+
+
+heart.style.setProperty(
+"--x",
+(Math.random() * 100 - 50) + "px"
+);
+
+
+heart.style.setProperty(
+"--y",
+(Math.random() * -100 - 30) + "px"
+);
+
+
+effects.appendChild(heart);
+
+
+setTimeout(
+function () {
+heart.remove();
 },
-{
-transform:
-`translate(${x}px, ${y}px)`,
-opacity: 0
+900
+);
+
 }
-],
-{
-duration:
-550 + Math.random() * 250,
 
-easing: "ease-out",
+}
 
-fill: "forwards"
+
+
+/* =========================================
+POP BALLOONS
+========================================= */
+
+balloons.forEach(
+function (balloon) {
+
+balloon.addEventListener(
+"click",
+function () {
+
+
+if (
+balloon.classList
+.contains("popped")
+) {
+return;
+}
+
+
+popped++;
+
+
+createPopEffect(
+balloon
+);
+
+
+balloon.classList.add(
+"popped"
+);
+
+
+balloonCount.textContent =
+popped;
+
+
+
+/* All 4 balloons */
+
+if (popped === 4) {
+
+setTimeout(
+function () {
+
+specialMessage
+.classList
+.add("show");
+
+},
+450
+);
+
+}
+
 }
 );
 
-document.body.appendChild(particle);
-
-setTimeout(() => {
-particle.remove();
-}, 900);
-
 }
+);
 
-}
 
 
 /* =========================================
-PAGE 2 — CONTINUE
+PAGE 2 → PAGE 3
 ========================================= */
 
-const balloonContinue =
-document.getElementById("balloonContinue");
+const continueButton =
+document.getElementById(
+"continueButton"
+);
 
-balloonContinue.addEventListener("click", () => {
 
-showPage(pages.page3);
+continueButton.addEventListener(
+"click",
+function () {
 
-});
+showPage(page3);
+
+}
+);
+
 
 
 /* =========================================
-PAGE 3 — SWIPE TO BLOW CANDLE
+PAGE 3 — SWIPE
 ========================================= */
 
 const swipeTrack =
-document.getElementById("swipeTrack");
+document.getElementById(
+"swipeTrack"
+);
 
-const swipeThumb =
-document.getElementById("swipeThumb");
+
+const swipeButton =
+document.getElementById(
+"swipeButton"
+);
+
 
 const flame =
-document.getElementById("flame");
+document.getElementById(
+"flame"
+);
 
-let dragging = false;
+
+const wishMessage =
+document.getElementById(
+"wishMessage"
+);
+
+
+let isDragging = false;
+
 let startX = 0;
+
 let currentX = 0;
 
-const thumbPadding = 4;
+let candleBlown = false;
 
+
+
+/* =========================================
+MAXIMUM SWIPE
+========================================= */
 
 function getMaxSwipe() {
 
 return (
-swipeTrack.clientWidth -
-swipeThumb.clientWidth -
-thumbPadding * 2
+
+swipeTrack.offsetWidth -
+
+swipeButton.offsetWidth -
+
+12
+
 );
 
 }
 
 
-/* Pointer start */
 
-swipeThumb.addEventListener(
+/* =========================================
+POINTER DOWN
+========================================= */
+
+swipeButton.addEventListener(
 "pointerdown",
-(event) => {
+function (event) {
 
-dragging = true;
 
-startX = event.clientX;
+if (candleBlown) {
+return;
+}
 
-swipeThumb.setPointerCapture(
+
+isDragging = true;
+
+
+startX =
+event.clientX -
+currentX;
+
+
+swipeButton.setPointerCapture(
 event.pointerId
 );
 
@@ -310,114 +429,243 @@ event.pointerId
 );
 
 
-/* Pointer movement */
 
-swipeThumb.addEventListener(
+/* =========================================
+POINTER MOVE
+========================================= */
+
+swipeButton.addEventListener(
 "pointermove",
-(event) => {
+function (event) {
 
-if (!dragging) {
+
+if (
+!isDragging ||
+candleBlown
+) {
 return;
 }
 
-const difference =
-event.clientX - startX;
+
+let newX =
+event.clientX -
+startX;
+
 
 const maxSwipe =
 getMaxSwipe();
 
-currentX =
+
+newX =
 Math.max(
 0,
 Math.min(
-difference,
+newX,
 maxSwipe
 )
 );
 
-swipeThumb.style.transform =
-`translateX(${currentX}px)`;
 
-}
-);
+currentX = newX;
 
 
-/* Pointer release */
-
-swipeThumb.addEventListener(
-"pointerup",
-finishSwipe
-);
-
-swipeThumb.addEventListener(
-"pointercancel",
-finishSwipe
-);
+swipeButton.style.transform =
+"translateX(" +
+currentX +
+"px)";
 
 
-function finishSwipe() {
+const progress =
+currentX /
+maxSwipe;
 
-if (!dragging) {
-return;
-}
 
-dragging = false;
-
-const maxSwipe =
-getMaxSwipe();
-
-if (currentX >= maxSwipe * 0.72) {
+if (progress >= 0.78) {
 
 finishCandle();
 
-} else {
-
-swipeThumb.style.transition =
-"transform 0.4s ease";
-
-swipeThumb.style.transform =
-"translateX(0)";
-
-setTimeout(() => {
-
-swipeThumb.style.transition =
-"";
-
-}, 450);
-
 }
 
 }
+);
 
 
-let candleFinished = false;
+
+/* =========================================
+POINTER UP
+========================================= */
+
+swipeButton.addEventListener(
+"pointerup",
+function () {
 
 
-function finishCandle() {
-
-if (candleFinished) {
+if (candleBlown) {
 return;
 }
 
-candleFinished = true;
 
-swipeThumb.style.transform =
-`translateX(${getMaxSwipe()}px)`;
+isDragging = false;
 
-flame.classList.add("off");
 
-/* Small pause after blowing,
-then transition to final page */
+swipeButton.style.transition =
+"transform 0.3s ease";
 
-setTimeout(() => {
 
-showPage(pages.page4);
+currentX = 0;
 
-resetLetterPage();
 
-}, 1150);
+swipeButton.style.transform =
+"translateX(0)";
+
+
+setTimeout(
+function () {
+
+swipeButton.style.transition =
+"";
+
+},
+300
+);
 
 }
+);
+
+
+
+swipeButton.addEventListener(
+"pointercancel",
+function () {
+
+isDragging = false;
+
+}
+);
+
+
+
+/* =========================================
+BLOW OUT CANDLE
+========================================= */
+
+function finishCandle() {
+
+
+if (candleBlown) {
+return;
+}
+
+
+candleBlown = true;
+
+
+isDragging = false;
+
+
+
+/* Finish swipe */
+
+currentX =
+getMaxSwipe();
+
+
+swipeButton.style.transition =
+"transform 0.25s ease";
+
+
+swipeButton.style.transform =
+"translateX(" +
+currentX +
+"px)";
+
+
+
+/* Flame disappears */
+
+setTimeout(
+function () {
+
+flame.classList.add(
+"off"
+);
+
+},
+100
+);
+
+
+
+/* Change text */
+
+setTimeout(
+function () {
+
+const blowText =
+document.querySelector(
+".blow-text"
+);
+
+
+if (blowText) {
+
+blowText.textContent =
+"Wish made ✨";
+
+}
+
+},
+350
+);
+
+
+
+/* Show wish */
+
+setTimeout(
+function () {
+
+wishMessage
+.classList
+.add("show");
+
+},
+550
+);
+
+
+
+/*
+Short smooth transition
+after flame disappears.
+*/
+
+setTimeout(
+function () {
+
+showPage(page4);
+
+},
+1150
+);
+
+}
+
+
+
+/* =========================================
+PREVENT CONTEXT MENU
+========================================= */
+
+swipeButton.addEventListener(
+"contextmenu",
+function (event) {
+
+event.preventDefault();
+
+}
+);
+
 
 
 /* =========================================
@@ -425,31 +673,148 @@ PAGE 4 — ENVELOPE
 ========================================= */
 
 const envelope =
-document.getElementById("envelope");
+document.getElementById(
+"envelope"
+);
+
 
 const letterIntro =
-document.getElementById("letterIntro");
+document.getElementById(
+"letterIntro"
+);
+
 
 const tapToOpen =
-document.getElementById("tapToOpen");
+document.getElementById(
+"tapToOpen"
+);
+
 
 const letterPaper =
-document.getElementById("letterPaper");
+document.getElementById(
+"letterPaper"
+);
+
 
 const finalLetterStage =
-document.getElementById("finalLetterStage");
+document.getElementById(
+"finalLetterStage"
+);
+
 
 let envelopeOpened = false;
 
+let typingStarted = false;
+
+
+
+/* =========================================
+LETTER TEXT
+========================================= */
+
+const letterText = `Happy Birthday Chotu ❤️
+
+Who knew one random, unplanned coffee date would bring you into my life? 🥹
+
+Since then, you’ve filled my life with so many laughs, memories, adventures, and little moments that mean more than you know.
+
+I hope this year brings you everything you wish for, and I hope I get to be beside you through all of it. ❤️
+
+More memories, more adventures, more us.
+
+Love you always ❤️`;
+
+
+
+/* =========================================
+OPEN ENVELOPE
+========================================= */
+
+function openEnvelope() {
+
+
+if (envelopeOpened) {
+return;
+}
+
+
+envelopeOpened = true;
+
+
+envelope.classList.add(
+"open"
+);
+
+
+tapToOpen.style.opacity =
+"0";
+
+
+
+/*
+Let the envelope open first.
+*/
+
+setTimeout(
+function () {
+
+letterIntro.classList.add(
+"hide"
+);
+
+
+/*
+Move the same letter
+from the envelope into
+the final letter stage.
+*/
+
+finalLetterStage.appendChild(
+letterPaper
+);
+
+
+letterPaper.classList.add(
+"final-letter-paper"
+);
+
+
+setTimeout(
+function () {
+
+typeLetter();
+
+},
+500
+);
+
+},
+850
+);
+
+}
+
+
+
+/* =========================================
+TAP / CLICK
+========================================= */
 
 envelope.addEventListener(
 "click",
 openEnvelope
 );
 
+
+
+/* =========================================
+KEYBOARD
+========================================= */
+
 envelope.addEventListener(
 "keydown",
-(event) => {
+function (event) {
+
 
 if (
 event.key === "Enter" ||
@@ -466,140 +831,138 @@ openEnvelope();
 );
 
 
-function openEnvelope() {
-
-if (envelopeOpened) {
-return;
-}
-
-envelopeOpened = true;
-
-envelope.classList.add("open");
-
-tapToOpen.style.opacity = "0";
-
-/*
-Let the envelope opening animation
-play first.
-*/
-
-setTimeout(() => {
-
-letterIntro.classList.add("hide");
-
-/*
-Move the SAME letter out of the
-envelope and into the final stage.
-*/
-
-finalLetterStage.appendChild(
-letterPaper
-);
-
-letterPaper.classList.add(
-"final-letter-paper"
-);
-
-/*
-Start typing after the letter
-reaches the screen.
-*/
-
-setTimeout(() => {
-
-typeLetter();
-
-}, 500);
-
-}, 850);
-
-}
-
 
 /* =========================================
-PAGE 4 — LETTER TEXT
+TYPING
 ========================================= */
 
-const messageText =
-`Happy Birthday Chotu ❤️
-
-Who knew one random, unplanned coffee date would bring you into my life? 🥹
-
-Since then, you’ve filled my life with so many laughs, memories, adventures, and little moments that mean more than you know.
-
-I hope this year brings you everything you wish for, and I hope I get to be beside you through all of it. ❤️
-
-More memories, more adventures, more us.
-
-Love you always ❤️`;
-
-
-let typingStarted = false;
-
-
 function typeLetter() {
+
 
 if (typingStarted) {
 return;
 }
 
+
 typingStarted = true;
 
-const typedMessage =
-document.getElementById("typedMessage");
 
-typedMessage.textContent = "";
+const message =
+document.getElementById(
+"typedMessage"
+);
+
+
+message.textContent =
+"";
+
 
 let index = 0;
-
-/*
-Slightly slower typing makes the
-letter feel intentional and personal.
-*/
-
-const typingSpeed = 24;
 
 
 function typeNextCharacter() {
 
-if (index >= messageText.length) {
 
-setTimeout(() => {
+if (
+index >=
+letterText.length
+) {
+
+/*
+Typing finished.
+Wait slightly, then
+shower kisses.
+*/
+
+setTimeout(
+function () {
 
 createKissShower();
 
-}, 500);
+},
+500
+);
 
 return;
+
 }
 
-typedMessage.textContent +=
-messageText.charAt(index);
+
+message.textContent +=
+letterText.charAt(index);
+
 
 index++;
 
+
+let delay = 28;
+
+
+const character =
+letterText.charAt(
+index - 1
+);
+
+
+
+/* Natural pauses */
+
+if (
+character === "." ||
+character === "!" ||
+character === "?"
+) {
+
+delay = 260;
+
+}
+
+else if (
+character === ","
+) {
+
+delay = 140;
+
+}
+
+else if (
+character === "\n"
+) {
+
+delay = 400;
+
+}
+
+
 setTimeout(
 typeNextCharacter,
-typingSpeed
+delay
 );
 
 }
+
 
 typeNextCharacter();
 
 }
 
 
+
 /* =========================================
-PAGE 4 — KISS SHOWER
+KISS SHOWER
 ========================================= */
 
 function createKissShower() {
 
+
 const effects =
-document.getElementById("effects");
+document.getElementById(
+"effects"
+);
+
 
 const kissCount = 14;
+
 
 for (
 let i = 0;
@@ -607,85 +970,71 @@ i < kissCount;
 i++
 ) {
 
-setTimeout(() => {
+
+setTimeout(
+function () {
+
 
 const kiss =
-document.createElement("div");
+document.createElement(
+"div"
+);
 
-kiss.className = "kiss";
+
+kiss.className =
+"kiss";
+
 
 kiss.textContent =
+
 Math.random() > 0.5
 ? "💋"
 : "😘";
 
+
 kiss.style.left =
-`${10 + Math.random() * 80}%`;
+
+(
+8 +
+Math.random() * 84
+) + "%";
+
 
 kiss.style.top =
-`${65 + Math.random() * 25}%`;
+
+(
+65 +
+Math.random() * 25
+) + "%";
+
 
 kiss.style.fontSize =
-`${15 + Math.random() * 9}px`;
 
-kiss.style.animationDelay =
-`${Math.random() * 0.25}s`;
+(
+15 +
+Math.random() * 9
+) + "px";
 
-effects.appendChild(kiss);
 
-setTimeout(() => {
+effects.appendChild(
+kiss
+);
+
+
+setTimeout(
+function () {
 
 kiss.remove();
 
-}, 2200);
-
-}, i * 110);
-
-}
-
-}
+},
+2200
+);
 
 
-/* =========================================
-PAGE 4 — RESET
-========================================= */
-
-function resetLetterPage() {
-
-envelopeOpened = false;
-typingStarted = false;
-
-envelope.classList.remove("open");
-
-tapToOpen.style.opacity = "";
-
-letterIntro.classList.remove("hide");
-
-/*
-If the letter had previously been moved
-to the final stage, return it to envelope.
-*/
-
-if (
-letterPaper.parentElement !== envelope
-) {
-
-envelope.insertBefore(
-letterPaper,
-envelope.querySelector(
-".envelope-front"
-)
+},
+i * 110
 );
 
 }
-
-letterPaper.classList.remove(
-"final-letter-paper"
-);
-
-const typedMessage =
-document.getElementById("typedMessage");
-
-typedMessage.textContent = "";
 
 }
