@@ -10,22 +10,20 @@ PAGE SWITCHING
 
 function showPage(number) {
 
-const pages =
-document.querySelectorAll(".page");
-
-pages.forEach(function(page) {
+document.querySelectorAll(".page").forEach(function(page) {
 
 page.classList.remove("active");
 
 });
 
 
-const target =
+const targetPage =
 document.getElementById("page" + number);
 
-if (target) {
 
-target.classList.add("active");
+if (targetPage) {
+
+targetPage.classList.add("active");
 
 }
 
@@ -39,10 +37,6 @@ MUSIC
 const music =
 document.getElementById("birthdayMusic");
 
-
-/*
-Keep volume comfortable.
-*/
 
 music.volume = 0.65;
 
@@ -58,28 +52,22 @@ document.getElementById("yesButton");
 yesButton.addEventListener("click", function() {
 
 /*
-IMPORTANT:
-
-The music starts INSIDE the user's
-YES click.
-
-This is required by browser autoplay rules.
+The music is started directly inside
+the YES click so the browser allows it.
 */
-
-music.currentTime = 0;
 
 music.play()
 .then(function() {
 
 console.log(
-"Birthday music started successfully 🎵"
+"Birthday music started 🎵"
 );
 
 })
 .catch(function(error) {
 
 console.log(
-"Music playback error:",
+"Music could not start:",
 error
 );
 
@@ -87,7 +75,7 @@ error
 
 
 /*
-Move immediately to Page 2.
+Move to Page 2.
 */
 
 showPage(2);
@@ -96,7 +84,7 @@ showPage(2);
 
 
 /* =====================================================
-PAGE 1 — NO BUTTON
+PAGE 1 — NO
 ===================================================== */
 
 const noButton =
@@ -112,34 +100,31 @@ const buttonHeight =
 noButton.offsetHeight;
 
 
-/*
-Keep the button completely
-inside the screen.
-*/
-
 const maxX =
 Math.max(
 10,
 window.innerWidth -
 buttonWidth -
-10
+15
 );
+
 
 const maxY =
 Math.max(
 10,
 window.innerHeight -
 buttonHeight -
-10
+15
 );
 
 
-const randomX =
+const x =
 10 +
 Math.random() *
 (maxX - 10);
 
-const randomY =
+
+const y =
 10 +
 Math.random() *
 (maxY - 10);
@@ -149,10 +134,10 @@ noButton.style.position =
 "fixed";
 
 noButton.style.left =
-randomX + "px";
+x + "px";
 
 noButton.style.top =
-randomY + "px";
+y + "px";
 
 noButton.style.zIndex =
 "9999";
@@ -160,19 +145,11 @@ noButton.style.zIndex =
 }
 
 
-/*
-Desktop
-*/
-
 noButton.addEventListener(
 "mouseenter",
 moveNoButton
 );
 
-
-/*
-Mobile
-*/
 
 noButton.addEventListener(
 "touchstart",
@@ -204,12 +181,12 @@ document.getElementById("specialMessage");
 
 let poppedBalloons = 0;
 
-let finishedBalloons = false;
+let allBalloonsPopped = false;
 
 
-/*
-Add click event to all 4 balloons.
-*/
+/* =====================================================
+BALLOON CLICK
+===================================================== */
 
 balloons.forEach(function(balloon) {
 
@@ -219,8 +196,8 @@ function() {
 
 
 /*
-Don't allow a popped balloon
-to be counted again.
+Prevent the same balloon from
+being counted twice.
 */
 
 if (
@@ -233,51 +210,49 @@ return;
 
 
 /*
-Pop it.
+Pop balloon.
 */
 
 balloon.classList.add("popped");
 
 
 /*
-Increase count.
+Increase counter.
 */
 
 poppedBalloons++;
 
 
 balloonCount.textContent =
-poppedBalloons + " / 4 popped";
+poppedBalloons +
+" / 4 popped";
 
 
 /*
-Pop confetti.
+Small pop celebration.
 */
 
 createPopConfetti(balloon);
 
 
-/*
-=====================================
-CRITICAL:
+/* =================================================
+IMPORTANT:
 
-NOTHING happens to the special
-message until ALL FOUR balloons
-have been popped.
-=====================================
-*/
+DO NOT SHOW THE SPECIAL MESSAGE
+UNTIL ALL 4 BALLOONS ARE POPPED.
+================================================= */
 
 if (
 poppedBalloons === 4 &&
-!finishedBalloons
+!allBalloonsPopped
 ) {
 
-finishedBalloons = true;
+allBalloonsPopped = true;
 
 
 /*
-Wait for the final balloon
-pop animation.
+Give the final balloon time
+to disappear.
 */
 
 setTimeout(
@@ -285,7 +260,9 @@ function() {
 
 
 /*
-NOW show the message.
+NOW reveal:
+
+"You are so special"
 */
 
 specialMessage.classList.add(
@@ -293,16 +270,14 @@ specialMessage.classList.add(
 );
 
 
-/*
-Celebrate.
-*/
-
 createBigConfetti();
 
 
 /*
 Keep the message visible
-before going to Page 3.
+for 3 seconds.
+
+Then Page 3.
 */
 
 setTimeout(
@@ -328,7 +303,7 @@ showPage(3);
 
 
 /* =====================================================
-BALLOON POP CONFETTI
+POP CONFETTI
 ===================================================== */
 
 function createPopConfetti(balloon) {
@@ -343,7 +318,7 @@ document.getElementById("confetti");
 
 for (
 let i = 0;
-i < 14;
+i < 12;
 i++
 ) {
 
@@ -385,7 +360,7 @@ Math.random() * 4
 piece.style.transform =
 "rotate(" +
 Math.random() * 360 +
-"deg)";
+"deg";
 
 
 container.appendChild(piece);
@@ -397,7 +372,7 @@ function() {
 piece.remove();
 
 },
-2000
+1800
 );
 
 }
@@ -435,7 +410,7 @@ Math.random() * 100 +
 
 
 piece.style.top =
-Math.random() * 30 +
+Math.random() * 25 +
 "vh";
 
 
@@ -478,7 +453,7 @@ piece.remove();
 
 
 /* =====================================================
-PAGE 3 — BLOW CANDLE
+PAGE 3 — CANDLE
 ===================================================== */
 
 const blowButton =
@@ -493,17 +468,13 @@ const wishText =
 document.getElementById("wishText");
 
 
-const page3Card =
-document.querySelector(".page3-card");
-
-
 blowButton.addEventListener(
 "click",
 function() {
 
 
 /*
-Put out the flame.
+Extinguish flame.
 */
 
 flame.style.opacity = "0";
@@ -513,7 +484,7 @@ flame.style.transform =
 
 
 /*
-Hide button.
+Hide blow button.
 */
 
 blowButton.style.display =
@@ -521,7 +492,7 @@ blowButton.style.display =
 
 
 /*
-Show message.
+Show wish message.
 */
 
 wishText.textContent =
@@ -534,21 +505,10 @@ wishText.classList.add(
 
 
 /*
-Small celebration.
+Little celebration.
 */
 
 createBigConfetti();
-
-
-/*
-PAGE 3 IS NOW COMPLETE.
-
-We are intentionally NOT moving
-to Page 4 yet.
-
-We'll build Page 4 after you
-confirm Pages 1–3 work.
-*/
 
 }
 );
