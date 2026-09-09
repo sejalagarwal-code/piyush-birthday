@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>For Piyush ❤️</title>
-
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- =========================
-PAGE 1
-========================== -->
+<!-- ================= PAGE 1 ================= -->
 
 <section id="page1" class="page active">
 
@@ -29,9 +24,7 @@ PAGE 1
 A LITTLE SURPRISE FOR YOU
 </div>
 
-<div class="main-heart">
-♥
-</div>
+<div class="main-heart">♥</div>
 
 <h1>
 Happy Birthday<br>
@@ -70,15 +63,13 @@ Choose wisely...
 </section>
 
 
-<!-- =========================
-PAGE 2
-========================== -->
+<!-- ================= PAGE 2 ================= -->
 
 <section id="page2" class="page">
 
 <div class="balloon-page">
 
-<div class="page2-small">
+<div class="small-text">
 A LITTLE SURPRISE
 </div>
 
@@ -86,63 +77,50 @@ A LITTLE SURPRISE
 Pop all 4 balloons
 </h2>
 
-<p class="page2-subtitle">
+<p class="balloon-subtitle">
 There's something waiting for you...
 </p>
 
-
-<!-- 2 × 2 BALLOON GRID -->
-
 <div class="balloon-area">
 
-<button class="balloon balloon-one">
-<span></span>
-</button>
+<div class="balloon balloon-one" data-balloon="1">
+<div class="balloon-shine"></div>
+<div class="balloon-string"></div>
+</div>
 
-<button class="balloon balloon-two">
-<span></span>
-</button>
+<div class="balloon balloon-two" data-balloon="2">
+<div class="balloon-shine"></div>
+<div class="balloon-string"></div>
+</div>
 
-<button class="balloon balloon-three">
-<span></span>
-</button>
+<div class="balloon balloon-three" data-balloon="3">
+<div class="balloon-shine"></div>
+<div class="balloon-string"></div>
+</div>
 
-<button class="balloon balloon-four">
-<span></span>
-</button>
+<div class="balloon balloon-four" data-balloon="4">
+<div class="balloon-shine"></div>
+<div class="balloon-string"></div>
+</div>
 
 </div>
 
+<p class="balloon-counter" id="balloonCounter">
+0 / 4 popped
+</p>
 
-<div class="balloon-counter">
-<span id="balloonCount">0</span> / 4
+<div class="special-message" id="specialMessage">
+
+<div class="special-title">
+You are special ❤️
 </div>
-
-
-<!-- Hidden until all 4 are popped -->
-
-<div
-id="specialMessage"
-class="special-message">
-
-<div class="special-heart">
-♥
-</div>
-
-<h3>
-You are special
-</h3>
 
 <p>
 This is just a little surprise for you ❤️
 </p>
 
-<button
-id="continueButton"
-class="continue-button">
-
+<button id="balloonContinue">
 Continue ✨
-
 </button>
 
 </div>
@@ -152,25 +130,115 @@ Continue ✨
 </section>
 
 
-<!-- =========================
-PAGE 3
-Will be built next
-========================== -->
+<!-- ================= PAGE 3 ================= -->
 
 <section id="page3" class="page">
+
+<div class="cake-page">
+
+<div class="cake-label">
+ONE LITTLE WISH ✦
+</div>
+
+<h2>
+Blow the candle
+</h2>
+
+<p class="cake-subtitle">
+Make a wish before you blow it out ❤️
+</p>
+
+
+<div class="cake-scene">
+
+<!-- Candle -->
+
+<div class="birthday-candle" id="birthdayCandle">
+
+<div class="flame" id="flame">
+<div class="flame-inner"></div>
+</div>
+
+<div class="wick"></div>
+
+<div class="candle-body">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+</div>
+
+
+<!-- Lotus Biscoff Cheesecake -->
+
+<div class="cheesecake">
+
+<div class="cake-top">
+
+<div class="cream-swirl"></div>
+
+<div class="biscoff-crumbs"></div>
+
+<div class="biscoff-cookie">
+Lotus
+</div>
+
+</div>
+
+<div class="cheesecake-middle"></div>
+
+<div class="biscoff-base"></div>
+
+<div class="cake-shadow"></div>
+
+</div>
+
+</div>
+
+
+<!-- Swipe to blow -->
+
+<div class="swipe-area">
+
+<p class="swipe-text">
+Swipe to blow the candle
+</p>
+
+<div class="swipe-track" id="swipeTrack">
+
+<div
+class="swipe-progress"
+id="swipeProgress">
+</div>
+
+<div
+class="swipe-button"
+id="swipeButton">
+
+<span>→</span>
+
+</div>
+
+<span class="swipe-label">
+SWIPE
+</span>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
 
-<!-- =========================
-EFFECTS
-========================== -->
+<!-- ================= EFFECTS ================= -->
 
 <div id="effects"></div>
 
 
-<!-- =========================
-YOUR ACTUAL MUSIC
-========================== -->
+<!-- ================= MUSIC ================= -->
 
 <audio
 id="birthdayMusic"
@@ -180,8 +248,7 @@ loop>
 </audio>
 
 
-<script src="script.js?v=4"></script>
+<script src="script.js?v=5"></script>
 
 </body>
-
 </html>
