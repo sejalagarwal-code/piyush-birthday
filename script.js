@@ -1,310 +1,111 @@
-/* =========================================
+/* =========================
 GET ELEMENTS
-========================================= */
+========================= */
 
-const page1 =
-document.getElementById("page1");
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
 
-const page2 =
-document.getElementById("page2");
+const yesButton = document.getElementById("yesButton");
+const noButton = document.getElementById("noButton");
 
+const birthdayMusic = document.getElementById("birthdayMusic");
 
-const yesButton =
-document.getElementById("yesButton");
+const balloons = document.querySelectorAll(".balloon");
 
-const noButton =
-document.getElementById("noButton");
-
-
-const balloons =
-document.querySelectorAll(".balloon");
-
-
-const balloonCount =
-document.getElementById("balloonCount");
-
+const balloonCount = document.getElementById("balloonCount");
 
 const specialMessage =
 document.getElementById("specialMessage");
 
+const continueButton =
+document.getElementById("continueButton");
 
 const effects =
 document.getElementById("effects");
 
 
-/* =========================================
-MUSIC VARIABLES
-========================================= */
-
-let audioContext = null;
-
-let musicStarted = false;
-
-let musicInterval = null;
-
-
-/* =========================================
-PAGE TRANSITION
-========================================= */
+/* =========================
+PAGE SWITCHING
+========================= */
 
 function showPage(page) {
 
-document
-.querySelectorAll(".page")
-.forEach(function(section) {
-
-section.classList.remove("active");
-
+document.querySelectorAll(".page").forEach((p) => {
+p.classList.remove("active");
 });
-
 
 page.classList.add("active");
 }
 
 
-/* =========================================
-HAPPY BIRTHDAY MUSIC
-========================================= */
-
-function startBirthdayMusic() {
-
-if (musicStarted) {
-return;
-}
-
-
-musicStarted = true;
-
-
-const AudioContext =
-window.AudioContext ||
-window.webkitAudioContext;
-
-
-if (!AudioContext) {
-return;
-}
-
-
-audioContext =
-new AudioContext();
-
-
-/*
-Simple Happy Birthday melody.
-
-It begins ONLY when YES is tapped,
-which allows the browser to play
-audio on mobile devices.
-*/
-
-
-const melody = [
-
-261.63,
-261.63,
-293.66,
-261.63,
-349.23,
-329.63,
-
-261.63,
-261.63,
-293.66,
-261.63,
-392.00,
-349.23,
-
-261.63,
-261.63,
-523.25,
-440.00,
-349.23,
-329.63,
-293.66,
-
-466.16,
-466.16,
-440.00,
-349.23,
-392.00,
-349.23
-
-];
-
-
-let note = 0;
-
-
-function playNote() {
-
-if (!audioContext) {
-return;
-}
-
-
-const oscillator =
-audioContext.createOscillator();
-
-
-const gain =
-audioContext.createGain();
-
-
-oscillator.type =
-"sine";
-
-
-oscillator.frequency.value =
-melody[note];
-
-
-gain.gain.setValueAtTime(
-0,
-audioContext.currentTime
-);
-
-
-gain.gain.linearRampToValueAtTime(
-0.13,
-audioContext.currentTime + 0.03
-);
-
-
-gain.gain.exponentialRampToValueAtTime(
-0.001,
-audioContext.currentTime + 0.48
-);
-
-
-oscillator.connect(gain);
-
-gain.connect(
-audioContext.destination
-);
-
-
-oscillator.start();
-
-
-oscillator.stop(
-audioContext.currentTime + 0.5
-);
-
-
-note++;
-
-
-if (note >= melody.length) {
-note = 0;
-}
-}
-
-
-playNote();
-
-
-musicInterval =
-setInterval(
-playNote,
-500
-);
-}
-
-
-/* =========================================
+/* =========================
 YES BUTTON
-========================================= */
+START MUSIC + PAGE 2
+========================= */
 
-yesButton.addEventListener(
-"click",
-function() {
+yesButton.addEventListener("click", async () => {
 
-/*
-Music starts immediately
-from this user interaction.
-*/
+birthdayMusic.volume = 0.4;
 
-startBirthdayMusic();
-
-
-/*
-Move from Page 1
-to Page 2.
-*/
+try {
+await birthdayMusic.play();
+} catch (error) {
+console.log("Music could not start:", error);
+}
 
 showPage(page2);
-
-}
-);
+});
 
 
-/* =========================================
+/* =========================
 NO BUTTON
-========================================= */
+KEEP INSIDE SCREEN
+========================= */
 
 function moveNoButton() {
 
-const buttonWidth =
-noButton.offsetWidth;
+const button = noButton;
 
+const padding = 20;
 
-const buttonHeight =
-noButton.offsetHeight;
-
-
-/*
-Keep the button away from
-the edges of the screen.
-*/
-
-const margin = 25;
-
+const buttonWidth = button.offsetWidth;
+const buttonHeight = button.offsetHeight;
 
 const maxX =
 window.innerWidth -
 buttonWidth -
-margin;
-
+padding;
 
 const maxY =
 window.innerHeight -
 buttonHeight -
-margin;
+padding;
+
+const minX = padding;
+const minY = padding;
 
 
-const x =
-margin +
+const randomX =
+Math.floor(
 Math.random() *
-Math.max(
-1,
-maxX - margin
-);
+(maxX - minX + 1)
+) + minX;
 
 
-const y =
-margin +
+const randomY =
+Math.floor(
 Math.random() *
-Math.max(
-1,
-maxY - margin
-);
+(maxY - minY + 1)
+) + minY;
 
 
-noButton.style.position =
-"fixed";
+button.style.position = "fixed";
 
+button.style.left =
+randomX + "px";
 
-noButton.style.left =
-x + "px";
-
-
-noButton.style.top =
-y + "px";
-
-
-noButton.style.zIndex =
-"100";
+button.style.top =
+randomY + "px";
 }
 
 
@@ -320,7 +121,7 @@ moveNoButton
 
 noButton.addEventListener(
 "touchstart",
-function(event) {
+(event) => {
 
 event.preventDefault();
 
@@ -333,159 +134,110 @@ passive: false
 );
 
 
-/* Pointer devices */
+/* Also handle pointer */
 
 noButton.addEventListener(
 "pointerdown",
-function(event) {
+(event) => {
+
+if (event.pointerType === "touch") {
 
 event.preventDefault();
 
 moveNoButton();
+}
 
 }
 );
 
 
-/* =========================================
+/* =========================
 BALLOONS
-========================================= */
+========================= */
 
-let popped =
-0;
+let popped = 0;
 
 
-balloons.forEach(
-function(balloon) {
+balloons.forEach((balloon) => {
 
-balloon.addEventListener(
-"click",
-function() {
+balloon.addEventListener("click", () => {
 
-/*
-Don't allow an already
-popped balloon to pop again.
-*/
+/* Don't pop twice */
 
-if (
-balloon.classList.contains(
-"popped"
-)
-) {
-
+if (balloon.classList.contains("popped")) {
 return;
 }
 
 
-/*
-Pop balloon.
-*/
+/* Pop balloon */
 
-balloon.classList.add(
-"popped"
-);
-
+balloon.classList.add("popped");
 
 popped++;
 
-
-/*
-Update counter.
-*/
-
-balloonCount.textContent =
-popped;
+balloonCount.textContent = popped;
 
 
-/*
-Create little heart
-explosion.
-*/
+/* Create pop effect */
 
-createPopEffect(
-balloon
-);
+createPopEffect(balloon);
 
 
-/*
-ONLY after all four
-balloons are popped...
-*/
+/* =========================
+ONLY AFTER ALL 4
+========================= */
 
 if (popped === 4) {
 
-setTimeout(
-function() {
+setTimeout(() => {
 
-specialMessage
-.classList
-.add("show");
+specialMessage.classList.add("show");
 
-},
-350
-);
+}, 400);
 
 }
 
-}
-);
+});
 
-}
-);
+});
 
 
-/* =========================================
-BALLOON POP HEART EFFECT
-========================================= */
+/* =========================
+POP EFFECT
+========================= */
 
-function createPopEffect(
-balloon
-) {
+function createPopEffect(balloon) {
 
 const rect =
 balloon.getBoundingClientRect();
 
-
 const centerX =
-rect.left +
-rect.width / 2;
-
+rect.left + rect.width / 2;
 
 const centerY =
-rect.top +
-rect.height / 2;
+rect.top + rect.height / 2;
 
 
-const symbols = [
-"💗",
+const emojis = [
+"❤️",
 "💕",
-"💖",
 "✨",
-"♥"
+"💗"
 ];
 
 
-for (
-let i = 0;
-i < 16;
-i++
-) {
+for (let i = 0; i < 8; i++) {
 
 const heart =
-document.createElement(
-"div"
-);
+document.createElement("span");
 
-
-heart.className =
-"pop-heart";
-
+heart.className = "pop-heart";
 
 heart.textContent =
-symbols[
+emojis[
 Math.floor(
 Math.random() *
-symbols.length
+emojis.length
 )
 ];
 
@@ -493,54 +245,44 @@ symbols.length
 heart.style.left =
 centerX + "px";
 
-
 heart.style.top =
 centerY + "px";
 
 
 heart.style.setProperty(
-"--move-x",
-(
-Math.random() *
-180 -
-90
-) + "px"
+"--x",
+(Math.random() * 160 - 80) + "px"
 );
 
 
 heart.style.setProperty(
-"--move-y",
-(
-Math.random() *
-180 -
-90
-) + "px"
+"--y",
+(Math.random() * 160 - 80) + "px"
 );
 
 
-heart.style.setProperty(
-"--rotate",
-(
-Math.random() *
-180 -
-90
-) + "deg"
-);
+effects.appendChild(heart);
 
 
-effects.appendChild(
-heart
-);
-
-
-setTimeout(
-function() {
-
+setTimeout(() => {
 heart.remove();
-
-},
-1100
-);
+}, 900);
 
 }
+
 }
+
+
+/* =========================
+CONTINUE BUTTON
+========================= */
+
+/*
+Page 3 will be added here later.
+*/
+
+continueButton.addEventListener("click", () => {
+
+alert("Page 3 coming next ❤️");
+
+});
