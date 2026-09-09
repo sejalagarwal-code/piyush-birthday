@@ -1,7 +1,3 @@
-/* =========================
-BASIC RESET
-========================= */
-
 * {
 box-sizing: border-box;
 margin: 0;
@@ -297,21 +293,27 @@ margin-bottom: 10px;
 
 /* =========================
 BALLOON AREA
+2 ON TOP + 2 BELOW
 ========================= */
 
 .balloon-area {
-width: 100%;
+width: 240px;
 
 min-height: 280px;
 
-display: flex;
+display: grid;
 
-justify-content: center;
+grid-template-columns: 1fr 1fr;
+
+grid-template-rows: 1fr 1fr;
+
+justify-items: center;
+
 align-items: center;
 
-gap: 25px;
+column-gap: 20px;
 
-flex-wrap: wrap;
+row-gap: 15px;
 
 margin-top: 10px;
 }
@@ -322,9 +324,9 @@ BALLOONS
 ========================= */
 
 .balloon {
-width: 105px;
+width: 95px;
 
-height: 135px;
+height: 125px;
 
 border-radius: 55% 55% 48% 48%;
 
@@ -396,7 +398,7 @@ position: absolute;
 
 width: 1px;
 
-height: 70px;
+height: 50px;
 
 background: rgba(90, 50, 70, 0.4);
 
@@ -436,6 +438,7 @@ transform: translateY(-8px) scale(1.05);
 
 .balloon.popped {
 animation: balloonPop 0.45s forwards;
+
 pointer-events: none;
 }
 
@@ -451,7 +454,7 @@ font-size: 15px;
 
 color: #976078;
 
-margin-top: 20px;
+margin-top: 10px;
 }
 
 
@@ -616,11 +619,15 @@ animation: popHeart 0.8s ease-out forwards;
 
 0% {
 opacity: 1;
-transform: translate(0, 0) scale(1);
+
+transform:
+translate(0, 0)
+scale(1);
 }
 
 100% {
 opacity: 0;
+
 transform:
 translate(
 var(--x),
@@ -650,7 +657,11 @@ min-height: 600px;
 }
 
 .balloon-area {
-gap: 12px;
+width: 220px;
+
+column-gap: 10px;
+
+row-gap: 10px;
 
 min-height: 250px;
 }
@@ -662,7 +673,7 @@ height: 105px;
 }
 
 .balloon span {
-height: 55px;
+height: 45px;
 }
 
 .special-message {
@@ -674,5 +685,4 @@ width: calc(100% - 30px);
 .special-message h3 {
 font-size: 24px;
 }
-
 }
