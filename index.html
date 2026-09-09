@@ -2,17 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Piyush ❤️</title>
-<link rel="stylesheet" href="style.css">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<title>Happy Birthday Piyush ❤️</title>
+
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 
 <body>
 
-<!-- ================= PAGE 1 ================= -->
+<!-- =========================================
+PAGE 1
+========================================= -->
 
 <section id="page1" class="page active">
 
+<!-- Floating hearts -->
 <div class="floating-heart h1">♡</div>
 <div class="floating-heart h2">♥</div>
 <div class="floating-heart h3">♡</div>
@@ -24,10 +33,12 @@
 A LITTLE SURPRISE FOR YOU
 </div>
 
-<div class="main-heart">♥</div>
+<div class="main-heart">
+♥
+</div>
 
 <h1>
-Happy Birthday<br>
+Happy Birthday,<br>
 <span>Piyush</span> ❤️
 </h1>
 
@@ -44,11 +55,19 @@ Are you excited for<br>
 
 <div class="button-area">
 
-<button id="yesButton" class="yes-button">
+<button
+id="yesButton"
+class="yes-button"
+type="button"
+>
 YES ❤️
 </button>
 
-<button id="noButton" class="no-button">
+<button
+id="noButton"
+class="no-button"
+type="button"
+>
 NO 😏
 </button>
 
@@ -63,13 +82,15 @@ Choose wisely...
 </section>
 
 
-<!-- ================= PAGE 2 ================= -->
+<!-- =========================================
+PAGE 2
+========================================= -->
 
 <section id="page2" class="page">
 
 <div class="balloon-page">
 
-<div class="small-text">
+<div class="page2-small">
 A LITTLE SURPRISE
 </div>
 
@@ -77,49 +98,81 @@ A LITTLE SURPRISE
 Pop all 4 balloons
 </h2>
 
-<p class="balloon-subtitle">
+<p class="page2-subtitle">
 There's something waiting for you...
 </p>
 
+
+<!-- BALLOONS -->
+
 <div class="balloon-area">
 
-<div class="balloon balloon-one" data-balloon="1">
-<div class="balloon-shine"></div>
-<div class="balloon-string"></div>
+<button
+class="balloon balloon-one"
+type="button"
+aria-label="Pop balloon"
+>
+<span></span>
+</button>
+
+<button
+class="balloon balloon-two"
+type="button"
+aria-label="Pop balloon"
+>
+<span></span>
+</button>
+
+<button
+class="balloon balloon-three"
+type="button"
+aria-label="Pop balloon"
+>
+<span></span>
+</button>
+
+<button
+class="balloon balloon-four"
+type="button"
+aria-label="Pop balloon"
+>
+<span></span>
+</button>
+
 </div>
 
-<div class="balloon balloon-two" data-balloon="2">
-<div class="balloon-shine"></div>
-<div class="balloon-string"></div>
+
+<!-- COUNTER -->
+
+<div class="balloon-counter">
+<span id="balloonCount">0</span> / 4
 </div>
 
-<div class="balloon balloon-three" data-balloon="3">
-<div class="balloon-shine"></div>
-<div class="balloon-string"></div>
+
+<!-- HIDDEN MESSAGE -->
+
+<div
+id="specialMessage"
+class="special-message"
+>
+
+<div class="special-heart">
+♥
 </div>
 
-<div class="balloon balloon-four" data-balloon="4">
-<div class="balloon-shine"></div>
-<div class="balloon-string"></div>
-</div>
-
-</div>
-
-<p class="balloon-counter" id="balloonCounter">
-0 / 4 popped
-</p>
-
-<div class="special-message" id="specialMessage">
-
-<div class="special-title">
-You are special ❤️
-</div>
+<h3>
+You are special
+</h3>
 
 <p>
 This is just a little surprise for you ❤️
 </p>
 
-<button id="balloonContinue">
+<button
+id="continueButton"
+class="continue-button"
+type="button"
+>
 Continue ✨
 </button>
 
@@ -130,102 +183,128 @@ Continue ✨
 </section>
 
 
-<!-- ================= PAGE 3 ================= -->
+<!-- =========================================
+PAGE 3
+========================================= -->
 
 <section id="page3" class="page">
 
-<div class="cake-page">
+<div class="candle-page">
 
-<div class="cake-label">
-ONE LITTLE WISH ✦
+<div class="page3-small">
+MAKE A WISH ✨
 </div>
 
 <h2>
 Blow the candle
 </h2>
 
-<p class="cake-subtitle">
-Make a wish before you blow it out ❤️
+<p class="page3-subtitle">
+Make a wish before the flame goes out...
 </p>
 
 
+<!-- CAKE SCENE -->
+
 <div class="cake-scene">
 
-<!-- Candle -->
+<!-- Glow behind cake -->
+<div class="cake-glow"></div>
 
-<div class="birthday-candle" id="birthdayCandle">
+
+<!-- CHEESECAKE -->
+
+<div class="cheesecake">
+
+<!-- Biscoff crumbs on top -->
+<div class="biscoff-crumbs">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<!-- Top cheesecake layer -->
+<div class="cheesecake-top"></div>
+
+<!-- Biscoff sauce/drip -->
+<div class="biscoff-drip drip-one"></div>
+<div class="biscoff-drip drip-two"></div>
+<div class="biscoff-drip drip-three"></div>
+
+<!-- Middle cream layer -->
+<div class="cheesecake-middle"></div>
+
+<!-- Bottom biscuit layer -->
+<div class="cheesecake-base"></div>
+
+</div>
+
+
+<!-- CANDLE -->
+
+<div
+id="candle"
+class="candle"
+>
 
 <div class="flame" id="flame">
 <div class="flame-inner"></div>
 </div>
 
-<div class="wick"></div>
-
 <div class="candle-body">
-<span></span>
-<span></span>
-<span></span>
+<div class="candle-stripe"></div>
+<div class="candle-stripe"></div>
+<div class="candle-stripe"></div>
 </div>
-
-</div>
-
-
-<!-- Lotus Biscoff Cheesecake -->
-
-<div class="cheesecake">
-
-<div class="cake-top">
-
-<div class="cream-swirl"></div>
-
-<div class="biscoff-crumbs"></div>
-
-<div class="biscoff-cookie">
-Lotus
-</div>
-
-</div>
-
-<div class="cheesecake-middle"></div>
-
-<div class="biscoff-base"></div>
-
-<div class="cake-shadow"></div>
 
 </div>
 
 </div>
 
 
-<!-- Swipe to blow -->
+<!-- BLOW TEXT -->
 
-<div class="swipe-area">
+<div class="blow-text">
+Blow the candle 💨
+</div>
 
-<p class="swipe-text">
-Swipe to blow the candle
-</p>
 
-<div class="swipe-track" id="swipeTrack">
+<!-- SWIPE CONTROL -->
+
+<div class="swipe-container">
 
 <div
-class="swipe-progress"
-id="swipeProgress">
-</div>
+id="swipeTrack"
+class="swipe-track"
+>
 
 <div
+id="swipeButton"
 class="swipe-button"
-id="swipeButton">
-
+>
 <span>→</span>
+</div>
+
+<div class="swipe-label">
+Swipe to blow candle
+</div>
 
 </div>
 
-<span class="swipe-label">
-SWIPE
-</span>
-
 </div>
 
+
+<!-- Hidden completion message -->
+
+<div
+id="wishMessage"
+class="wish-message"
+>
+✨ Wish made ✨
 </div>
 
 </div>
@@ -233,12 +312,18 @@ SWIPE
 </section>
 
 
-<!-- ================= EFFECTS ================= -->
+<!-- =========================================
+EFFECTS CONTAINER
+========================================= -->
 
 <div id="effects"></div>
 
 
-<!-- ================= MUSIC ================= -->
+<!-- =========================================
+BIRTHDAY MUSIC
+Starts after YES is clicked
+and continues between pages.
+========================================= -->
 
 <audio
 id="birthdayMusic"
@@ -248,7 +333,11 @@ loop>
 </audio>
 
 
-<script src="script.js?v=5"></script>
+<!-- =========================================
+JAVASCRIPT
+========================================= -->
+
+<script src="script.js?v=4"></script>
 
 </body>
 </html>
