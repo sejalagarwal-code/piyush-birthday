@@ -2,10 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0,
-maximum-scale=1.0,
-user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Happy Birthday Piyush ❤️</title>
 
@@ -14,203 +11,221 @@ user-scalable=no">
 
 <body>
 
-<!-- =====================================================
+<!-- =========================================
+BIRTHDAY MUSIC
+File in the same GitHub folder:
+birthday-music.mp3
+========================================== -->
+
+<audio id="birthdayMusic" loop preload="auto">
+<source src="birthday-music.mp3" type="audio/mpeg">
+</audio>
+
+
+<!-- =========================================
 PAGE 1
-===================================================== -->
+========================================== -->
 
-<section id="page1" class="page active">
+<section class="page active" id="page1">
 
-<div class="floating-heart heart-one">♡</div>
-<div class="floating-heart heart-two">♥</div>
-<div class="floating-heart heart-three">♡</div>
-<div class="floating-heart heart-four">♥</div>
+<div class="card page1-card">
 
-<div class="card">
+<div class="heart">♥</div>
 
-<div class="small-text">
-A LITTLE SURPRISE FOR YOU
-</div>
-
-<div class="main-heart">
-♥
-</div>
+<p class="tiny-title">A little surprise for you</p>
 
 <h1>
 Happy Birthday,<br>
-<span>Piyush</span> ❤️
+Piyush ❤️
 </h1>
 
-<div class="divider">
-<span></span>
-✦
-<span></span>
-</div>
-
-<p class="question">
-Are you excited for<br>
-<i>what's next?</i>
+<p class="intro">
+I've planned something special for you...
 </p>
+
+<h2>
+Are you excited for what's next?
+</h2>
 
 <div class="button-area">
 
-<button id="yesButton"
-class="yes-button">
+<button id="yesButton" class="yes-button">
 YES ❤️
 </button>
 
-<button id="noButton"
-class="no-button">
-NO 😏
+<button id="noButton" class="no-button">
+NO 🙈
 </button>
 
 </div>
-
-<p class="bottom-text">
-Choose wisely...
-</p>
 
 </div>
 
 </section>
 
 
-<!-- =====================================================
-PAGE 2 — BALLOONS
-===================================================== -->
+<!-- =========================================
+PAGE 2
+========================================== -->
 
-<section id="page2" class="page">
+<section class="page" id="page2">
 
-<div class="page-content">
+<div class="card page2-card">
 
-<p class="scene-label">
-A LITTLE SOMETHING FOR YOU
+<p class="tiny-title">
+Your first little challenge 🎈
 </p>
 
-<h2>
-Pop all 4<br>
-<span>balloons</span> 🎈
-</h2>
+<h1>
+Pop all 4 balloons
+</h1>
 
-<p class="tap-hint">
-Tap each balloon
+<p class="instruction">
+Tap each balloon to continue...
 </p>
-
-
-<!-- Message is BEHIND balloons and hidden initially -->
-
-<div class="special-message">
-
-<span>You are</span>
-
-<strong>so special</strong>
-
-<span>❤️</span>
-
-</div>
 
 
 <!-- BALLOONS -->
 
-<div id="balloonArea"
-class="balloon-area">
+<div class="balloon-area" id="balloonArea">
 
-<button class="balloon balloon-one">
-<span></span>
+<button
+class="balloon balloon-one"
+aria-label="Pop balloon 1">
+<span>♥</span>
 </button>
 
-<button class="balloon balloon-two">
-<span></span>
+<button
+class="balloon balloon-two"
+aria-label="Pop balloon 2">
+<span>★</span>
 </button>
 
-<button class="balloon balloon-three">
-<span></span>
+<button
+class="balloon balloon-three"
+aria-label="Pop balloon 3">
+<span>♥</span>
 </button>
 
-<button class="balloon balloon-four">
-<span></span>
+<button
+class="balloon balloon-four"
+aria-label="Pop balloon 4">
+<span>★</span>
 </button>
 
 </div>
 
 
-<div class="balloon-count">
-<span id="balloonCount">0</span> / 4
+<p id="balloonCount" class="balloon-count">
+0 / 4 popped
+</p>
+
+
+<!-- =====================================
+IMPORTANT:
+
+This starts HIDDEN.
+
+It is revealed ONLY after
+all 4 balloons are popped.
+====================================== -->
+
+<div id="specialMessage" class="special-message">
+
+<div class="sparkles">
+✨ ✨ ✨
+</div>
+
+<h2>
+You are so special ❤️
+</h2>
+
+<p>
+And there's so much more waiting for you...
+</p>
+
 </div>
 
 </div>
+
+
+<!-- CONFETTI -->
 
 <div id="confetti"></div>
 
 </section>
 
 
-<!-- =====================================================
-PAGE 3 — CANDLE
-===================================================== -->
+<!-- =========================================
+PAGE 3
+========================================== -->
 
-<section id="page3" class="page">
+<section class="page" id="page3">
 
-<div class="candle-page">
+<div class="card page3-card">
 
-<p class="scene-label">
-ONE MORE LITTLE THING
+<p class="tiny-title">
+A birthday wish just for you ✨
 </p>
 
-<h2>
-Blow the<br>
-<span>candle</span> 🕯️
-</h2>
+<h1>
+Blow the candle
+</h1>
 
-<p class="candle-subtitle">
-Make a wish for your new year ✨
+<p class="instruction">
+Make a wish first... then tap below 💨
 </p>
 
 
-<!-- Candle -->
+<!-- CAKE -->
 
-<div class="candle-scene">
-
-<div class="cake-plate"></div>
+<div class="cake-area">
 
 <div class="cake">
 
-<div class="cake-top"></div>
-
-<div class="cake-body"></div>
-
-<div class="icing"></div>
-
-</div>
-
-
 <div class="candle">
 
-<div id="flame"
-class="flame">
-
-<div class="flame-inner"></div>
-
+<div
+class="flame"
+id="flame">
+🔥
 </div>
+
+<div class="wick"></div>
 
 <div class="candle-stick"></div>
 
 </div>
 
+<div class="cake-top"></div>
+
+<div class="cake-body">
+
+<div class="cream cream-one"></div>
+<div class="cream cream-two"></div>
+
+</div>
+
+</div>
+
 </div>
 
 
-<button id="blowButton"
-class="blow-button">
+<!-- BLOW BUTTON -->
 
+<button
+id="blowButton"
+class="main-button">
 Tap to blow 💨
-
 </button>
 
-<p id="wishText"
+
+<!-- AFTER BLOWING -->
+
+<p
+id="wishText"
 class="wish-text">
-
-Make a wish... ❤️
-
+Make your wish... ❤️
 </p>
 
 </div>
@@ -218,33 +233,11 @@ Make a wish... ❤️
 </section>
 
 
-<!-- =====================================================
-PAGE 4 PLACEHOLDER
-===================================================== -->
+<!-- =========================================
+JAVASCRIPT
+========================================== -->
 
-<section id="page4" class="page">
-
-<div class="page-content">
-
-<p class="scene-label">
-AND NOW...
-</p>
-
-<h2>
-Something<br>
-<span>special</span> 🌹
-</h2>
-
-<p class="tap-hint">
-Page 4 will be built next
-</p>
-
-</div>
-
-</section>
-
-
-<script src="script.js?v=4"></script>
+<script src="script.js?v=20"></script>
 
 </body>
 </html>
