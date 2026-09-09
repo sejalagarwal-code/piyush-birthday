@@ -1,24 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Piyush ❤️</title>
+
+<title>For Piyush ❤️</title>
+
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-
-<!-- Floating Hearts -->
-<div class="floating-hearts">
-<span>❤️</span>
-<span>💕</span>
-<span>💗</span>
-<span>💖</span>
-<span>❤️</span>
-<span>💕</span>
-</div>
-
 
 <!-- =========================
 PAGE 1
@@ -26,27 +18,52 @@ PAGE 1
 
 <section id="page1" class="page active">
 
+<div class="floating-heart h1">♡</div>
+<div class="floating-heart h2">♥</div>
+<div class="floating-heart h3">♡</div>
+<div class="floating-heart h4">♥</div>
+
 <div class="card">
 
-<div class="small-heart">❤️</div>
+<div class="small-text">
+A LITTLE SURPRISE FOR YOU
+</div>
 
-<h1>Happy Birthday, Piyush ❤️</h1>
+<div class="main-heart">
+♥
+</div>
 
-<p class="subtitle">
-Are you excited for what's next?
+<h1>
+Happy Birthday,<br>
+<span>Piyush</span> ❤️
+</h1>
+
+<div class="divider">
+<span></span>
+✦
+<span></span>
+</div>
+
+<p class="question">
+Are you excited for<br>
+<i>what's next?</i>
 </p>
 
-<div class="buttons">
+<div class="button-area">
 
 <button id="yesButton" class="yes-button">
 YES ❤️
 </button>
 
 <button id="noButton" class="no-button">
-NO 🙈
+NO 😏
 </button>
 
 </div>
+
+<p class="bottom-text">
+Choose wisely...
+</p>
 
 </div>
 
@@ -59,55 +76,73 @@ PAGE 2
 
 <section id="page2" class="page">
 
-<div class="card balloon-card">
+<div class="balloon-page">
 
-<div class="small-heart">🎈</div>
+<div class="page2-small">
+A LITTLE SURPRISE
+</div>
 
-<h2>Pop all 4 balloons</h2>
+<h2>
+Pop all 4 balloons
+</h2>
 
-<p class="subtitle">
+<p class="page2-subtitle">
 There's something waiting for you...
 </p>
 
+
+<!-- 2 × 2 BALLOON GRID -->
+
 <div class="balloon-area">
 
-<button class="balloon balloon-one" data-balloon="1">
+<button class="balloon balloon-one">
 <span></span>
 </button>
 
-<button class="balloon balloon-two" data-balloon="2">
+<button class="balloon balloon-two">
 <span></span>
 </button>
 
-<button class="balloon balloon-three" data-balloon="3">
+<button class="balloon balloon-three">
 <span></span>
 </button>
 
-<button class="balloon balloon-four" data-balloon="4">
+<button class="balloon balloon-four">
 <span></span>
 </button>
 
 </div>
 
-<div class="counter">
-<span id="balloonCount">0</span> / 4 popped
+
+<div class="balloon-counter">
+<span id="balloonCount">0</span> / 4
 </div>
 
 
-<!-- Hidden until all 4 balloons are popped -->
+<!-- Hidden until all 4 are popped -->
 
-<div id="specialMessage" class="special-message">
+<div
+id="specialMessage"
+class="special-message">
 
-<div class="message-heart">💗</div>
+<div class="special-heart">
+♥
+</div>
 
-<h3>You are so special</h3>
+<h3>
+You are special
+</h3>
 
 <p>
-And this little surprise is just for you ❤️
+This is just a little surprise for you ❤️
 </p>
 
-<button id="continueButton" class="continue-button">
+<button
+id="continueButton"
+class="continue-button">
+
 Continue ✨
+
 </button>
 
 </div>
@@ -117,23 +152,36 @@ Continue ✨
 </section>
 
 
-<!-- Balloon/pop effects -->
+<!-- =========================
+PAGE 3
+Will be built next
+========================== -->
+
+<section id="page3" class="page">
+</section>
+
+
+<!-- =========================
+EFFECTS
+========================== -->
+
 <div id="effects"></div>
 
 
 <!-- =========================
-REAL BIRTHDAY MUSIC
+YOUR ACTUAL MUSIC
 ========================== -->
 
 <audio
 id="birthdayMusic"
-src="./birthday-music.mp3"
+src="birthday-music.mp3"
 preload="auto"
 loop>
 </audio>
 
 
-<script src="script.js?v=3"></script>
+<script src="script.js?v=4"></script>
 
 </body>
+
 </html>
