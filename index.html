@@ -11,49 +11,43 @@
 
 <body>
 
-<!-- =========================================
-BIRTHDAY MUSIC
-File in the same GitHub folder:
-birthday-music.mp3
-========================================== -->
+<!-- ================= MUSIC ================= -->
 
 <audio id="birthdayMusic" loop preload="auto">
 <source src="birthday-music.mp3" type="audio/mpeg">
 </audio>
 
 
-<!-- =========================================
-PAGE 1
-========================================== -->
+<!-- ================= PAGE 1 ================= -->
 
 <section class="page active" id="page1">
 
-<div class="card page1-card">
+<div class="heart-bg">♡</div>
 
-<div class="heart">♥</div>
+<div class="card">
 
-<p class="tiny-title">A little surprise for you</p>
+<div class="small-heart">♥</div>
 
 <h1>
 Happy Birthday,<br>
 Piyush ❤️
 </h1>
 
-<p class="intro">
-I've planned something special for you...
+<p>
+Something special is waiting for you...
 </p>
 
 <h2>
 Are you excited for what's next?
 </h2>
 
-<div class="button-area">
+<div class="buttons">
 
-<button id="yesButton" class="yes-button">
+<button id="yesButton" class="yes-btn">
 YES ❤️
 </button>
 
-<button id="noButton" class="no-button">
+<button id="noButton" class="no-btn">
 NO 🙈
 </button>
 
@@ -64,51 +58,47 @@ NO 🙈
 </section>
 
 
-<!-- =========================================
-PAGE 2
-========================================== -->
+<!-- ================= PAGE 2 ================= -->
 
 <section class="page" id="page2">
 
-<div class="card page2-card">
+<div class="card balloon-card">
 
-<p class="tiny-title">
-Your first little challenge 🎈
+<p class="step">
+A little challenge for you 🎈
 </p>
 
 <h1>
 Pop all 4 balloons
 </h1>
 
-<p class="instruction">
-Tap each balloon to continue...
+<p class="subtext">
+Tap each balloon to see what's waiting for you...
 </p>
 
 
-<!-- BALLOONS -->
-
-<div class="balloon-area" id="balloonArea">
+<div class="balloon-area">
 
 <button
-class="balloon balloon-one"
+class="balloon balloon1"
 aria-label="Pop balloon 1">
 <span>♥</span>
 </button>
 
 <button
-class="balloon balloon-two"
+class="balloon balloon2"
 aria-label="Pop balloon 2">
 <span>★</span>
 </button>
 
 <button
-class="balloon balloon-three"
+class="balloon balloon3"
 aria-label="Pop balloon 3">
 <span>♥</span>
 </button>
 
 <button
-class="balloon balloon-four"
+class="balloon balloon4"
 aria-label="Pop balloon 4">
 <span>★</span>
 </button>
@@ -116,24 +106,17 @@ aria-label="Pop balloon 4">
 </div>
 
 
-<p id="balloonCount" class="balloon-count">
+<div id="balloonCount" class="balloon-count">
 0 / 4 popped
-</p>
+</div>
 
 
-<!-- =====================================
-IMPORTANT:
-
-This starts HIDDEN.
-
-It is revealed ONLY after
-all 4 balloons are popped.
-====================================== -->
+<!-- THIS IS HIDDEN UNTIL ALL 4 ARE POPPED -->
 
 <div id="specialMessage" class="special-message">
 
-<div class="sparkles">
-✨ ✨ ✨
+<div class="sparkle">
+✨
 </div>
 
 <h2>
@@ -141,45 +124,39 @@ You are so special ❤️
 </h2>
 
 <p>
-And there's so much more waiting for you...
+And there's so much more I want to show you...
 </p>
 
 </div>
 
 </div>
 
-
-<!-- CONFETTI -->
 
 <div id="confetti"></div>
 
 </section>
 
 
-<!-- =========================================
-PAGE 3
-========================================== -->
+<!-- ================= PAGE 3 ================= -->
 
 <section class="page" id="page3">
 
-<div class="card page3-card">
+<div class="card candle-card">
 
-<p class="tiny-title">
-A birthday wish just for you ✨
+<p class="step">
+One more little thing... 🥹
 </p>
 
 <h1>
-Blow the candle
+Make a wish ✨
 </h1>
 
-<p class="instruction">
-Make a wish first... then tap below 💨
+<p class="subtext">
+Blow out the candle and make your birthday wish.
 </p>
 
 
-<!-- CAKE -->
-
-<div class="cake-area">
+<div class="cake-scene">
 
 <div class="cake">
 
@@ -193,16 +170,19 @@ id="flame">
 
 <div class="wick"></div>
 
-<div class="candle-stick"></div>
+<div class="candle-body"></div>
 
 </div>
+
 
 <div class="cake-top"></div>
 
+
 <div class="cake-body">
 
-<div class="cream cream-one"></div>
-<div class="cream cream-two"></div>
+<div class="cream-line"></div>
+
+<div class="cream-line second"></div>
 
 </div>
 
@@ -210,34 +190,32 @@ id="flame">
 
 </div>
 
-
-<!-- BLOW BUTTON -->
 
 <button
 id="blowButton"
 class="main-button">
+
 Tap to blow 💨
+
 </button>
 
 
-<!-- AFTER BLOWING -->
-
-<p
+<div
 id="wishText"
 class="wish-text">
+
 Make your wish... ❤️
-</p>
+
+</div>
 
 </div>
 
 </section>
 
 
-<!-- =========================================
-JAVASCRIPT
-========================================== -->
+<!-- ================= JAVASCRIPT ================= -->
 
-<script src="script.js?v=20"></script>
+<script src="script.js?v=40"></script>
 
 </body>
 </html>
